@@ -2,16 +2,17 @@ package com.kaishengit.entity;
 
 public class User {
 
-   private int id;
+//   因为int的默认值为0，在某些请我们使用integer
+   private Integer id;
    private String userName;
    private int age;
    private String phoneNum;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -31,12 +32,12 @@ public class User {
         this.age = age;
     }
 
-    public String getPhoneNume() {
+    public String getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNume(String phoneNume) {
-        this.phoneNum = phoneNume;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     @Override
