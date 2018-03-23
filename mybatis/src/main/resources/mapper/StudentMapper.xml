@@ -8,12 +8,39 @@
     
     <resultMap id="baseMap" type="com.kaishengit.entity.Student">
         <id column="id" property="id" />
-        <result column="student_name" property="userName"/>
+        <result column="student_name" property="studentName"/>
         <result column="age" property="age"/>
         <result column="address" property="address"/>
         <result column="id" property="schoolId"/>
     </resultMap>
+
     
+    <resultMap id="studentMapWithTag" type="com.kaishengit.entity.Student" extends="baseMap">
+        <collection property="tagList" ofType="com.kaishengit.entity.Tag">
+            <id column="tid" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+
+    <select id="findByIdTag" parameterType="int" resultMap="studentMapWithTag">
+
+        SELECT
+            stu.id,
+            stu.student_name,
+            stu.age,
+            stu.school_id,
+            st.tid,
+            t.tag_name
+        FROM
+            t_student stu
+        INNER JOIN t_stu_tag st ON stu.id = st.sid
+        INNER JOIN t_tag t ON st.tid = t.id
+        WHERE
+	        stu.id = #{id};
+
+    </select>
+
+
     <resultMap id="studentMap" type="com.kaishengit.entity.Student" extends="baseMap">
         <association property="school" javaType="com.kaishengit.entity.School">
             <id column="id" property="id"/>
@@ -22,54 +49,57 @@
         </association>
 
     </resultMap>
-    
+
+    <!--查询单个-->
     <select id="findById" parameterType="int" resultMap="studentMap">
       SELECT
 	        stu.id,
             stu.student_name,
             stu.age,
             stu.address,
-            stu.shcool_id,
+            stu.school_id,
             sch.school_name,
             sch.tel
         FROM
             t_student stu
-        INNER JOIN t_school sch ON stu.shcool_id = sch.id
+        INNER JOIN t_school sch ON stu.school_id = sch.id
         WHERE
 	  stu.id = #{id};
 
     </select>
 
+    <!--使用OGNL的方式查找单个-->
     <select id="findId" parameterType="int" resultType="com.kaishengit.entity.Student">
         SELECT
             stu.id,
             stu.student_name,
             stu.age,
             stu.address,
-            stu.shcool_id,
+            stu.school_id,
             sch.id as 'school.id',
             sch.school_name as 'school.schoolName',
             sch.tel as 'school.tel'
         FROM
           t_student stu
-        INNER JOIN t_school sch ON stu.shcool_id = sch.id
+        INNER JOIN t_school sch ON stu.school_id = sch.id
         WHERE
          stu.id = #{id};
 
     </select>
 
+    <!--查找全部-->
     <select id="findAll" resultMap="studentMap">
         SELECT
             stu.id,
             stu.student_name,
             stu.age,
             stu.address,
-            stu.shcool_id,
+            stu.school_id,
             sch.school_name,
             sch.tel
         FROM
            t_student stu
-        INNER JOIN t_school sch ON stu.shcool_id = sch.id
+        INNER JOIN t_school sch ON stu.school_id = sch.id
 
     </select>
 

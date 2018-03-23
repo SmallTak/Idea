@@ -9,5 +9,6 @@ public interface StudentMapper {
     Student findById(int id);
     Student findId(int id);
     List<Student> findAll();
+    Student findByIdTag(int id);
 
 }

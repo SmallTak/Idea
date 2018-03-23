@@ -1,4 +1,5 @@
 import com.kaishengit.entity.Student;
+import com.kaishengit.entity.Tag;
 import com.kaishengit.mapper.StudentMapper;
 import com.kaishengit.util.SqlSessionFactoryUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -41,6 +42,18 @@ public class StudentSchoolMapperInterfaceTest {
         }
     }
 
+
+    @Test
+    public void testfindByIdTag(){
+
+        Student student = studentMapper.findByIdTag(2);
+        System.out.println(student);
+        List<Tag> tagList = student.getTagList();
+        for (Tag tag : tagList){
+            System.out.println(tag);
+        }
+
+    }
 
     @After
     public void destory(){

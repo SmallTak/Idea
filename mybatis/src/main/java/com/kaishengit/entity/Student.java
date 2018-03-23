@@ -1,24 +1,36 @@
 package com.kaishengit.entity;
 
+import java.util.List;
+
 public class Student {
 
     private Integer id;
-    private String userName;
+    private String studentName;
     private int age;
     private String address;
     private Integer schoolId;
     private School school;
+    private List<Tag> tagList;
 
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", studentName='" + userName + '\'' +
+                ", studentName='" + studentName + '\'' +
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 ", schoolId=" + schoolId +
                 ", school=" + school +
+                ", tagList=" + tagList +
                 '}';
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 
     public Integer getId() {
@@ -30,11 +42,11 @@ public class Student {
     }
 
     public String getStudentName() {
-        return userName;
+        return studentName;
     }
 
     public void setStudentName(String studentName) {
-        this.userName = studentName;
+        this.studentName = studentName;
     }
 
     public int getAge() {
