@@ -8,6 +8,16 @@ public class User {
    private int age;
    private String phoneNum;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", age=" + age +
+                ", phoneNum='" + phoneNum + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
@@ -38,15 +48,5 @@ public class User {
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", age=" + age +
-                ", phoneNume='" + phoneNum + '\'' +
-                '}';
     }
 }

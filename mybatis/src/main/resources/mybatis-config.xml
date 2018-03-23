@@ -15,7 +15,7 @@
             <transactionManager type="jdbc"></transactionManager>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql:///crm_2018"/>
+                <property name="url" value="jdbc:mysql:///mybatis"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
@@ -27,6 +27,7 @@
     <mappers>
         <!--classpath路径：源代码根目录-->
         <mapper resource="mapper/UserMapper.xml"></mapper>
+        <mapper resource="mapper/StudentMapper.xml"></mapper>
     </mappers>
 
 </configuration>
