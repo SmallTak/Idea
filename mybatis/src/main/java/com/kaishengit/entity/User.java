@@ -1,8 +1,12 @@
 package com.kaishengit.entity;
 
-public class User {
+import java.io.Serializable;
 
-//   因为int的默认值为0，在某些请我们使用integer
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -5211389707739541364L;
+
+    //   因为int的默认值为0，在某些请我们使用integer
    private Integer id;
    private String userName;
    private int age;

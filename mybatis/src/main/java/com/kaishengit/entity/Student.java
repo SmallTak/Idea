@@ -1,8 +1,11 @@
 package com.kaishengit.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Student {
+public class Student implements Serializable {
+
+    private static final long serialVersionUID = -5211389707739541364L;
 
     private Integer id;
     private String studentName;

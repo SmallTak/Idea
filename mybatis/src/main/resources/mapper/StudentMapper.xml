@@ -28,6 +28,7 @@
             stu.id,
             stu.student_name,
             stu.age,
+            stu.address,
             stu.school_id,
             st.tid,
             t.tag_name

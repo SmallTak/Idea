@@ -1,3 +1,4 @@
+
 import com.kaishengit.entity.Student;
 import com.kaishengit.entity.Tag;
 import com.kaishengit.mapper.StudentMapper;
@@ -16,8 +17,8 @@ public class StudentSchoolMapperInterfaceTest {
 
     @Before
     public void init(){
-       sqlSession = SqlSessionFactoryUtil.getSqlSession(true);
-       studentMapper = sqlSession.getMapper(StudentMapper.class);
+        sqlSession = SqlSessionFactoryUtil.getSqlSession(true);
+        studentMapper = sqlSession.getMapper(StudentMapper.class);
     }
 
     @Test
@@ -62,3 +63,4 @@ public class StudentSchoolMapperInterfaceTest {
 
 
 }
+

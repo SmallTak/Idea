@@ -5,12 +5,10 @@ import com.kaishengit.entity.Student;
 
 import java.util.List;
 
-public interface StudentMapper {
+public interface StudentMapperTwo {
 
     Student findById(int id);
-    Student findId(int id);
     List<Student> findAll();
-    Student findByIdTag(int id);
 
 }
 
