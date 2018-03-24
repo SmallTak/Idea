@@ -30,6 +30,7 @@
         <mapper resource="mapper/StudentMapper.xml"/>
         <mapper resource="mapper/StudentMapperTwo.xml"/>
         <mapper resource="mapper/SchoolMapper.xml"/>
+        <mapper resource="mapper/MovieMapper.xml"/>
     </mappers>
 
 </configuration>

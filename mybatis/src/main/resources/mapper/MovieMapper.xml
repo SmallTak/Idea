@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--推荐使用类似类的完全限定名-->
+<mapper namespace="com.kaishengit.mapper.MovieMapper">
+
+    <select id="findByTitle" parameterType="string" resultType="com.kaishengit.entity.Movie">
+        SELECT * FROM movie
+        <if test="title != null and title != ''">
+            WHERE title LIKE #{title}
+        </if>
+    </select>
+
+    <select id="findByParams" parameterType="map" resultType="com.kaishengit.entity.Movie">
+        SELECT * FROM movie
+        <!--<trim prefix="where" prefixOverrides="and | or">
+            <if test="title != null and title != ''">
+                title LIKE #{title} AND
+            </if>
+            <if test="director != null and director != ''">
+                director LIKE #{director}
+            </if>
+        </trim>-->
+
+        <where>
+            <if test="title != null and title != ''" >
+                title LIKE #{title}
+            </if>
+            <if test="director != null and director != ''">
+                AND director LIKE #{director}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findByIdList" parameterType="list" resultType="com.kaishengit.entity.Movie">
+
+        SELECT * FROM movie WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+
+    </select>
+
+    <insert id="addMovie" parameterType="list">
+        INSERT INTO movie (title, director, rate) VALUES
+        <foreach collection="list" item="movie" separator=",">
+            (#{movie.title}, #{movie.director}, #{movie.rate})
+        </foreach>
+    </insert>
+
+
+</mapper>
