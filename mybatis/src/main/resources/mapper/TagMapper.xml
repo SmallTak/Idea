@@ -1,0 +1,20 @@
+<!--
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+&lt;!&ndash;推荐使用类似类的完全限定名&ndash;&gt;
+<mapper namespace="com.kaishengit.mapper.TagMapper">
+    <select id="findTag" parameterType="int" resultType="com.kaishengit.entity.Tag" >
+        SELECT
+    	  *
+        FROM
+            t_student stu
+        INNER JOIN t_stu_tag st ON stu.id = st.sid
+        INNER JOIN t_tag t ON st.tid = t.id
+        WHERE
+	      stu.id = #{id}
+    </select>
+
+</mapper>-->

@@ -69,7 +69,7 @@ public class UserMapperInterfaceTest {
     @Test
     public void testDel(){
 
-       int num =  userMapper.delById(23);
+       int num =  userMapper.delById(25);
         System.out.println(num);
 
     }

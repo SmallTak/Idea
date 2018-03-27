@@ -2,7 +2,7 @@ package com.kaishengit.entity;
 
 import java.io.Serializable;
 
-public class School implements Serializable {
+public class School implements Serializable  {
     private Integer id;
     private String SchoolName;
     private String tel;

@@ -1,25 +1,26 @@
+<!--
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--推荐使用类似类的完全限定名-->
+&lt;!&ndash;推荐使用类似类的完全限定名&ndash;&gt;
 <mapper namespace="com.kaishengit.mapper.UserMapper">
 
-    <!--开启二级缓存-->
+    &lt;!&ndash;开启二级缓存&ndash;&gt;
     <cache/>
 
-    <!--
+    &lt;!&ndash;
        id:唯一，最好写成类似于方法名
        parameterType : 参数类型 一个参数的情况下可以省略
        resultType: 返回值类型
-     -->
-    <!--若开启二级缓存，不想缓存该查询的情况下可useCache="false"-->
+     &ndash;&gt;
+    &lt;!&ndash;若开启二级缓存，不想缓存该查询的情况下可useCache="false"&ndash;&gt;
     <select id="findByid" parameterType="int" resultType="com.kaishengit.entity.User" useCache="false">
         SELECT  * FROM t_user WHERE id = #{id}
     </select>
 
-    <!--resultType可使用user也可以使用该entity的完全限定名-->
+    &lt;!&ndash;resultType可使用user也可以使用该entity的完全限定名&ndash;&gt;
     <select id="findAll" resultType="com.kaishengit.entity.User" >
         SELECT * FROM t_user
     </select>
@@ -33,7 +34,7 @@
         WHERE id=#{id}
     </update>
 
-    <!--若开启二级缓存，不想在删除数据之后刷新可添加 flushCache="false"-->
+    &lt;!&ndash;若开启二级缓存，不想在删除数据之后刷新可添加 flushCache="false"&ndash;&gt;
 
     <delete id="delById" flushCache="false">
         delete from t_user where id = #{id}
@@ -42,7 +43,7 @@
     <select id="page" resultType="com.kaishengit.entity.User" parameterType="map">
           SELECT * FROM t_user limit #{start}, #{size}
     </select>
-    <!--SELECT * FROM t_user limit #{param1}, #{param2}-->
+    &lt;!&ndash;SELECT * FROM t_user limit #{param1}, #{param2}&ndash;&gt;
     <select id="page2" resultType="com.kaishengit.entity.User">
           SELECT * FROM t_user limit #{arg0}, #{arg1}
     </select>
@@ -51,4 +52,4 @@
         SELECT * FROM t_user limit #{start}, #{size}
     </select>
 
-</mapper>
+</mapper>-->

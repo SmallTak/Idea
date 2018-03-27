@@ -26,6 +26,14 @@ public class MovieMapperTest {
     }
 
     @Test
+    public void findAll(){
+        List<Movie> movieList = movieMapper.findAll();
+        for (Movie movie : movieList){
+            System.out.println(movie);
+        }
+    }
+
+    @Test
     public void findByTitle(){
 
         List<Movie> movieList = movieMapper.findByTitle("%大话西游%");

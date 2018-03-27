@@ -1,9 +1,10 @@
+<!--
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--推荐使用类似类的完全限定名-->
+&lt;!&ndash;推荐使用类似类的完全限定名&ndash;&gt;
 <mapper namespace="com.kaishengit.mapper.StudentMapper">
     
     <resultMap id="baseMap" type="com.kaishengit.entity.Student">
@@ -51,7 +52,7 @@
 
     </resultMap>
 
-    <!--查询单个-->
+    &lt;!&ndash;查询单个&ndash;&gt;
     <select id="findById" parameterType="int" resultMap="studentMap">
       SELECT
 	        stu.id,
@@ -69,7 +70,7 @@
 
     </select>
 
-    <!--使用OGNL的方式查找单个-->
+    &lt;!&ndash;使用OGNL的方式查找单个&ndash;&gt;
     <select id="findId" parameterType="int" resultType="com.kaishengit.entity.Student">
         SELECT
             stu.id,
@@ -88,7 +89,7 @@
 
     </select>
 
-    <!--查找全部-->
+    &lt;!&ndash;查找全部&ndash;&gt;
     <select id="findAll" resultMap="studentMap">
         SELECT
             stu.id,
@@ -106,3 +107,4 @@
 
 
 </mapper>
+-->
