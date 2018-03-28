@@ -43,7 +43,7 @@
         <mapper class="com.kaishengit.mapper.MovieMapper"/>
         <mapper class="com.kaishengit.mapper.StudentMapper"/>
         <mapper class="com.kaishengit.mapper.SchoolMapper"/>
-        <mapper class="com.kaishengit.mapper.TagMalpper"/>
+        <mapper class="com.kaishengit.mapper.TagMapper"/>
     </mappers>
 
 </configuration>
