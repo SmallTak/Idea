@@ -5,6 +5,34 @@ import java.sql.*;
 public class MysqlCaseTest {
 
     @Test
+    public void testTransaction(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql:///kaishengit_db","root","root");
+            conn.setAutoCommit(false);
+            String sql = "delete from t_stu where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,39);
+            ps.executeUpdate();
+
+            //设置保留点
+            Savepoint save = conn.setSavepoint("s1");
+            String sqla = "delete from t_stu where id = ?";
+            PreparedStatement psa = conn.prepareStatement(sqla);
+            psa.setInt(1,40);
+            psa.executeUpdate();
+
+            conn.rollback(save);
+            conn.commit();
+            ps.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testJDBC(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
