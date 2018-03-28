@@ -1,17 +1,8 @@
-import org.apache.ibatis.jdbc.SQL;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.security.spec.ECField;
 import java.sql.*;
-import java.util.Collection;
 
 public class MysqlCaseTest {
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testJDBC(){
@@ -25,6 +16,9 @@ public class MysqlCaseTest {
             if (rs.next()){
                 System.out.println(rs.getString("prod_name"));
             }
+            rs.close();
+            ps.close();
+            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -41,6 +35,9 @@ public class MysqlCaseTest {
             while (rs.next()){
                 System.out.println(rs.getString("prod_name"));
             }
+            rs.close();
+            callableStatement.close();
+            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -59,6 +56,9 @@ public class MysqlCaseTest {
             float min = callableStatement.getFloat(2);
             System.out.println(max);
             System.out.println(min);
+
+            callableStatement.close();
+            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -75,6 +75,8 @@ public class MysqlCaseTest {
             call.executeUpdate();
             float price = call.getFloat(2);
             System.out.println(price);
+            call.close();
+            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -93,6 +95,9 @@ public class MysqlCaseTest {
             call.executeUpdate();
             int num = call.getInt(3);
             System.out.println("价格小于10$:" + num);
+
+            call.close();
+            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
