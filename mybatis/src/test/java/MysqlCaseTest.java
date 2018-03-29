@@ -58,13 +58,13 @@ public class MysqlCaseTest {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql:///kaishengit_db","root","root");
             String sql = "{call p_1}";
-            CallableStatement callableStatement = conn.prepareCall(sql);
-            ResultSet rs = callableStatement.executeQuery();
+            CallableStatement call = conn.prepareCall(sql);
+            ResultSet rs = call.executeQuery();
             while (rs.next()){
                 System.out.println(rs.getString("prod_name"));
             }
             rs.close();
-            callableStatement.close();
+            call.close();
             conn.close();
         }catch (Exception e){
             e.printStackTrace();
