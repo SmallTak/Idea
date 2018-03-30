@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--当scope="prototype"时bean在容器中不是单例-->
+    <!--init-method="init"指定init方法，destroy-method指定销毁方法-->
+    <!--当lazy-init="true"的时候为表示调用getBean的时候创建类的实例(懒汉式)，false时表示容器启动的时候就创建类的实例-->
+    <bean id="userDao" class="com.kaishengit.dao.UserDao" lazy-init="true" init-method="init" scope="prototype" destroy-method="destory"></bean>
+
+
+</beans>
