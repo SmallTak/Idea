@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="studentDao" class="com.kaishengit.dao.StudentDao"/>
+    <!--自动注入-->
+    <!--byName使用ser方法名称(去掉set，首字母变小写)，去spring容器中查找名称相同bean进行注入-->
+
+    <!--byType:使用set方法的参数类型从Spring容器找类型相同的Bean进行注入，如果找不到类型相同的Bean，则不注入;
+    如果找到多个类型相同的Bean，则抛出NoUniqueBeanDefinitionException异常-->
+
+    <!--constructor：使用构造方法的参数先根据byName的规则去容器查找，如果没有找到再根据byType的规则去容器查找-->
+    <bean id="studentService" class="com.kaishengit.service.StudentService" autowire="constructor"/>
+
+   <!-- <bean id="studentService" class="com.kaishengit.service.StudentService">-->
+
+        <!--构造方法注入1-->
+        <!--name:构造方法参数的名称-->
+        <!--ref:被注入的bean在spring容器中的id-->
+        <!--<constructor-arg name="studentDao" ref="studentDao"/>-->
+
+        <!--构造方法注入2-->
+        <!--index:构造方法参数的索引，从0开始-->
+        <!--ref:被注入bean在spring容器中的id-->
+        <!--<constructor-arg index="0" ref="studentDao"/>-->
+
+        <!--构造方法注入3-->
+        <!--type:构造方法的参数的名称，不适用于多个参数类型相同-->
+        <!--ref:被注入bean在spring容器中的id-->
+        <!--<constructor-arg type="StudentDao" ref="studentDao"/>-->
+    <!--</bean>-->
+
+
+    <!--<bean id="studentService" class="com.kaishengit.service.StudentService">-->
+
+       <!--该name的值是被注入属性的set方法名去掉set首字母变小写-->
+        <!--ref:spring容器中被注入对象的id-->
+        <!--set方法注入1-->
+      <!-- <property name="studentDao" ref="studentDao"/>-->
+
+        <!--set方法注入2-->
+        <!--<property name="studentDao">
+            &lt;!&ndash;bean为被注入bean的id&ndash;&gt;
+            <ref bean ="studentDao"/>
+        </property>-->
+
+        <!--set方法注入3-->
+        <!--<property name="studentDao">
+            <bean class="com.kaishengit.dao.StudentDao"/>
+        </property>-->
+
+    <!--</bean>-->
+
+    <!--基本类型及集合注入-->
+    <bean id="otherService" class="com.kaishengit.service.OtherService">
+        <property name="id" value="123"/>
+        <property name="name" value="Jack"/>
+        <property name="score" value="77.5"/>
+        <property name="nameList">
+            <list>
+                <value>qqq</value>
+                <value>www</value>
+            </list>
+        </property>
+        <property name="numSet">
+            <set>
+                <value>22</value>
+                <value>21</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="qwq" value-ref="studentDao"/>
+                <entry key="ewwq" value-ref="studentDao"/>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="k1">v1</prop>
+                <prop key="k2">v2</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

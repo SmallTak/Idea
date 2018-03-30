@@ -3,7 +3,7 @@ package com.kaishengit.dao;
 public class UserDao {
 
     public UserDao(){
-        System.out.println("hello...");
+        System.out.println("我是构造方法...");
     }
 
     public void  init(){
@@ -14,7 +14,7 @@ public class UserDao {
         System.out.println("Hello,spring...");
     }
 
-    public void  destory(){
+   public void  destory(){
         System.out.println("容器销毁"+"destory...");
     }
 
