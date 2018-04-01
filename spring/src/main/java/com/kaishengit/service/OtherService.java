@@ -27,17 +27,19 @@ public class OtherService {
 //        for (Map.Entry<String,StudentDao> entry : map.entrySet()){
 //            System.out.println(entry.getKey() + "->" + entry.getValue());
 //        }
-        Iterator<Map.Entry<String,StudentDao>> entris = map.entrySet().iterator();
-        while (entris.hasNext()){
-            Map.Entry<String,StudentDao> entry = entris.next();
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+       Iterator<Map.Entry<String, StudentDao>> maps = map.entrySet().iterator();
+        while (maps.hasNext()){
+            Map.Entry<String, StudentDao> entry = maps.next();
+            System.out.println(entry.getKey() + entry.getValue());
         }
+
         Enumeration<Object> enumeration = properties.keys();
         while (enumeration.hasMoreElements()){
             Object key = enumeration.nextElement();
             Object value = properties.get(key);
-            System.out.println(key + "->" + value);
+            System.out.println("key" + key + "value" + value);
         }
+
 
     }
 

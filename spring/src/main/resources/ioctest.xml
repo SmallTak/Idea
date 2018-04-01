@@ -53,7 +53,7 @@
     <!--</bean>-->
 
     <!--基本类型及集合注入-->
-    <bean id="otherService" class="com.kaishengit.service.OtherService">
+    <!--<bean id="otherService" class="com.kaishengit.service.OtherService">
         <property name="id" value="123"/>
         <property name="name" value="Jack"/>
         <property name="score" value="77.5"/>
@@ -81,6 +81,6 @@
                 <prop key="k2">v2</prop>
             </props>
         </property>
-    </bean>
+    </bean>-->
 
 </beans>

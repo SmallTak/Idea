@@ -12,11 +12,11 @@ public class StudentServiceTest {
     public void studentServiceTest(){
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ioctest.xml");
-        /*StudentService studentService = (StudentService)applicationContext.getBean("studentService");
-        studentService.save();*/
+        StudentService studentService = (StudentService)applicationContext.getBean("studentService");
+        studentService.save();
 
-        OtherService otherService = (OtherService) applicationContext.getBean("otherService");
-        otherService.show();
+      /*  OtherService otherService = (OtherService) applicationContext.getBean("otherService");
+        otherService.show();*/
 
     }
 
