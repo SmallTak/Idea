@@ -9,13 +9,16 @@ public class Mp3AdProxy implements Player {
         this.player=player;
     }
 
+    @Override
     public void play(String msicName) {
         System.out.println("广告");
         player.play(msicName);
         System.out.println("广告结束");
     }
 
-    public void stop() {
-
+    @Override
+    public int stop() {
+        player.stop();
+        return 10/2;
     }
 }

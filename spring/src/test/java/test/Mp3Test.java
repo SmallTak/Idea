@@ -42,7 +42,7 @@ public class Mp3Test {
              * @return 方法返回值
              * @throws Throwable
              */
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 //获得正在执行的方法名
                 String methodName = method.getName();
                 System.out.println("方法:"+methodName+"开始调用");

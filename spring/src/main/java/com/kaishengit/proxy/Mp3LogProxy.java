@@ -9,14 +9,17 @@ public class Mp3LogProxy implements Player {
         this.player = player;
     }
 
-
+    @Override
     public void play(String msicName) {
         System.out.println("日志");
         player.play(msicName);
         System.out.println("日志结束");
     }
 
-    public void stop() {
+    @Override
+    public int stop() {
+
         player.stop();
+        return 11;
     }
 }

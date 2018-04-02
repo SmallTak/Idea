@@ -4,6 +4,6 @@ public interface Player {
 
     void play(String msicName);
 
-    void stop();
+    int stop();
 
 }
