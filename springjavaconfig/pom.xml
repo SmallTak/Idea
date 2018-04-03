@@ -45,6 +45,13 @@
             <version>${spring-version}</version>
         </dependency>
 
+        <!--spring 事务管理-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
        <!--添加数据库驱动-->
         <dependency>
             <groupId>mysql</groupId>
@@ -66,12 +73,7 @@
             <version>${spring-version}</version>
         </dependency>
 
-        <!--JDBC事务管理-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring-version}</version>
-        </dependency>
+
 
         <!--JSR330-->
         <dependency>

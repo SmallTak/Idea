@@ -1,15 +1,12 @@
 package com.kaishengit.aop;
 
-import jdk.nashorn.internal.scripts.JO;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Executable;
-
-@Repository
-@Aspect    //该注解表示为通知类
+//@Repository
+//@Aspect    //该注解表示为通知类
 public class LogAspect {
 
     @Pointcut("execution(* com.kaishengit.service.*.*(..))")
