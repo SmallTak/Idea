@@ -14,11 +14,12 @@ public class ProductServiceTest extends baseTestCase {
     @Autowired
     ProductService productService;
 
+    //复习时其它单元测试报错就把userservice dao 加入到到spring容器
     @Test
     public void test() throws Exception {
         List<Product> productList = Arrays.asList(
                 new Product("You",22),
-                new Product("Me",22)
+                new Product("狗子",22)
         );
         productService.insert(productList);
     }

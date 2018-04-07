@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
-@Service
+//@Service
 public class UserService {
 
     /*@Autowired*/

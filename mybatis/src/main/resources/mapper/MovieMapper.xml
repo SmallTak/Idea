@@ -1,10 +1,9 @@
-<!--
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-&lt;!&ndash;推荐使用类似类的完全限定名&ndash;&gt;
+<!--推荐使用类似类的完全限定名-->
 <mapper namespace="com.kaishengit.mapper.MovieMapper">
 
     <select id="findByTitle" parameterType="string" resultType="com.kaishengit.entity.Movie">
@@ -26,14 +25,14 @@
             </if>
         </where>
 
-        &lt;!&ndash;<trim prefix="where" prefixOverrides="and | or">
+        <!--<trim prefix="where" prefixOverrides="and | or">
             <if test="title != null and title != ''">
                 title LIKE #{title} AND
             </if>
             <if test="director != null and director != ''">
                 director LIKE #{director}
             </if>
-        </trim>&ndash;&gt;
+        </trim>-->
 
 
 
@@ -56,4 +55,4 @@
     </insert>
 
 
-</mapper>-->
+</mapper>

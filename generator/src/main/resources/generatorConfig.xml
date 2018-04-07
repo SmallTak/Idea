@@ -6,6 +6,7 @@
     <!--加载数据库驱动-->
     <classPathEntry location="F:/kaishengitjar/mysql-connector-java-5.1.6.jar"/>
 
+    <!--targetRuntime : MyBatis3Simple 生成简单的CRUD语句 -->
     <context id="generatotConfig" targetRuntime="MyBatis3">
 
         <!--去除自动生成的注释-->

@@ -24,7 +24,7 @@ public class ProductService {
     public void insert(List<Product> productList) throws Exception {
         for(Product product : productList){
             productDao.insert(product);
-            throw new Exception("");
+            throw new Exception("真是粗心不细心");
         }
     }
 

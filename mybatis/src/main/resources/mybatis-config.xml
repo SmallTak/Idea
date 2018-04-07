@@ -31,16 +31,17 @@
     <mappers>
         <!--以下使用的是xml方式-->
         <!--classpath路径：源代码根目录-->
-        <!--<mapper resource="mapper/UserMapper.xml"/>
-        <mapper resource="mapper/StudentMapper.xml"/>
-        <mapper resource="mapper/StudentMapperTwo.xml"/>
-        <mapper resource="mapper/SchoolMapper.xml"/>
+        <!--<mapper resource="mapper/UserMapper.xml"/>-->
+        <!--<mapper resource="mapper/StudentMapper.xml"/>-->
+        <!--<mapper resource="mapper/StudentMapperTwo.xml"/>-->
+        <!--<mapper resource="mapper/SchoolMapper.xml"/>-->
         <mapper resource="mapper/MovieMapper.xml"/>
-        <mapper resource="mapper/TagMapper.xml"/>-->
+        <!--<mapper resource="mapper/TagMapper.xml"/>-->
 
-        <!--一下使用的是注释放方式-->
+        <!--<mapper resource="mapper/MovieMapper.xml"/>-->
+        <!--一下使用的是注解方式-->
         <mapper class="com.kaishengit.mapper.UserMapper"/>
-        <mapper class="com.kaishengit.mapper.MovieMapper"/>
+        <!--<mapper class="com.kaishengit.mapper.MovieMapper"/>-->
         <mapper class="com.kaishengit.mapper.StudentMapper"/>
         <mapper class="com.kaishengit.mapper.SchoolMapper"/>
         <mapper class="com.kaishengit.mapper.TagMapper"/>

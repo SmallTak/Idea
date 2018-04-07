@@ -7,7 +7,7 @@ import sun.misc.Cleaner;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)   //
-//@ContextConfiguration(locations = "classpath:spring.xml")//找到spring.xml配置文件并读取 创建spring容器
-@ContextConfiguration(classes = Application.class)
+@ContextConfiguration(locations = "classpath:spring.xml")//找到spring.xml配置文件并读取 创建spring容器
+//@ContextConfiguration(classes = Application.class)
 public class baseTestCase {
 }
