@@ -4,9 +4,10 @@ package com.kaishengit.aop;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
-//@Repository
-//@Aspect    //该注解表示为通知类
+@Component
+@Aspect    //该注解表示为通知类
 public class LogAspect {
 
     @Pointcut("execution(* com.kaishengit.service.*.*(..))")

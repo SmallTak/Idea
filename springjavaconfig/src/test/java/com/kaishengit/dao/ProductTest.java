@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ProductTest extends baseTestCase {
 
-    @Autowired
+    @Autowired                                                                          //若报错则使用注解的方式，把base改为注解的方式
     private ProductDao productDao;
 
     @Test

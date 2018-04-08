@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 
 /*@Named*/
-//@Repository
+@Repository
 public class UserDao {
 
     public void save(){
