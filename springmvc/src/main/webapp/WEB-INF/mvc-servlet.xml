@@ -20,5 +20,27 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!--处理静态资源 1 -->
+    <!--  <mvc:resources mapping="/static/**" location="/static/"/>
+      <mvc:resources mapping="favicon.ico" location="/favicon.ico"/>-->
+
+    <!--处理静态资源 2  /static/a.jpg /static/img/a.jpg-->
+    <mvc:default-servlet-handler/>
+
+    <!--文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+
+    <!--拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--设置所有的请求都将经过拦截器-->
+            <mvc:mapping path="/**"/>
+            <!--拦截器位置-->
+            <bean class="com.kaishengit.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 
 </beans>

@@ -9,7 +9,6 @@
     <title></title>
 </head>
 <body>
-    <h3>Hello,Springmvc</h3>
-    <img src="/static/img/2.png">
+   <h3>sorry not fount</h3>
 </body>
 </html>

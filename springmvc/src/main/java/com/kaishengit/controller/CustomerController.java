@@ -1,11 +1,13 @@
 package com.kaishengit.controller;
 
 import com.kaishengit.entity.Customer;
+import com.kaishengit.exception.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +26,10 @@ public class CustomerController {
     }
 
     @GetMapping("/new")
-    public String saveCustomer(){
+    public String saveCustomer() throws IOException {
+        if(1==1){
+            throw new IOException();
+        }
         return "/customer/new";
     }
 
@@ -39,6 +44,11 @@ public class CustomerController {
     @GetMapping("/{id:\\d+}")
     public String showCustomer(@PathVariable Integer id, Model model){
         System.out.println("customerId:" + id);
+
+        if (id.equals(1024)){
+            throw new NotFoundException();
+        }
+
         model.addAttribute("customerId",id);
         return "/customer/show";
     }
