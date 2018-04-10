@@ -6,6 +6,15 @@ public class ProductType {
     private String typeName;
     private Integer parentId;
 
+    @Override
+    public String toString() {
+        return "ProductType{" +
+                "id=" + id +
+                ", typeName='" + typeName + '\'' +
+                ", parentId=" + parentId +
+                '}';
+    }
+
     public ProductType() {}
 
     public Integer getId() {

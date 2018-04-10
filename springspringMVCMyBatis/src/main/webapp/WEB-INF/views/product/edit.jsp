@@ -7,42 +7,39 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-    <head>
-        <title>添加商品</title>
-        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
-    </head>
+    <title>修改商品</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+</head>
 <body>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <form method="post">
-                <legend>新增商品</legend>
+                <legend>修改商品</legend>
                 <div class="form-group">
                     <label>选择分类</label>
                     <select name="typeId" class="form-control">
                         <%--<option value=""></option>--%>
-                        <c:forEach items="${typeList}" var="type">
-                            <option value="${type.id}">${type.typeName}</option>
+                        <c:forEach items="${productTypeList}" var="type">
+                            <option ${product.typeId ==  type.id ? 'selected' : ''} value="${type.id}">${type.typeName}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>商品名称</label>
-                    <input type="text" class="form-control" name="productName">
+                    <input type="text" class="form-control" name="productName" value="${product.productName}">
                 </div>
                 <div class="form-group">
                     <label>商品价格</label>
-                    <input type="text" class="form-control" name="price">
+                    <input type="text" class="form-control" name="price" value="${product.price}">
                 </div>
                 <div class="form-group">
                     <label>市场价格</label>
-                    <input type="text" class="form-control" name="marketPrice">
+                    <input type="text" class="form-control" name="marketPrice" value="${product.marketPrice}">
                 </div>
                 <div class="form-group">
                     <label>商品产地</label>
-                    <input type="text" class="form-control" name="place">
+                    <input type="text" class="form-control" name="place" value="${product.place}">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-success">提交</button>

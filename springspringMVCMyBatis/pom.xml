@@ -15,14 +15,14 @@
     </properties>
 
     <dependencies>
-        <!--junit-->
+<!--junit-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
 
-        <!--javax.servlet-api-->
+<!--javax.servlet-api-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -30,14 +30,14 @@
             <scope>provided</scope>                     <!--!!!!!!!!!!!!!!!!!!!!!!!!!-->
         </dependency>
 
-        <!--jstl-->
+<!--jstl-->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
 
-        <!--spring-->
+<!--spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -69,7 +69,7 @@
             <version>${spring-version}</version>
         </dependency>
 
-        <!--db-->
+<!--db-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -94,14 +94,14 @@
             <version>2.1.1</version>
         </dependency>
 
-        <!--other-->
+<!--分页插件-->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.4</version>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.0.0</version>
         </dependency>
 
-        <!--文件上传-->
+<!--文件上传-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -124,6 +124,14 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.25</version>
         </dependency>
+
+<!--other-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.4</version>
+        </dependency>
+
 
     </dependencies>
 

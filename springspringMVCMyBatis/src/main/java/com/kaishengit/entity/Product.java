@@ -3,6 +3,10 @@ package com.kaishengit.entity;
 import java.math.BigDecimal;
 
 public class Product {
+    /*
+    * 商品默认评论数量
+    * */
+    public static final Integer DEFAULT_COMMENT_NUM = 0;
 
     private Integer id;
     private String productName;
@@ -11,6 +15,7 @@ public class Product {
     private String place;
     private Integer commentNum;
     private Integer typeId;
+    private ProductType productType;
 
     public Product() {}
 
@@ -31,6 +36,14 @@ public class Product {
         this.place = place;
         this.commentNum = commentNum;
         this.typeId = typeId;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public Integer getId() {
