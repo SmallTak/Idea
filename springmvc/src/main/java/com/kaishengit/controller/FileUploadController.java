@@ -12,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 @Controller
 public class FileUploadController {
@@ -21,7 +23,9 @@ public class FileUploadController {
         //通过注解@RequestHeader来获得响应头User-Agent的内容
         System.out.println(userAgent);
 
-        Cookie cookie = new Cookie("user", "Vip");
+
+
+        Cookie cookie = new Cookie("user", "das");
         //只能通过后端获得cookie
         cookie.setHttpOnly(true);
         cookie.setDomain("60 * 60 * 24");
@@ -33,7 +37,7 @@ public class FileUploadController {
     }
 
     @PostMapping("/upload")
-    public String upload(@CookieValue  String user, @RequestParam(name="file") MultipartFile photo, RedirectAttributes redirectAttributes) throws IOException {
+    public String upload(@CookieValue(name = "user")  String user, @RequestParam(name="file") MultipartFile photo, RedirectAttributes redirectAttributes) throws IOException {
         System.out.println(user);
         //表单的元素名
         System.out.println("原始文件名" + photo.getName());
@@ -42,10 +46,19 @@ public class FileUploadController {
         //把文件大小转换成可阅读大小
         System.out.println(FileUtils.byteCountToDisplaySize(photo.getSize()));
 
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies){
+//            System.out.println(cookie);
+//        }
+
         if (!photo.isEmpty()){
+
+//            byte[] bytes = photo.getBytes();
+//            System.out.println(bytes);
 
             InputStream inputStream = photo.getInputStream();
             OutputStream outputStream = new FileOutputStream(new File("a:/temp/" + photo.getOriginalFilename()));
+//            outputStream.write(bytes);
             IOUtils.copy(inputStream,outputStream);
 
             outputStream.flush();
@@ -62,7 +75,7 @@ public class FileUploadController {
         }
          return "redirect:/upload";
     }
-
+    //@exceptionHandler用来处理指定异常发生时跳转的视图
     @ExceptionHandler(IOException.class)
     public String ioException(){
         return "error/500";

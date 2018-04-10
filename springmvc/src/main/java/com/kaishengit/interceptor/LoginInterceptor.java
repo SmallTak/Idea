@@ -12,7 +12,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String url = request.getRequestURI();
-        System.out.println(url);
+        //System.out.println(url);
         //对于静态资源的请求直接放行
         if(url.startsWith("/static") || url.equals("/favicon.ico")){
             return true;

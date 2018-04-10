@@ -27,9 +27,9 @@ public class CustomerController {
 
     @GetMapping("/new")
     public String saveCustomer() throws IOException {
-        if(1==1){
-            throw new IOException();
-        }
+//        if(1==1){
+//            throw new IOException();
+//        }
         return "/customer/new";
     }
 
@@ -45,9 +45,9 @@ public class CustomerController {
     public String showCustomer(@PathVariable Integer id, Model model){
         System.out.println("customerId:" + id);
 
-        if (id.equals(1024)){
-            throw new NotFoundException();
-        }
+//        if (id.equals(1024)){
+//            throw new NotFoundException();
+//        }
 
         model.addAttribute("customerId",id);
         return "/customer/show";

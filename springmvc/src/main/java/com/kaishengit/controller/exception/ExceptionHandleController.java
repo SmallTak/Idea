@@ -7,10 +7,9 @@ import java.io.IOException;
 
 @ControllerAdvice
 public class ExceptionHandleController {
-
-    @ExceptionHandler(IOException.class)
-    public String ioException(){
-        return "error/500";
-    }
-
+//
+//    @ExceptionHandler(IOException.class)
+//    public String ioException(){
+//        return "error/500";
+//    }
 }

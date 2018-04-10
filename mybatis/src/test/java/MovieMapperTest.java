@@ -29,9 +29,9 @@ public class MovieMapperTest {
     public void findAll(){
         List<Movie> movieList = movieMapper.findAll();
         for (Movie movie : movieList){
-            System.out.println(movie);
-        }
+        System.out.println(movie);
     }
+}
 
     @Test
     public void findByTitle(){
