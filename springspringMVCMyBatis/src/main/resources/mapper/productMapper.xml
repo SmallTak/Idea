@@ -30,6 +30,29 @@
         DELETE FROM product WHERE id = #{id}
     </delete>
 
+    <select id="findAllPageAndQueryParam" resultMap="productAndTypeMap">
+        SELECT * FROM product LEFT JOIN product_type ON product.type_id = product_type.id
+        <where>
+            <if test="productName != null and productName != ''">
+                product.product_name LIKE concat('%',#{productName},'%')
+            </if>
+            <if test="place != null and place != ''">
+                and product.place = #{place}
+            </if>
+            <if test="minPrice != null and mixPrice != ''">
+                and product.price >= #{minPrice}
+            </if>
+            <if test="maxPrice != null and maxPrice !=''">
+                and product.price &lt;=#{maxPrice}
+            </if>
+            <if test="typeId != null and typeId != ''">
+                and product.type_id = #{typeId}
+            </if>
+
+        </where>
+    </select>
+
+
     <select id="findAllWithPage" resultMap="productAndTypeMap">
         SELECT
             product.*, type_name,
@@ -42,6 +65,7 @@
     <resultMap id="productAndTypeMap" type="Product">
         <id column="id" property="id"/>
         <result column="product_name" property="productName"/>
+        <result column="place" property="place"/>
         <result column="price" property="price"/>
         <result column="market_price" property="marketPrice"/>
         <result column="comment_num" property="commentNum"/>

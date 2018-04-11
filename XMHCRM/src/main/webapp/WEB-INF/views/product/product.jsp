@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html>
 <head>
@@ -12,16 +13,19 @@
 <body>
 
    <div class="container">
-       <h3>${product.productName}</h3>
+       <h3>${customer.custName}</h3>
        <ul class="list-group">
            <li class="list-group-item">
-               价格：${product.price}
+               手机号：${customer.mobile}
            </li>
            <li class="list-group-item">
-               市场价格：${product.marketPrice}
+               上次来访时间:
+               <fmt:formatDate value="${customer.updateTime}"  pattern='yyyy年MM月dd日'></fmt:formatDate>
            </li>
            <li class="list-group-item">
-               产地：${product.place}
+               客户备注:
+               <<textarea class="form-control" onresize="true" name="custText" style="resize: none ">
+                   ${customer.custText}</textarea>
            </li>
            <li class="list-group-item">
                <a style="text-decoration:none" href="/product"><i class="fa fa-arrow-left"></i> 返回列表</a>

@@ -1,6 +1,7 @@
 package com.kaishengit.service;
 
 import com.github.pagehelper.PageInfo;
+import com.kaishengit.entity.Customer;
 import com.kaishengit.entity.Product;
 import com.kaishengit.entity.ProductType;
 
@@ -8,27 +9,21 @@ import java.util.List;
 import java.util.Map;
 
 
-public interface ProductService {
+public interface CustomerService {
     /**@Author 周云飞
      * @MethodDescription 根据id查找商品
      * @param id
      * @Date: 2018/4/10 12:42
      */
-    Product findById(Integer id);
+    Customer findById(Integer id);
 
-    /**@Author 周云飞
-     *
-     *查询所有的商品分类
-     * @Date: 2018/4/10 19:40
-     */
-    List<ProductType> findAllByType();
 
     /**@Author 周云飞
      * 保存商品
      * @param  * @param null
      * @Date: 2018/4/10 19:40
      */
-    void saveProduct(Product product);
+    void saveCustomer(Customer customer);
 
     /**@Author 周云飞
     *分页
@@ -52,11 +47,11 @@ public interface ProductService {
      *修改商品信息
      * @Date: 2018/4/10 23:24
      */
-    void updateProduct(Product product);
+    void updateProduct(Customer customer);
 
     /**@Author 周云飞
      *搜索商品分页
      * @Date: 2018/4/11 15:13
      */
-    PageInfo<Product> findAllPageAndQueryParam(Integer pageNo, Map<String, Object> queryParamMap);
+    PageInfo<Product> findAllPageAndQueryParam(Integer pageNo);
 }

@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
@@ -68,11 +71,27 @@ public class ProductController {
 
     }
     @GetMapping
-    public String listProduct(@RequestParam(defaultValue = "1",name = "p",required = false) Integer pageNo, Model model){
+    public String listProduct(@RequestParam(defaultValue = "1",name = "p",required = false) Integer pageNo, Model model,
+                              @RequestParam(required = false) String productName,
+                              @RequestParam(required = false) String place,
+                              @RequestParam(required = false) Float minPrice,
+                              @RequestParam(required = false) Float maxPrice,
+                              @RequestParam(required = false) Integer typeId
+                              ){
 
-        PageInfo<Product> productPageInfo = productService.findAllPage(pageNo);
+
+        //将搜索内容添加到map集合中
+        Map<String, Object> queryParamMap = new HashMap<>();
+        queryParamMap.put("productName", productName);
+        queryParamMap.put("place", place);
+        queryParamMap.put("minPrice", minPrice);
+        queryParamMap.put("maxPrice", maxPrice);
+        queryParamMap.put("typeId",typeId);
+
+        PageInfo<Product> productPageInfo = productService.findAllPageAndQueryParam(pageNo, queryParamMap);
 
         model.addAttribute("productPageInfo",productPageInfo);
+        model.addAttribute("typeList",productService.findAllByType());
         return "product/list";
     }
 

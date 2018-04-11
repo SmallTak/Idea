@@ -2,28 +2,26 @@ package com.kaishengit.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kaishengit.entity.Customer;
 import com.kaishengit.entity.Product;
 import com.kaishengit.entity.ProductType;
-import com.kaishengit.mapper.ProductMapper;
-import com.kaishengit.mapper.ProductTypeMapper;
-import com.kaishengit.service.ProductService;
+import com.kaishengit.mapper.CustomerMapper;
+import com.kaishengit.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class CustomerServiceImpl implements CustomerService {
 
-    private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private ProductTypeMapper productTypeMapper;
+    private CustomerMapper productMapper;
 
     /**
      * @param id
@@ -32,18 +30,10 @@ public class ProductServiceImpl implements ProductService {
      * @Date: 2018/4/10 12:42
      */
     @Override
-    public Product findById(Integer id) {
+    public Customer findById(Integer id) {
         return productMapper.findById(id);
     }
 
-    /**@Author 周云飞
-     *查询所有的商品分类
-     * @Date: 2018/4/10 19:40
-     */
-    @Override
-    public List<ProductType> findAllByType() {
-        return productTypeMapper.findAll();
-    }
 
     /**@Author 周云飞
      * 保存商品
@@ -51,10 +41,10 @@ public class ProductServiceImpl implements ProductService {
      * @Date: 2018/4/10 19:40
      */
     @Override
-    public void saveProduct(Product product) {
-        product.setCommentNum(Product.DEFAULT_COMMENT_NUM);
-        productMapper.saveProduct(product);
-        logger.info("保存商品 {}",product);
+    public void saveCustomer(Customer customer) {
+        customer.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        productMapper.saveCustomer(customer);
+        logger.info("保存商品 {}",customer);
     }
 
     /**
@@ -76,9 +66,15 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<ProductType> findAllProductType() {
-
-        return productTypeMapper.findAll();
+        return null;
     }
+
+    /**
+     * @Author 周云飞
+     * 查找所有商品的类型
+     * @Date: 2018/4/10 22:29
+     */
+
 
     /**
      * @param id
@@ -89,10 +85,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delProduct(Integer id) {
 
-        Product product = productMapper.findById(id);
-        if (product != null){
+        Customer customer = productMapper.findById(id);
+        if (customer != null){
             productMapper.delProduct(id);
-            logger.info("删除商品 {}",product);
+            logger.info("删除商品 {}",customer);
         }
     }
 
@@ -102,23 +98,24 @@ public class ProductServiceImpl implements ProductService {
      * @Date: 2018/4/10 23:24
      */
     @Override
-    public void updateProduct(Product product) {
-        productMapper.updateProduct(product);
-        logger.info("修改商品{}",product);
+    public void updateProduct(Customer customer) {
+        customer.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        productMapper.updateProduct(customer);
+        logger.info("修改商品{}",customer);
     }
 
     /**
      * @param pageNo
-     * @param queryParamMap
+     * @param
      * @Author 周云飞
      * 搜索商品分页
      * @Date: 2018/4/11 15:13
      */
     @Override
-    public PageInfo<Product> findAllPageAndQueryParam(Integer pageNo, Map<String, Object> queryParamMap) {
+    public PageInfo<Product> findAllPageAndQueryParam(Integer pageNo) {
 
-        PageHelper.startPage(pageNo,15);
-        List<Product> productList = productMapper.findAllPageAndQueryParam(queryParamMap);
+        PageHelper.startPage(pageNo,1);
+        List<Product> productList = productMapper.findAllPageAndQueryParam();
         return new PageInfo<>(productList);
     }
 
