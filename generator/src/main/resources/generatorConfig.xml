@@ -2,6 +2,7 @@
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
 <generatorConfiguration>
     <!--加载数据库驱动-->
     <classPathEntry location="F:/kaishengitjar/mysql-connector-java-5.1.6.jar"/>
@@ -29,5 +30,6 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.kaishengit.mapper" targetProject="src/main/java"/>
 
         <table tableName="movie" domainObjectName="Movie" />
+        <table tableName="t_user" domainObjectName="User"/>
     </context>
 </generatorConfiguration>
