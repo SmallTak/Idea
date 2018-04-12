@@ -15,8 +15,8 @@
         <module>./tms-commons</module>
         <module>./tms-service</module>
         <module>./tms-service-impl</module>
-        <module>./tms-manager-web</module>
-        <module>./tms-finance-web</module>
+       <!-- <module>./tms-manager-web</module>
+        <module>./tms-finance-web</module>-->
     </modules>
 
 
@@ -122,6 +122,18 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>23.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.25</version>
             </dependency>
 
         </dependencies>
