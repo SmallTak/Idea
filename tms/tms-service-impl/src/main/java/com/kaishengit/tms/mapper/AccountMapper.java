@@ -3,6 +3,7 @@ package com.kaishengit.tms.mapper;
 import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.entity.AccountExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface AccountMapper {
@@ -27,4 +28,6 @@ public interface AccountMapper {
     int updateByPrimaryKeySelective(Account record);
 
     int updateByPrimaryKey(Account record);
+
+    List<Account> findAllAccountWithRolesByQueryParam(Map<String, Object> objectMap);
 }

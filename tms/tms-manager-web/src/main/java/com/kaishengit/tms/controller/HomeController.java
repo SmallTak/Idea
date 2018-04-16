@@ -3,13 +3,16 @@ package com.kaishengit.tms.controller;
 import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.AccountService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -24,7 +27,15 @@ public class HomeController {
     private AccountService accountService;
 
     @GetMapping("/")
-    public String index(){
+    public String index(HttpServletRequest req, RedirectAttributes redirectAttributes){
+
+//        Cookie[] cookies = req.getCookies();
+//        for(Cookie cookie : cookies) {
+//            if("username".equals(cookie.getName())) {
+//                redirectAttributes.addFlashAttribute("account",cookie.getValue());
+//            }
+//        }
+
         return "index";
     }
 
@@ -34,6 +45,7 @@ public class HomeController {
                         String remember,
                         HttpServletRequest request,
                         HttpSession session,
+                        HttpServletResponse response,
                         RedirectAttributes redirectAttributes){
 
         //获得用户登录的ip
@@ -44,7 +56,27 @@ public class HomeController {
             session.setAttribute("account", account);
 
             //cookie
-            
+            if(StringUtils.isNotEmpty(remember)) {
+                Cookie cookie = new Cookie("username",accountMobile);
+                cookie.setDomain("localhost");
+                cookie.setPath("/");
+                cookie.setMaxAge(60 * 60 * 24 * 30);
+                cookie.setHttpOnly(true);
+
+                response.addCookie(cookie);
+            } else {
+                Cookie[] cookies = request.getCookies();
+                for(Cookie cookie : cookies) {
+                    if("username".equals(cookie.getName())) {
+                        cookie.setDomain("localhost");
+                        cookie.setPath("/");
+                        cookie.setMaxAge(0);
+
+                        response.addCookie(cookie);
+                    }
+                }
+            }
+            redirectAttributes.addFlashAttribute("account",account);
 
             //跳转到home页面
             return "redirect:/home";
@@ -55,6 +87,19 @@ public class HomeController {
             return "redirect:/";
         }
 
+    }
+
+    @GetMapping("/logout")
+    public String logOut(HttpServletRequest req){
+        req.getSession().invalidate();
+
+//        Cookie[] cookies = req.getCookies();
+//        for(Cookie cookie : cookies) {
+//            if("username".equals(cookie.getName())) {
+//                req.setAttribute("username", cookie.getValue());
+//            }
+//        }
+        return "redirect:/";
     }
 
     /**

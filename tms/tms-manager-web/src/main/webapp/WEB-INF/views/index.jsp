@@ -27,6 +27,12 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        .bo{
+            display: inline;
+        }
+    </style>
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -45,26 +51,27 @@
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" name="password" placeholder="密码">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <span class="glyphicon glyphicon-log-in  form-control-feedback"></span>
             </div>
             <div class="row">
                 <div class="col-xs-8">
-                    <div class="checkbox icheckbox">
+                    <div class="checkbox">
                         <label>
                             <input type="checkbox"  name="remember"
-                            <c:if test="${not empty username}"> checked</c:if>
+                            <c:if test="${not empty phone}"> checked</c:if>
                                    value="remember" id="remember"> 记住密码
                         </label>
 
                     </div>
                 </div>
                 <!-- /.col -->
-                <div class="form-group has-feedback col-xs-4 left">
-                    <button class="btn btn-default btn-block btn-flat">忘记密码</button>
-                </div>
+                <%--<div class="bo form-group has-feedback col-xs-4 left">--%>
+                    <%--<button class="btn btn-default btn-block btn-flat" style="float: left">忘记密码</button>--%>
+                <%--</div>--%>
 
-                <div class="form-group has-feedback col-xs-4 ">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">进入系统</button>
+                <div class="bo form-group has-feedback col-xs-4 ">
+
+                    <button type="submit" class="btn btn-primary" style="float: right">进入系统</button>
                 </div>
                 <!-- /.col -->
             </div>

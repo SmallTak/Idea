@@ -2,6 +2,7 @@ package com.kaishengit.tms.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统登录账号实体类
@@ -50,7 +51,24 @@ public class Account implements Serializable {
      */
     private String accountState;
 
+    private List<Roles> rolesList;
+
     private static final long serialVersionUID = 1L;
+
+
+
+    public List<Roles> getRolesList() {
+        return rolesList;
+    }
+
+    public void setRolesList(List<Roles> rolesList) {
+        this.rolesList = rolesList;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
 
     public Integer getId() {
         return id;

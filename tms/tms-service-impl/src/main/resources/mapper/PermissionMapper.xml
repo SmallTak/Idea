@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kaishengit.tms.mapper.AccountMapper">
-  <resultMap id="BaseResultMap" type="com.kaishengit.tms.entity.Account">
+<mapper namespace="com.kaishengit.tms.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.kaishengit.tms.entity.Permission">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
-    <result column="account_mobile" jdbcType="VARCHAR" property="accountMobile" />
-    <result column="account_password" jdbcType="VARCHAR" property="accountPassword" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
+    <result column="permission_type" jdbcType="VARCHAR" property="permissionType" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="account_state" jdbcType="VARCHAR" property="accountState" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +70,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account_name, account_mobile, account_password, create_time, update_time, account_state
+    id, permission_name, permission_code, permission_type, parent_id, create_time, update_time, 
+    url
   </sql>
-  <select id="selectByExample" parameterType="com.kaishengit.tms.entity.AccountExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.kaishengit.tms.entity.PermissionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from account
+    from permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,41 +90,44 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from account
+    from permission
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from account
+    delete from permission
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.kaishengit.tms.entity.AccountExample">
-    delete from account
+  <delete id="deleteByExample" parameterType="com.kaishengit.tms.entity.PermissionExample">
+    delete from permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.kaishengit.tms.entity.Account">
-    insert into account (id, account_name, account_mobile, 
-      account_password, create_time, update_time, 
-      account_state)
-    values (#{id,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, #{accountMobile,jdbcType=VARCHAR}, 
-      #{accountPassword,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{accountState,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.kaishengit.tms.entity.Permission">
+    insert into permission (id, permission_name, permission_code, 
+      permission_type, parent_id, create_time, 
+      update_time, url)
+    values (#{id,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR}, #{permissionCode,jdbcType=VARCHAR}, 
+      #{permissionType,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.Account" useGeneratedKeys="true" keyProperty="id">
-    insert into account
+  <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.Permission">
+    insert into permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="accountName != null">
-        account_name,
+      <if test="permissionName != null">
+        permission_name,
       </if>
-      <if test="accountMobile != null">
-        account_mobile,
+      <if test="permissionCode != null">
+        permission_code,
       </if>
-      <if test="accountPassword != null">
-        account_password,
+      <if test="permissionType != null">
+        permission_type,
+      </if>
+      <if test="parentId != null">
+        parent_id,
       </if>
       <if test="createTime != null">
         create_time,
@@ -130,22 +135,25 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="accountState != null">
-        account_state,
+      <if test="url != null">
+        url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="accountName != null">
-        #{accountName,jdbcType=VARCHAR},
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
       </if>
-      <if test="accountMobile != null">
-        #{accountMobile,jdbcType=VARCHAR},
+      <if test="permissionCode != null">
+        #{permissionCode,jdbcType=VARCHAR},
       </if>
-      <if test="accountPassword != null">
-        #{accountPassword,jdbcType=VARCHAR},
+      <if test="permissionType != null">
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -153,31 +161,34 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="accountState != null">
-        #{accountState,jdbcType=VARCHAR},
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.kaishengit.tms.entity.AccountExample" resultType="java.lang.Long">
-    select count(*) from account
+  <select id="countByExample" parameterType="com.kaishengit.tms.entity.PermissionExample" resultType="java.lang.Long">
+    select count(*) from permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update account
+    update permission
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.accountName != null">
-        account_name = #{record.accountName,jdbcType=VARCHAR},
+      <if test="record.permissionName != null">
+        permission_name = #{record.permissionName,jdbcType=VARCHAR},
       </if>
-      <if test="record.accountMobile != null">
-        account_mobile = #{record.accountMobile,jdbcType=VARCHAR},
+      <if test="record.permissionCode != null">
+        permission_code = #{record.permissionCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.accountPassword != null">
-        account_password = #{record.accountPassword,jdbcType=VARCHAR},
+      <if test="record.permissionType != null">
+        permission_type = #{record.permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -185,8 +196,8 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.accountState != null">
-        account_state = #{record.accountState,jdbcType=VARCHAR},
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -194,29 +205,33 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update account
+    update permission
     set id = #{record.id,jdbcType=INTEGER},
-      account_name = #{record.accountName,jdbcType=VARCHAR},
-      account_mobile = #{record.accountMobile,jdbcType=VARCHAR},
-      account_password = #{record.accountPassword,jdbcType=VARCHAR},
+      permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      permission_code = #{record.permissionCode,jdbcType=VARCHAR},
+      permission_type = #{record.permissionType,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      account_state = #{record.accountState,jdbcType=VARCHAR}
+      url = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.tms.entity.Account">
-    update account
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.tms.entity.Permission">
+    update permission
     <set>
-      <if test="accountName != null">
-        account_name = #{accountName,jdbcType=VARCHAR},
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
       </if>
-      <if test="accountMobile != null">
-        account_mobile = #{accountMobile,jdbcType=VARCHAR},
+      <if test="permissionCode != null">
+        permission_code = #{permissionCode,jdbcType=VARCHAR},
       </if>
-      <if test="accountPassword != null">
-        account_password = #{accountPassword,jdbcType=VARCHAR},
+      <if test="permissionType != null">
+        permission_type = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -224,73 +239,21 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="accountState != null">
-        account_state = #{accountState,jdbcType=VARCHAR},
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.kaishengit.tms.entity.Account">
-    update account
-    set account_name = #{accountName,jdbcType=VARCHAR},
-      account_mobile = #{accountMobile,jdbcType=VARCHAR},
-      account_password = #{accountPassword,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.kaishengit.tms.entity.Permission">
+    update permission
+    set permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_code = #{permissionCode,jdbcType=VARCHAR},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      account_state = #{accountState,jdbcType=VARCHAR}
+      url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="findAllAccountWithRolesByQueryParam" resultMap="accountWithRolesMap">
-    SELECT
-      account.*, roles.id AS rolesId,
-      roles.roles_code,
-      roles.roles_name,
-                 roles.create_time AS rolesCreateTime,
-                 roles.update_time AS rolesUpdateTime
-    FROM
-      account
-      LEFT JOIN account_roles ON account.id = account_roles.account_id
-      LEFT JOIN roles ON roles.id = account_roles.roles_id
-    <choose>
-      <when test="rolesId != null and rolesId != 0">
-        inner JOIN (
-        SELECT
-        id
-        FROM
-        account
-        INNER JOIN account_roles ON account_roles.account_id = account.id
-        <where>
-          account_roles.roles_id = #{rolesId}
-          <if test="nameMobile != null and nameMobile != ''">
-            and( (account.account_name like concat('%',#{nameMobile},'%'))
-            or
-            (account.account_mobile like concat('%',#{nameMobile},'%')))
-          </if>
-        </where>
-        ) AS temp ON account.id = temp.id
-      </when>
-      <otherwise>
-        <where>
-          <if test="nameMobile != null and nameMobile != ''">
-            (account.account_name like concat('%',#{nameMobile},'%'))
-            or
-            (account.account_mobile like concat('%',#{nameMobile},'%'))
-          </if>
-        </where>
-      </otherwise>
-    </choose>
-    order by account.id desc
-  </select>
-
-  <resultMap id="accountWithRolesMap" type="Account" extends="BaseResultMap">
-    <collection property="rolesList" ofType="Roles">
-      <id property="id" column="rolesId"/>
-      <result property="updateTime" column="update_time"/>
-      <result property="createTime" column="create_time"/>
-      <result property="rolesCode" column="roles_code"/>
-      <result property="rolesName" column="roles_name"/>
-    </collection>
-  </resultMap>
-  
 </mapper>
