@@ -21,9 +21,8 @@
         </c:if>
 
         <div class="well-sm">
-            <button id="settings" class="btn btn-default btn-sm pull-right">个人设置</button>
+            <button id="settings" class="btn btn-default btn-sm pull-right">退出登录</button>
             <form class="form-inline form-group-sm  pull-left">
-
                 <input type="text" name="mobile" class="form-control" placeholder="客户手机号" value="${param.mobile}"/>
                 <button class="btn btn-default btn-sm ">搜索</button>
             </form>
@@ -94,7 +93,7 @@
             });
 
             $("#settings").click(function () {
-                window.location.href="/account/edit";
+                window.location.href="/account/logout";
             });
         })
 

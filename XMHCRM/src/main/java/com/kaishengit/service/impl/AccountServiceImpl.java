@@ -1,28 +1,27 @@
 package com.kaishengit.service.impl;
 
-import com.kaishengit.entity.Account;
-import com.kaishengit.entity.Customer;
-import com.kaishengit.mapper.AccountMapper;
+import com.kaishengit.entity.TAccount;
+import com.kaishengit.entity.TAccountExample;
+import com.kaishengit.mapper.TAccountMapper;
 import com.kaishengit.service.AccountService;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    private AccountMapper accountMapper;
+    private TAccountMapper tAccountMapper;
 
     @Override
-    public Account findByMobile(String mobile, String password) {
-        return accountMapper.findByMobile(mobile);
+    public List<TAccount> findByMobile(String mobile, String password) {
+       TAccountExample tAccountExample = new TAccountExample();
+       tAccountExample.createCriteria().andMobileEqualTo(mobile);
+        return tAccountMapper.selectByExample(tAccountExample);
 
     }
 
-    @Override
-    public void updateAccount(Customer customer) {
-        accountMapper.updateAccount();
-    }
 }

@@ -24,7 +24,7 @@
            </li>
            <li class="list-group-item">
                客户备注:
-               <<textarea class="form-control" onresize="true" name="custText" style="resize: none ">
+               <textarea class="form-control" onresize="true" name="custText" style="resize: none ">
                    ${customer.custText}</textarea>
            </li>
            <li class="list-group-item">

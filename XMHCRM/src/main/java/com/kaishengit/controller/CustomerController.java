@@ -69,10 +69,11 @@ public class CustomerController {
                               @RequestParam(required = false) String mobile
                               ){
 
+
         Map<String,Object> queryParamMap = new HashMap<>();
         queryParamMap.put("mobile", mobile);
 
-        PageInfo<Product> productPageInfo = customerService.findAllPageAndQueryParam(pageNo);
+        PageInfo<Product> productPageInfo = customerService.findAllPageAndQueryParam(pageNo,queryParamMap);
 
         model.addAttribute("productPageInfo",productPageInfo);
         return "product/list";

@@ -53,5 +53,7 @@ public interface CustomerService {
      *搜索商品分页
      * @Date: 2018/4/11 15:13
      */
-    PageInfo<Product> findAllPageAndQueryParam(Integer pageNo);
+    PageInfo<Product> findAllPageAndQueryParam(Integer pageNo,Map<String,Object> queryParamMap);
+
+
 }

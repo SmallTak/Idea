@@ -51,7 +51,7 @@ public class MovieExampleCaseText {
     public void findListOr(){
         MovieExample example = new MovieExample();
 
-        example.createCriteria().andDirectorLike("%大%");
+        example.createCriteria().andDirectorLike("%大%").;
         //查看2017~2018之间评分再大于等于9.6的影视
 //        example.or().andRateGreaterThanOrEqualTo(9.6f);
 //        example.or().andReleaseYearBetween("2017","2018");

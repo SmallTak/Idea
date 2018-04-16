@@ -20,6 +20,9 @@
         <a href="../../index2.html"><b>CRM</b></a>
     </div>
         <div class="login-box-body">
+            <c:if test="${not empty message}">
+                <div class="alert alert-danger">${message}</div>
+            </c:if>
             <p class="login-box-msg"></p>
             <div class="alert alert-danger" hidden id="message"></div>
                 <form id="loginForm" method="post" action="/account/login">
@@ -28,25 +31,12 @@
                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" id="password" name="password" value="" placeholder="密码">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码">
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"  name="remember"
-                                    <c:if test="${not empty username}"> checked</c:if>
-                                           value="remember" id="remember"> 记住账号
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-offset-8 col-xs-4">
-                            <button type="button" id="loginBtn" class="btn btn-primary btn-block btn-flat">登录</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
+
+                    <button type="button" id="loginBtn" class="btn btn-default btn-block btn-flat">登录</button>
+
                 </form>
 
         </div>
@@ -72,46 +62,6 @@
                 $("#loginForm").submit();
             });
 
-            /*$("#loginForm").validate({
-                errorClass : 'text-danger',
-                errorElement : 'span',
-                rules : {
-                    username :{
-                        "required" : true
-                    },
-                    password : {
-                        "required" : true
-                    }
-                },
-                messages :{
-                    username :{
-                        "required" : "请输入用户名"
-                    },
-                    password : {
-                        "required" : "请输入密码"
-                    }
-                },
-                submitHandler : function(form){
-                    $.ajax({
-                        url:'/login',
-                        type:'post',
-                        data:$("#loginForm").serialize(),
-                        beforeSend : function(){
-                            $("#loginBtn").text("登录中...").attr("disabled","disabled");
-                        },
-                        success : function(data){
-                           window.location.href = "/account/home";
-                        },
-                        error : function(){
-                            alert("系统异常");
-                        },
-                        complete : function(){
-                            $("#loginBtn").text("登录").removeAttr("disabled");
-                        }
-                    });
-                }
-
-            });*/
         })
     </script>
 

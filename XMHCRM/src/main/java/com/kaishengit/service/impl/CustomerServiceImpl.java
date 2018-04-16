@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -48,16 +49,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
+     * @param pageNo
      * @Author 周云飞
      * 分页
      * @Date: 2018/4/10 19:51
      */
     @Override
     public PageInfo<Product> findAllPage(Integer pageNo) {
-        PageHelper.startPage(pageNo,15);
-        List<Product> withPage = productMapper.findAllWithPage();
-        return new PageInfo<>(withPage);
+        return null;
     }
+
 
     /**
      * @Author 周云飞
@@ -112,12 +113,14 @@ public class CustomerServiceImpl implements CustomerService {
      * @Date: 2018/4/11 15:13
      */
     @Override
-    public PageInfo<Product> findAllPageAndQueryParam(Integer pageNo) {
+    public PageInfo<Product> findAllPageAndQueryParam(Integer pageNo, Map<String,Object> queryParamMap) {
 
-        PageHelper.startPage(pageNo,1);
-        List<Product> productList = productMapper.findAllPageAndQueryParam();
+        PageHelper.startPage(pageNo,8);
+        List<Product> productList = productMapper.findAllPageAndQueryParam(queryParamMap);
         return new PageInfo<>(productList);
     }
+
+
 
 
 }

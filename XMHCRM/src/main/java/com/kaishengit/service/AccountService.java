@@ -1,13 +1,13 @@
 package com.kaishengit.service;
 
-import com.kaishengit.entity.Account;
-import com.kaishengit.entity.Customer;
-import com.kaishengit.mapper.AccountMapper;
+import com.kaishengit.entity.TAccount;
+
+import java.util.List;
 
 public interface AccountService {
 
 
-    Account findByMobile(String mobile, String password);
+    List<TAccount> findByMobile(String mobile, String password);
 
-    void updateAccount(Customer customer);
+
 }

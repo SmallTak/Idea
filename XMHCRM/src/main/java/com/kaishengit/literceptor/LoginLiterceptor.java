@@ -1,6 +1,5 @@
 package com.kaishengit.literceptor;
 
-import com.kaishengit.entity.Account;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,10 @@ public class LoginLiterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String uri = request.getRequestURI();
-        if (uri.startsWith("/static") || uri.equals("/favicon.ico") || uri.startsWith("/account/")){
+        if (uri.startsWith("/static") || uri.equals("/favicon.ico") || uri.startsWith("/account")){
+            return true;
+        }
+        if(uri.equals("") || uri.equals("/")){
             return true;
         }
 

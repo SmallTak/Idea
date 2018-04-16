@@ -22,15 +22,14 @@
         values (#{custName},#{mobile},#{custText},#{createTime},#{updateTime})
     </insert>
 
-    <select id="findAll" resultType="com.kaishengit.entity.Product">
-        select * from product order by id desc
-    </select>
 
     <delete id="delProduct">
         DELETE FROM t_customer WHERE id = #{id}
     </delete>
 
-    <select id="findAllPageAndQueryParam" resultType="Customer">
+
+
+    <select id="findAllPageAndQueryParam" resultType="com.kaishengit.entity.Product">
         SELECT * FROM t_customer
         <where>
             <if test="mobile != null and mobile != ''">
