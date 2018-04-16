@@ -243,15 +243,15 @@
 
   <select id="findAllAccountWithRolesByQueryParam" resultMap="accountWithRolesMap">
     SELECT
-      account.*, roles.id AS rolesId,
-      roles.roles_code,
-      roles.roles_name,
-                 roles.create_time AS rolesCreateTime,
-                 roles.update_time AS rolesUpdateTime
+    account.*, roles.id AS rolesId,
+    roles.roles_code,
+    roles.roles_name,
+    roles.create_time AS rolesCreateTime,
+    roles.update_time AS rolesUpdateTime
     FROM
-      account
-      LEFT JOIN account_roles ON account.id = account_roles.account_id
-      LEFT JOIN roles ON roles.id = account_roles.roles_id
+    account
+    LEFT JOIN account_roles ON account.id = account_roles.account_id
+    LEFT JOIN roles ON roles.id = account_roles.roles_id
     <choose>
       <when test="rolesId != null and rolesId != 0">
         inner JOIN (

@@ -260,7 +260,9 @@
     
   </resultMap>
 
-
+<select id="findRoleByAccountId" resultType="com.kaishengit.tms.entity.Roles">
+   SELECT * FROM roles WHERE id IN (SELECT roles_id FROM account_roles WHERE account_id = #{accountId})
+</select>
 
  <!-- <mapper namespace="com.kaishengit.mapper.StudentMapper">
 

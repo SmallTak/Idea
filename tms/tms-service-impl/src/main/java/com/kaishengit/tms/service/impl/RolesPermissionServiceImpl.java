@@ -255,6 +255,19 @@ public class RolesPermissionServiceImpl implements RolesPermissionService{
 
     }
 
+    /**
+     * 根据账户id查找当前账户拥有的角色
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/4/16 22:27
+     */
+    @Override
+    public List<Roles> findRolesByAccountId(Integer id) {
+        List<Roles> rolesList = rolesMapper.findRoleByAccountId(id);
+        return rolesList;
+    }
+
 
     private void treeList(List<Permission> permissionList, List<Permission> resList, int i) {
         //Collections2.filter()从一个集合里面筛选出符合条件的元素

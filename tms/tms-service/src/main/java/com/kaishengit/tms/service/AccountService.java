@@ -34,4 +34,18 @@ public interface AccountService {
      * @Date: 2018/4/16 21:09
      */
     List<Account> findAllAccountWithRolesByQueryParam(Map<String, Object> objectMap);
+
+    /**
+     * 根据id查找账户
+     * @Author Reich
+     * @Date: 2018/4/16 22:21
+     */
+    Account findByAccountId(Integer id);
+
+    /**更新账户
+     *
+     * @Author Reich
+     * @Date: 2018/4/16 22:55
+     */
+    void updateAccount(Account account, Integer[] rolesIds);
 }

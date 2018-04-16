@@ -96,4 +96,11 @@ public interface RolesPermissionService {
      * @Date: 2018/4/16 18:35
      */
     void updateRolesAndPermission(Roles roles, Integer[] permissionId);
+
+    /**
+     * 根据账户id查找当前账户拥有的角色
+     * @Author Reich
+     * @Date: 2018/4/16 22:27
+     */
+    List<Roles> findRolesByAccountId(Integer id);
 }
