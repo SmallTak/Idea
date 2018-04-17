@@ -88,10 +88,12 @@
 
 <%@include file="../../include/js.jsp"%>
 <script>
+
     $(function () {
         $("#saveBtn").click(function () {
             $(".saveForm").submit();
         });
+
     });
 </script>
 </body>

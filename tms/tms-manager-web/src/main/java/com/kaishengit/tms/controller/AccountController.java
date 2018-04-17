@@ -1,9 +1,10 @@
 package com.kaishengit.tms.controller;
 
-import com.google.common.collect.Maps;
-import com.kaishengit.tms.controller.Exception.NotFoundException;
+import com.kaishengit.tms.Exception.NotFoundException;
+import com.kaishengit.tms.dto.ResponseBean;
 import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.entity.Roles;
+import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.AccountService;
 import com.kaishengit.tms.service.RolesPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.management.relation.Role;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +59,7 @@ public class AccountController {
     }
 
     /**
-     * 新增角色
+     * 新增yonghu
      * @param
      * @return
      */
@@ -101,6 +101,18 @@ public class AccountController {
         accountService.updateAccount(account,rolesIds);
         redirectAttributes.addFlashAttribute("message","修改账号成功");
         return "redirect:/manage/account";
+    }
+
+    @GetMapping("/{id:\\d+}/del")
+    @ResponseBody
+    public ResponseBean delAccount(@PathVariable Integer id, Model model){
+        try {
+            accountService.delAccountById(id);
+            model.addAttribute("message","删除成功");
+            return ResponseBean.success();
+        }catch (ServiceException e){
+            return ResponseBean.error(e.getMessage());
+        }
     }
 
 

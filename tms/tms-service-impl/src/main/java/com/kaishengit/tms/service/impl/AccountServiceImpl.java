@@ -37,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRolesMapper accountRolesMapper;
 
+
     /**
      * @param accountMobile 登陆员工的账号
      * @param password      登陆员工密码
@@ -112,13 +113,14 @@ public class AccountServiceImpl implements AccountService {
         //设置账号默认状态
         account.setAccountState(Account.STATE_NORMAL);
         accountMapper.insertSelective(account);
-
         //添加用户和角色关系
-        for (Integer rolesId : rolesIds){
-            AccountRolesKey accountRolesKey = new AccountRolesKey();
-            accountRolesKey.setAccountId(account.getId());
-            accountRolesKey.setRolesId(rolesId);
-            accountRolesMapper.insert(accountRolesKey);
+        if (rolesIds != null){
+            for (Integer rolesId : rolesIds){
+                AccountRolesKey accountRolesKey = new AccountRolesKey();
+                accountRolesKey.setAccountId(account.getId());
+                accountRolesKey.setRolesId(rolesId);
+                accountRolesMapper.insertSelective(accountRolesKey);
+            }
         }
     }
 
@@ -180,6 +182,33 @@ public class AccountServiceImpl implements AccountService {
         }
 
         logger.info("修改账号 {}",account);
+    }
+
+    /**
+     * 根据账户id删除账户及角色引用关系
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/4/17 10:41
+     */
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void delAccountById(Integer id) {
+        //删除用户和角色的关联关系
+        AccountRolesExample accountRolesExample = new AccountRolesExample();
+        accountRolesExample.createCriteria().andAccountIdEqualTo(id);
+        accountRolesMapper.deleteByExample(accountRolesExample);
+
+        //删除用户和登录日志关联表
+        AccountLoginLogExample accountLoginLogExample = new AccountLoginLogExample();
+        accountLoginLogExample.createCriteria().andAccountIdEqualTo(id);
+        accountLoginLogMapper.deleteByExample(accountLoginLogExample);
+
+        Account account = accountMapper.selectByPrimaryKey(id);
+        //删除用户
+        accountMapper.deleteByPrimaryKey(id);
+        logger.info("删除用户{}",account);
+
     }
 
 

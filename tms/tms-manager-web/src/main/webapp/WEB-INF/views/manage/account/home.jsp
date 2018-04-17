@@ -93,7 +93,8 @@
                                     <fmt:formatDate value="${account.createTime}"/>
                                 </td>
                                 <td>
-                                    <a href="/manage/account/${account.id}/edit"><i class="fa fa-edit"></i></a>
+                                    <a href="/manage/account/${account.id}/edit">编辑</a>
+                                    <a class="delLink" rel="${account.id}" href="javascript:;">删除</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -109,5 +110,32 @@
 <!-- ./wrapper -->
 
 <%@include file="../../include/js.jsp"%>
+<script src="/static/plugins/layer/layer.js"></script>
+
+<script>
+
+    $(function(){
+        $(".delLink").click(function () {
+            var id = $(this).attr("rel");
+            layer.confirm("确定眼删除么？",function (index) {
+                layer.close(index);
+                $.get("/manage/account/"+id+"/del").done(function (result) {
+                    if (result.status == 'success'){
+                        history.go(0);
+                    }else{
+                        layer.msg(result.message);
+                    }
+                }).error(function () {
+                    layer.msg("服务器忙");
+                })
+            });
+
+        })
+    })
+
+</script>
+
 </body>
+
+
 </html>

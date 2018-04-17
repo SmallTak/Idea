@@ -48,4 +48,11 @@ public interface AccountService {
      * @Date: 2018/4/16 22:55
      */
     void updateAccount(Account account, Integer[] rolesIds);
+
+    /**
+     * 根据账户id删除账户及角色引用关系
+     * @Author Reich
+     * @Date: 2018/4/17 10:41
+     */
+    void delAccountById(Integer id);
 }
