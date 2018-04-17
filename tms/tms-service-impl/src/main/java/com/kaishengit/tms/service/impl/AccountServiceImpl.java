@@ -211,5 +211,37 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    /**
+     * 通过手机号查找用户
+     *
+     * @Author Reich
+     * @Date: 2018/4/17 19:10
+     */
+    @Override
+    public Account findAccountByMobile(String userMobile) {
+
+        AccountExample accountExample = new AccountExample();
+        accountExample.createCriteria().andAccountMobileEqualTo(userMobile);
+
+        List<Account> accountList = accountMapper.selectByExample(accountExample);
+        if (accountList != null){
+            return accountList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * 保存登录日志
+     *
+     * @param accountLoginLog
+     * @Author Reich
+     * @Date: 2018/4/17 19:15
+     */
+    @Override
+    public void saveAccountLoginLog(AccountLoginLog accountLoginLog) {
+
+        accountLoginLogMapper.insert(accountLoginLog);
+    }
+
 
 }

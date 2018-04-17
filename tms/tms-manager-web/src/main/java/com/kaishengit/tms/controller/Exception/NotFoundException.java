@@ -1,4 +1,4 @@
-package com.kaishengit.tms.Exception;
+package com.kaishengit.tms.controller.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

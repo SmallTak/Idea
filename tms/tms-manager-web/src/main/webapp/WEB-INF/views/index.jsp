@@ -57,9 +57,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"  name="remember"
-                            <c:if test="${not empty phone}"> checked</c:if>
-                                   value="remember" id="remember"> 记住密码
+                            <input type="checkbox"  name="rememberMe" value="true" > 记住密码
                         </label>
 
                     </div>

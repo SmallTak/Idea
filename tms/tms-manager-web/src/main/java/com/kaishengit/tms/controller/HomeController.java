@@ -3,7 +3,13 @@ package com.kaishengit.tms.controller;
 import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.AccountService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.Security;
 
 /**
  * 首页登录及登出的控制器
@@ -27,78 +34,60 @@ public class HomeController {
     private AccountService accountService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest req, RedirectAttributes redirectAttributes){
+    public String index(){
 
-//        Cookie[] cookies = req.getCookies();
-//        for(Cookie cookie : cookies) {
-//            if("username".equals(cookie.getName())) {
-//                redirectAttributes.addFlashAttribute("account",cookie.getValue());
-//            }
-//        }
+        Subject subject = SecurityUtils.getSubject();
+        System.out.println("isAuthenticated:" + subject.isAuthenticated());
+        System.out.println("isRemembered:" + subject.isRemembered());
+
+        if (subject.isRemembered()){
+            return "redirect:/home";
+        }
 
         return "index";
     }
 
+    /**登录系统
+     * 
+     * @Author Reich
+     * @Date: 2018/4/17 17:15  
+     */
     @PostMapping("/")
     public String login(String accountMobile,
                         String password,
-                        String remember,
+                        String rememberMe,
                         HttpServletRequest request,
-                        HttpSession session,
-                        HttpServletResponse response,
-                        RedirectAttributes redirectAttributes){
+                        RedirectAttributes redirectAttributes) {
 
-        //获得用户登录的ip
-        String accountIp = request.getRemoteAddr();
+        //创建subject对象
+        Subject subject = SecurityUtils.getSubject();
+        //获取登录ip
+        String requestIp = request.getRemoteAddr();
+
+        //根据账号密码进行登录
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(accountMobile, DigestUtils.md5Hex(password),rememberMe != null , requestIp);
+
         try {
-            Account account = accountService.login(accountMobile, password, accountIp);
-            //将登录成功后的用户放入到session
-            session.setAttribute("account", account);
+            subject.login(usernamePasswordToken);
 
-            //cookie
-            if(StringUtils.isNotEmpty(remember)) {
-                Cookie cookie = new Cookie("username",accountMobile);
-                cookie.setDomain("localhost");
-                cookie.setPath("/");
-                cookie.setMaxAge(60 * 60 * 24 * 30);
-                cookie.setHttpOnly(true);
-
-                response.addCookie(cookie);
-            } else {
-                Cookie[] cookies = request.getCookies();
-                for(Cookie cookie : cookies) {
-                    if("username".equals(cookie.getName())) {
-                        cookie.setDomain("localhost");
-                        cookie.setPath("/");
-                        cookie.setMaxAge(0);
-
-                        response.addCookie(cookie);
-                    }
-                }
+            //登录成功后跳转的目标(callback)
+            SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+            String url = "/home";
+            if (savedRequest != null){
+                url = savedRequest.getRequestUrl();
             }
-            redirectAttributes.addFlashAttribute("account",account);
 
-            //跳转到home页面
-            return "redirect:/home";
-
-        }catch (ServiceException e) {
-            redirectAttributes.addFlashAttribute("phone",accountMobile);
-            redirectAttributes.addFlashAttribute("message",e.getMessage());
-            return "redirect:/";
+            return "redirect:" + url;
+        }catch (UnknownAccountException | IncorrectCredentialsException e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message","账号密码不匹配");
+        }catch (LockedAccountException e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", "账号被锁定");
+        }catch (AuthenticationException e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", "账号密码不匹配");
         }
-
-    }
-
-    @GetMapping("/logout")
-    public String logOut(HttpServletRequest req){
-        req.getSession().invalidate();
-
-//        Cookie[] cookies = req.getCookies();
-//        for(Cookie cookie : cookies) {
-//            if("username".equals(cookie.getName())) {
-//                req.setAttribute("username", cookie.getValue());
-//            }
-//        }
         return "redirect:/";
     }
 

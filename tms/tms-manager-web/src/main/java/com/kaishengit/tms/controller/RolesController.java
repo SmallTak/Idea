@@ -1,7 +1,7 @@
 package com.kaishengit.tms.controller;
 
 import com.google.common.collect.Maps;
-import com.kaishengit.tms.Exception.NotFoundException;
+import com.kaishengit.tms.controller.Exception.NotFoundException;
 import com.kaishengit.tms.dto.ResponseBean;
 import com.kaishengit.tms.entity.Permission;
 import com.kaishengit.tms.entity.Roles;

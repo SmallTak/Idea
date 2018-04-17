@@ -241,12 +241,14 @@ public class RolesPermissionServiceImpl implements RolesPermissionService{
         rolesPrimissionExample.createCriteria().andRolesIdEqualTo(roles.getId());
 
         rolesPrimissionMapper.deleteByExample(rolesPrimissionExample);
-        for (Integer perId : permissionId){
-            //重新建立角色权限对应关系
-            RolesPrimissionKey rolesPrimissionKey = new RolesPrimissionKey();
-            rolesPrimissionKey.setRolesId(roles.getId());
-            rolesPrimissionKey.setPermissionId(perId);
-            rolesPrimissionMapper.insert(rolesPrimissionKey);
+        if (permissionId != null){
+            for (Integer perId : permissionId){
+                //重新建立角色权限对应关系
+                RolesPrimissionKey rolesPrimissionKey = new RolesPrimissionKey();
+                rolesPrimissionKey.setRolesId(roles.getId());
+                rolesPrimissionKey.setPermissionId(perId);
+                rolesPrimissionMapper.insertSelective(rolesPrimissionKey);
+            }
         }
         //修改角色对象
         rolesMapper.updateByPrimaryKeySelective(roles);
