@@ -7,7 +7,6 @@ import com.kaishengit.tms.entity.Roles;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.AccountService;
 import com.kaishengit.tms.service.RolesPermissionService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +38,7 @@ public class AccountController {
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put("nameMobile",nameMobile);
         objectMap.put("rolesId",rolesId);
+
         List<Account> accountList = accountService.findAllAccountWithRolesByQueryParam(objectMap);
 
         model.addAttribute("accountList", accountList);
@@ -52,7 +52,6 @@ public class AccountController {
      * @return
      */
     @GetMapping("/new")
-    @RequiresPermissions("account:add")
     public String newAccount(Model model) {
         //角色列表
         List<Roles> roleList = rolesPermissionService.findAllRoles();
@@ -66,7 +65,6 @@ public class AccountController {
      * @return
      */
     @PostMapping("/new")
-    @RequiresPermissions("account:add")
     public String newAccount(Account account, Integer[] rolesIds) {
         accountService.saveAccount(account,rolesIds);
         return "redirect:/manage/account";
@@ -78,7 +76,6 @@ public class AccountController {
      * @Date: 2018/4/16 22:20
      */
     @GetMapping("/{id:\\d+}/edit")
-    @RequiresPermissions("account:update")
     public String updateAccount(@PathVariable Integer id, Model model){
 
         Account account = accountService.findByAccountId(id);
@@ -101,7 +98,6 @@ public class AccountController {
      * @Date: 2018/4/16 22:53
      */
     @PostMapping("/{id:\\d+}/edit")
-    @RequiresPermissions("account:update")
     public String updateAccount(Account account, Integer[] rolesIds, RedirectAttributes redirectAttributes){
         accountService.updateAccount(account,rolesIds);
         redirectAttributes.addFlashAttribute("message","修改账号成功");
@@ -109,7 +105,6 @@ public class AccountController {
     }
 
     @GetMapping("/{id:\\d+}/del")
-    @RequiresPermissions("account:del")
     @ResponseBody
     public ResponseBean delAccount(@PathVariable Integer id, Model model){
         try {
@@ -120,6 +115,4 @@ public class AccountController {
             return ResponseBean.error(e.getMessage());
         }
     }
-
-
 }

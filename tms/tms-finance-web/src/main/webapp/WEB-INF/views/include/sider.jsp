@@ -9,19 +9,20 @@
         <!-- 菜单 -->
         <ul class="sidebar-menu">
             <li class="${param.menu == 'home' ? 'active' : ''}"><a href="/home"><i class="fa fa-home"></i> <span>首页</span></a></li>
-
-            <li class="header">系统功能</li>
-            <li class="${param.menu == 'ticket_store' ? 'active' : ''}"><a href="/ticketstore"><i class="fa fa-send"></i> <span>售票点管理</span></a></li>
-            <li class="header">系统管理</li>
-
-            <li class="${param.menu == 'manager_account' ? 'active' : ''}"><a href="/manage/account"><i class="fa fa-desktop"></i> <span>账号管理</span></a></li>
-
-        <%--<shiro:hasPermission name="roles:select">--%>
-            <li class="${param.menu == 'manager_roles' ? 'active' : ''}"><a href="/manage/roles"><i class="fa fa-desktop"></i> <span>角色管理</span></a></li>
-       <%-- </shiro:hasPermission>--%>
-       <%-- <shiro:hasPermission name="permission:select">--%>
-            <li class="${param.menu == 'manager_permission' ? 'active' : ''}"><a href="/manage/permission"><i class="fa fa-desktop"></i> <span>权限管理</span></a></li>
-        <%--</shiro:hasPermission>--%>
+            <shiro:hasRole name="store">
+                <li class="header">库存管理</li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>年票入库</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>年票下发</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>年票作废</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>盘点统计</span></a></li>
+            </shiro:hasRole>
+            <shiro:hasRole name="finance">
+                <li class="header">财务管理</li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>售票点缴费</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>景区结算</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>销售统计</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> <span>验票统计</span></a></li>
+            </shiro:hasRole>
 
 
             <%--<!-- 普通菜单 -->
@@ -53,8 +54,6 @@
                     <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                 </ul>
             </li>
-
-
             <!-- 多级菜单 -->
             <li class="treeview">
                 <a href="#">

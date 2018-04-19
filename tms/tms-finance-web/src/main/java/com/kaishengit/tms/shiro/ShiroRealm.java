@@ -1,17 +1,16 @@
 package com.kaishengit.tms.shiro;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.entity.AccountLoginLog;
 import com.kaishengit.tms.entity.Permission;
 import com.kaishengit.tms.entity.Roles;
 import com.kaishengit.tms.service.AccountService;
 import com.kaishengit.tms.service.RolesPermissionService;
+
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +35,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //获取当前登录对象
         Account account = (Account) principalCollection.getPrimaryPrincipal();
-        //获取当前对象拥有的角色
         List<Roles> rolesList = rolesPermissionService.findRolesByAccountId(account.getId());
 
         //获取当前对象拥有角色的权限
@@ -80,7 +77,7 @@ public class ShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         String userMobile = usernamePasswordToken.getUsername();
         if (userMobile != null){
-            Account account = accountService.findAccountByMobile(userMobile);
+           Account account = accountService.findAccountByMobile(userMobile);
             if (account == null){
                 throw new UnknownAccountException("找不到该账户" + userMobile);
             }else{

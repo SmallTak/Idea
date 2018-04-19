@@ -58,7 +58,7 @@
                 </section>
                 <div class="box-header">
                     <div class="box-tools">
-                        <shiro:hasPermission name="account:add">
+                        <shiro:hasPermission name="account:new">
                             <a href="/manage/account/new" class="btn btn-default btn-sm">
                                 <i class="fa fa-plus"></i> 新增账号
                             </a>
@@ -94,8 +94,12 @@
                                     <fmt:formatDate value="${account.createTime}"/>
                                 </td>
                                 <td>
-                                    <a href="/manage/account/${account.id}/edit">编辑</a>
-                                    <a class="delLink" rel="${account.id}" href="javascript:;">删除</a>
+                                    <shiro:hasPermission name="account:edit">
+                                        <a href="/manage/account/${account.id}/edit">编辑</a>
+                                        </shiro:hasPermission>
+                                    <shiro:hasPermission name="account:delete">
+                                        <a class="delLink" rel="${account.id}" href="javascript:;">删除</a>
+                                    </shiro:hasPermission>
                                 </td>
                             </tr>
                         </c:forEach>

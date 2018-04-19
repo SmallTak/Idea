@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @Author Reich
  * @Date: 2018/4/15 14:55
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)      //属性为null 不序列化，表值为null的不传到前传
+@JsonInclude(JsonInclude.Include.NON_NULL)      //属性为null的 不序列化，表值为null的不传到前端
 public class ResponseBean {
 
     private String status;

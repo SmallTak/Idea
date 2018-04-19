@@ -3,11 +3,8 @@ package com.kaishengit.tms.service;
 
 import com.kaishengit.tms.entity.Permission;
 import com.kaishengit.tms.entity.Roles;
-import com.kaishengit.tms.entity.RolesPrimissionExample;
-import com.kaishengit.tms.entity.RolesPrimissionKey;
 import com.kaishengit.tms.exception.ServiceException;
 
-import javax.management.relation.Role;
 import java.util.List;
 
 public interface RolesPermissionService {
@@ -103,4 +100,11 @@ public interface RolesPermissionService {
      * @Date: 2018/4/16 22:27
      */
     List<Roles> findRolesByAccountId(Integer id);
+
+    /**根据角色id查找权限
+     *
+     * @Author Reich
+     * @Date: 2018/4/18 10:22
+     */
+    List<Permission> findPermissionByRolesId(Integer id);
 }

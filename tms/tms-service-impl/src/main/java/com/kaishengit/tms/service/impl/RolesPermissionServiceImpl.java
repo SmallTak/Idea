@@ -71,13 +71,15 @@ public class RolesPermissionServiceImpl implements RolesPermissionService{
         rolesMapper.insertSelective(roles);
 
         //建立角色和权限的对应关系
-        for (Integer perId : permissionId) {
-            RolesPrimissionKey rolesPrimissionKey = new RolesPrimissionKey();
-            rolesPrimissionKey.setPermissionId(perId);
-            rolesPrimissionKey.setRolesId(roles.getId());
+       if (permissionId != null){
+           for (Integer perId : permissionId) {
+               RolesPrimissionKey rolesPrimissionKey = new RolesPrimissionKey();
+               rolesPrimissionKey.setPermissionId(perId);
+               rolesPrimissionKey.setRolesId(roles.getId());
 
-            rolesPrimissionMapper.insert(rolesPrimissionKey);
-        }
+               rolesPrimissionMapper.insert(rolesPrimissionKey);
+           }
+       }
         logger.info("保存角色 {}",roles);
 
     }
@@ -251,6 +253,7 @@ public class RolesPermissionServiceImpl implements RolesPermissionService{
             }
         }
         //修改角色对象
+        roles.setUpdateTime(new Date());
         rolesMapper.updateByPrimaryKeySelective(roles);
         logger.info("修改对象{}",roles);
 
@@ -268,6 +271,18 @@ public class RolesPermissionServiceImpl implements RolesPermissionService{
     public List<Roles> findRolesByAccountId(Integer id) {
         List<Roles> rolesList = rolesMapper.findRoleByAccountId(id);
         return rolesList;
+    }
+
+    /**
+     * 根据角色id查找权限
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/4/18 10:22
+     */
+    @Override
+    public List<Permission> findPermissionByRolesId(Integer id) {
+       return permissionMapper.findPermissionByRolesId(id);
     }
 
 

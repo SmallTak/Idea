@@ -5,6 +5,8 @@ import com.kaishengit.entity.Product;
 import com.kaishengit.entity.ProductType;
 import com.kaishengit.exception.NotFountException;
 import com.kaishengit.service.ProductService;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +58,11 @@ public class ProductController {
         System.out.println(product);
         redirectAttributes.addFlashAttribute("message","商品修改成功");
         return "redirect:/product";
+    }
+
+    @Test
+    public void tes(){
+        System.out.println(DigestUtils.md5Hex("123123"));
     }
 
     @GetMapping("/{id:\\d+}")

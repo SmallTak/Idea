@@ -36,7 +36,9 @@
                     <h2> 角色管理</h2>
                 </section>
                     <div class="box-tools">
-                        <a href="/manage/roles/new" class="btn btn-default btn-sm"><i class="fa fa-plus"> </i> 新增角色</a>
+                        <shiro:hasPermission name="roles:new">
+                            <a href="/manage/roles/new" class="btn btn-default btn-sm"><i class="fa fa-plus"> </i> 新增角色</a>
+                        </shiro:hasPermission>
                     </div>
                 </div>
                 <div class="box-body">
@@ -46,8 +48,12 @@
                                 <tr class="bg-gray-active">
                                     <td>角色名称：${roles.rolesName}
                                         <span class="pull-right">
-                                                <a href="/manage/roles/${roles.id}/edit">编辑</a>
-                                                <a class="delLink" rel="${roles.id}" href="javascript:;">删除</a>
+                                           <%--<shiro:hasPermission name="roles:edit">--%>
+                                               <a href="/manage/roles/${roles.id}/edit">编辑</a>
+                                           <%--</shiro:hasPermission>--%>
+                                            <shiro:hasPermission name="roles:delete">
+                                            <a class="delLink" rel="${roles.id}" href="javascript:;">删除</a>
+                                            </shiro:hasPermission>
                                         </span>
                                     </td>
                                 </tr>
@@ -82,7 +88,7 @@
             var id = $(this).attr("rel");
             layer.confirm("确定要删除么？",function (index) {
                 layer.close(index);
-                $.get("/manage/roles/"+id+"/del").done(function (result) {
+                $.get("/manage/roles/" + id + "/del").done(function (result) {
                     if (result.status == 'success'){
                         history.go(0);
                     }else {

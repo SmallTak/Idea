@@ -1,10 +1,7 @@
 package com.kaishengit.tms.controller;
 
-import com.kaishengit.tms.entity.Account;
-import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.AccountService;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -18,9 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.security.Security;
+
 
 /**
  * 首页登录及登出的控制器
@@ -37,9 +32,13 @@ public class HomeController {
     public String index(){
 
         Subject subject = SecurityUtils.getSubject();
-        System.out.println("isAuthenticated:" + subject.isAuthenticated());
-        System.out.println("isRemembered:" + subject.isRemembered());
 
+        //判断当前是否有已经认证的账号，如果有，则退出该账号
+        if(subject.isAuthenticated()) {
+            subject.logout();
+        }
+
+        //若当前为被记住（通过rememberMe认证），则直接跳转到登录成功页面 home
         if (subject.isRemembered()){
             return "redirect:/home";
         }
