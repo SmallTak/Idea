@@ -13,7 +13,6 @@
     <result column="stroe_manager_attachment" jdbcType="VARCHAR" property="stroeManagerAttachment" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="stroe_account_id" jdbcType="INTEGER" property="stroeAccountId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,8 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, stroe_name, stroe_manager, stroe_mobile, stroe_address, stroe_geo_longitude, 
-    stroe_geo_latitude, stroe_attachment, stroe_manager_attachment, create_time, update_time, 
-    stroe_account_id
+    stroe_geo_latitude, stroe_attachment, stroe_manager_attachment, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.kaishengit.tms.entity.TicketStroeExample" resultMap="BaseResultMap">
     select
@@ -90,14 +88,6 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
-    </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -120,13 +110,11 @@
     insert into ticket_stroe (id, stroe_name, stroe_manager, 
       stroe_mobile, stroe_address, stroe_geo_longitude, 
       stroe_geo_latitude, stroe_attachment, stroe_manager_attachment, 
-      create_time, update_time, stroe_account_id
-      )
+      create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{stroeName,jdbcType=VARCHAR}, #{stroeManager,jdbcType=VARCHAR}, 
       #{stroeMobile,jdbcType=VARCHAR}, #{stroeAddress,jdbcType=VARCHAR}, #{stroeGeoLongitude,jdbcType=VARCHAR}, 
       #{stroeGeoLatitude,jdbcType=VARCHAR}, #{stroeAttachment,jdbcType=VARCHAR}, #{stroeManagerAttachment,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{stroeAccountId,jdbcType=INTEGER}
-      )
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.TicketStroe">
     insert into ticket_stroe
@@ -164,9 +152,6 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="stroeAccountId != null">
-        stroe_account_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -201,9 +186,6 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="stroeAccountId != null">
-        #{stroeAccountId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -249,9 +231,6 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.stroeAccountId != null">
-        stroe_account_id = #{record.stroeAccountId,jdbcType=INTEGER},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -269,8 +248,7 @@
       stroe_attachment = #{record.stroeAttachment,jdbcType=VARCHAR},
       stroe_manager_attachment = #{record.stroeManagerAttachment,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      stroe_account_id = #{record.stroeAccountId,jdbcType=INTEGER}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -308,9 +286,6 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="stroeAccountId != null">
-        stroe_account_id = #{stroeAccountId,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -325,8 +300,7 @@
       stroe_attachment = #{stroeAttachment,jdbcType=VARCHAR},
       stroe_manager_attachment = #{stroeManagerAttachment,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      stroe_account_id = #{stroeAccountId,jdbcType=INTEGER}
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

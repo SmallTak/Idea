@@ -39,8 +39,6 @@ public class StroeAccount implements Serializable {
      */
     private String stroeState;
 
-    private Integer ticketStroeId;
-
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -91,11 +89,53 @@ public class StroeAccount implements Serializable {
         this.stroeState = stroeState;
     }
 
-    public Integer getTicketStroeId() {
-        return ticketStroeId;
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        StroeAccount other = (StroeAccount) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getStroeAccount() == null ? other.getStroeAccount() == null : this.getStroeAccount().equals(other.getStroeAccount()))
+            && (this.getStroePassword() == null ? other.getStroePassword() == null : this.getStroePassword().equals(other.getStroePassword()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getStroeState() == null ? other.getStroeState() == null : this.getStroeState().equals(other.getStroeState()));
     }
 
-    public void setTicketStroeId(Integer ticketStroeId) {
-        this.ticketStroeId = ticketStroeId;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getStroeAccount() == null) ? 0 : getStroeAccount().hashCode());
+        result = prime * result + ((getStroePassword() == null) ? 0 : getStroePassword().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getStroeState() == null) ? 0 : getStroeState().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", stroeAccount=").append(stroeAccount);
+        sb.append(", stroePassword=").append(stroePassword);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", stroeState=").append(stroeState);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

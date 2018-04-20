@@ -494,66 +494,6 @@ public class StroeAccountExample {
             addCriterion("stroe_state not between", value1, value2, "stroeState");
             return (Criteria) this;
         }
-
-        public Criteria andTicketStroeIdIsNull() {
-            addCriterion("ticket_stroe_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdIsNotNull() {
-            addCriterion("ticket_stroe_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdEqualTo(Integer value) {
-            addCriterion("ticket_stroe_id =", value, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdNotEqualTo(Integer value) {
-            addCriterion("ticket_stroe_id <>", value, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdGreaterThan(Integer value) {
-            addCriterion("ticket_stroe_id >", value, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ticket_stroe_id >=", value, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdLessThan(Integer value) {
-            addCriterion("ticket_stroe_id <", value, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdLessThanOrEqualTo(Integer value) {
-            addCriterion("ticket_stroe_id <=", value, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdIn(List<Integer> values) {
-            addCriterion("ticket_stroe_id in", values, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdNotIn(List<Integer> values) {
-            addCriterion("ticket_stroe_id not in", values, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdBetween(Integer value1, Integer value2) {
-            addCriterion("ticket_stroe_id between", value1, value2, "ticketStroeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketStroeIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("ticket_stroe_id not between", value1, value2, "ticketStroeId");
-            return (Criteria) this;
-        }
     }
 
     /**

@@ -34,6 +34,16 @@
         <!-- Main content -->
         <section class="content">
             <div class="box">
+
+                <div class="box-body">
+                    <form method="get" class="form-inline">
+                        <input type="text" name="stroeName" class="form-control" placeholder="售票点名称" value="${param.stroeName}">
+                        <input type="text" name="stroeMobile" class="form-control" placeholder="电话" value="${param.stroeMobile}">
+                        <input type="text" name="stroeManager" class="form-control" placeholder="联系人" value="${param.stroeManager}">
+                        <button class="btn btn-default">搜索</button>
+                    </form>
+                </div>
+
                 <div class="box-header">
                     <h3 class="box-title">销售点列表</h3>
                     <div class="box-tools">
@@ -56,44 +66,57 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <c:forEach items="${ticketStroeList}" var="ticketStroe">
-                                    <td>${ticketStroe.stroeName}</td>
+                            <c:forEach items="${pageInfo.list}" var="ticketStroe">
+                                <tr>
+                                    <td><a href="/ticketstore/${ticketStroe.id}">${ticketStroe.stroeName}</a></td>
                                     <td>${ticketStroe.stroeManager}</td>
                                     <td>${ticketStroe.stroeMobile}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                            <%--<shiro:hasPermission name="permission:edit">--%>
+                                   <%-- <td>
+                                            &lt;%&ndash;<shiro:hasPermission name="permission:edit">&ndash;%&gt;
                                         <a class="edit" href="javascript:;" rel="${ticketStroe.id}">修改</a>
-                                            <%--</shiro:hasPermission>--%>
-                                            <%--<shiro:hasPermission name="permission:delete">--%>
+                                            &lt;%&ndash;</shiro:hasPermission>&ndash;%&gt;
+                                            &lt;%&ndash;<shiro:hasPermission name="permission:delete">&ndash;%&gt;
                                         <a class="del" href="javascript:;" rel="${ticketStroe.id}">删除</a>
-                                            <%--</shiro:hasPermission>--%>
-                                    </td>
-                                </c:forEach>
-
-                            </tr>
+                                            &lt;%&ndash;</shiro:hasPermission>&ndash;%&gt;
+                                    </td>--%>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
+        <ul id="pagination-demo" class="pagination pull-right"></ul>
         <!-- /.content -->
     </div>
+
     <!-- /.content-wrapper -->
 </div>
 <!-- ./wrapper -->
 
 <%@include file="../include/js.jsp"%>
-<script type="text/javascript" src="/static/plugins/treegrid/js/jquery.treegrid.js"></script>
-<script type="text/javascript" src="/static/plugins/treegrid/js/jquery.treegrid.bootstrap3.js"></script>
-<script src="/static/plugins/layer/layer.js"></script>
+
+<script src="/static/bootstrap/js/jquery.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<%--分页插件若出问题修改为twbsPagination.min.js--%>
+<script src="/static/bootstrap/js/jquery.twbsPagination.js"></script>
+<script src="/static/bootstrap/js/layer.js"></script>
 
 <script>
 
     $(function () {
+
+        /*分页*/
+        $('#pagination-demo').twbsPagination({
+            totalPages: ${pageInfo.pages},
+            visiblePages: 10,
+            first:'首页',
+            last:'末页',
+            prev:'上一页',
+            next:'下一页',
+            href:"?stroeName="+encodeURIComponent('${param.stroeName}')+"&p={{number}}"
+        });
+
 
         $(".del").click(function () {
             var id = $(this).attr("rel");

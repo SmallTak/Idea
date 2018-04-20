@@ -1,8 +1,10 @@
 package com.kaishengit.tms.service;
 
+import com.kaishengit.tms.entity.StroeAccount;
 import com.kaishengit.tms.entity.TicketStroe;
-
+import com.github.pagehelper.PageInfo;
 import java.util.List;
+import java.util.Map;
 
 public interface TicketStoreService {
 
@@ -12,6 +14,7 @@ public interface TicketStoreService {
      * @Date: 2018/4/19 20:24
      */
     List<TicketStroe> findAllTicketStrop();
+
 
     /**根据代理人id删除代理人
      *
@@ -34,4 +37,25 @@ public interface TicketStoreService {
      * @Date: 2018/4/19 22:47
      */
     void updateTicketStroe(Integer id, TicketStroe ticketStroe);
+
+    /**搜索  分页
+     *
+     * @Author Reich
+     * @Date: 2018/4/20 10:22
+     */
+    PageInfo<TicketStroe> findAllTicketStropByPageNo(Integer pageNo, Map<String, Object> queryParam);
+
+    /**通过id查找stroeAccount对象
+     *
+     * @Author Reich
+     * @Date: 2018/4/20 12:21
+     */
+    StroeAccount findStroeAccountById(Integer id);
+
+    /**根据id禁用账号
+     *
+     * @Author Reich
+     * @Date: 2018/4/20 14:28
+     */
+    void prohibitedTicketStroeById(Integer id);
 }

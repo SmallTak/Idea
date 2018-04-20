@@ -113,18 +113,6 @@ public class HomeController {
         return "home";
     }
 
-    /**
-     * 安全退出
-     * @return
-     */
-    /*@GetMapping("/logout")
-    public String logout(RedirectAttributes redirectAttributes) {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        redirectAttributes.addFlashAttribute("message","你已安全退出系统");
-        return "redirect:/";
-    }*/
-
     @GetMapping("/401")
     public String unauthorizedUrl() {
         return "error/401";

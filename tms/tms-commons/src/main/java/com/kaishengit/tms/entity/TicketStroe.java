@@ -60,8 +60,6 @@ public class TicketStroe implements Serializable {
      */
     private Date updateTime;
 
-    private Integer stroeAccountId;
-
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -152,14 +150,6 @@ public class TicketStroe implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Integer getStroeAccountId() {
-        return stroeAccountId;
-    }
-
-    public void setStroeAccountId(Integer stroeAccountId) {
-        this.stroeAccountId = stroeAccountId;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -182,8 +172,7 @@ public class TicketStroe implements Serializable {
             && (this.getStroeAttachment() == null ? other.getStroeAttachment() == null : this.getStroeAttachment().equals(other.getStroeAttachment()))
             && (this.getStroeManagerAttachment() == null ? other.getStroeManagerAttachment() == null : this.getStroeManagerAttachment().equals(other.getStroeManagerAttachment()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getStroeAccountId() == null ? other.getStroeAccountId() == null : this.getStroeAccountId().equals(other.getStroeAccountId()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -201,7 +190,6 @@ public class TicketStroe implements Serializable {
         result = prime * result + ((getStroeManagerAttachment() == null) ? 0 : getStroeManagerAttachment().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getStroeAccountId() == null) ? 0 : getStroeAccountId().hashCode());
         return result;
     }
 
@@ -222,7 +210,6 @@ public class TicketStroe implements Serializable {
         sb.append(", stroeManagerAttachment=").append(stroeManagerAttachment);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", stroeAccountId=").append(stroeAccountId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

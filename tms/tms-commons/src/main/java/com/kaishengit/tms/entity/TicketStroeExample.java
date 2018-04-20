@@ -11,10 +11,6 @@ public class TicketStroeExample {
 
     protected List<Criteria> oredCriteria;
 
-    private Integer limit;
-
-    private Integer offset;
-
     public TicketStroeExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -66,22 +62,6 @@ public class TicketStroeExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public Integer getOffset() {
-        return offset;
     }
 
     protected abstract static class GeneratedCriteria {
@@ -862,66 +842,6 @@ public class TicketStroeExample {
 
         public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
             addCriterion("update_time not between", value1, value2, "updateTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdIsNull() {
-            addCriterion("stroe_account_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdIsNotNull() {
-            addCriterion("stroe_account_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdEqualTo(Integer value) {
-            addCriterion("stroe_account_id =", value, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdNotEqualTo(Integer value) {
-            addCriterion("stroe_account_id <>", value, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdGreaterThan(Integer value) {
-            addCriterion("stroe_account_id >", value, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("stroe_account_id >=", value, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdLessThan(Integer value) {
-            addCriterion("stroe_account_id <", value, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdLessThanOrEqualTo(Integer value) {
-            addCriterion("stroe_account_id <=", value, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdIn(List<Integer> values) {
-            addCriterion("stroe_account_id in", values, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdNotIn(List<Integer> values) {
-            addCriterion("stroe_account_id not in", values, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdBetween(Integer value1, Integer value2) {
-            addCriterion("stroe_account_id between", value1, value2, "stroeAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andStroeAccountIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("stroe_account_id not between", value1, value2, "stroeAccountId");
             return (Criteria) this;
         }
     }
