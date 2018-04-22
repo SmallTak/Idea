@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -60,19 +61,19 @@
                 <div class="box-body">
                     <table class="table">
                         <tbody>
-                        <tr>
+                        <tr style="color: #006600">
                             <td class="text-muted">售票点名称</td>
-                            <td style="color: #000033">${ticketStroe.stroeName}</td>
+                            <td >${ticketStroe.stroeName}</td>
                             <td class="text-muted">联系人</td>
-                            <td style="color: #000033">${ticketStroe.stroeManager}</td>
+                            <td >${ticketStroe.stroeManager}</td>
                             <td class="text-muted">联系电话</td>
-                            <td style="color: #000033">${ticketStroe.stroeMobile}</td>
+                            <td >${ticketStroe.stroeMobile}</td>
                         </tr>
-                        <tr>
+                        <tr style="color: #006600">
                             <td class="text-muted">地址</td>
-                            <td colspan="3" style="color: #000033">${ticketStroe.stroeAddress}</td>
+                            <td colspan="3" >${ticketStroe.stroeAddress}</td>
                             <td class="text-muted">创建时间</td>
-                            <td style="color: #000033"><fmt:formatDate value="${ticketStroe.createTime}"/></td>
+                            <td ><fmt:formatDate value="${ticketStroe.createTime}"/></td>
                         </tr>
                         </tbody>
                     </table>
@@ -82,18 +83,26 @@
                 <div class="box-header">
                     <h3 class="box-title">关联账号</h3>
                     <div class="box-tools">
-                        <a href="javascript:;" id="prohibited" rel="${ticketStroe.id}" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> 禁用账号</a>
+
+                        <c:choose>
+                            <c:when test="${stroeAccount.stroeState == '禁用'}">
+                                <a href="javascript:;" id="enable" rel="${ticketStroe.id}" class="btn btn-success btn-sm"><i class="fa fa-key"></i> 启用账户</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="javascript:;" hidden id="prohibited" rel="${ticketStroe.id}" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> 禁用账户</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
                 <div class="box-body">
                     <table class="table">
-                        <tr>
+                        <tr style="color: #006600">
                             <td class="text-muted">账号</td>
-                            <td style="color: #000033">${stroeAccount.stroeAccount}</td>
+                            <td >${stroeAccount.stroeAccount}</td>
                             <td class="text-muted">状态</td>
-                            <td style="color: #000033">${stroeAccount.stroeState}</td>
+                            <td >${stroeAccount.stroeState}</td>
                             <td class="text-muted">创建时间</td>
-                            <td style="color: #000033"><fmt:formatDate value="${stroeAccount.createTime}"/></td>
+                            <td><fmt:formatDate value="${stroeAccount.createTime}"/></td>
                         </tr>
                     </table>
                 </div>
@@ -102,20 +111,20 @@
                 <div class="box-header">
                     <h3 class="box-title">关联资质</h3>
                 </div>
-                <%--<div class="box-body">
+                <div class="box-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="photo">
-                                <img src="http://p7f6tjc1h.bkt.clouddn.com/${ticketStroe.storeManagerAttachment}-preview" alt="">
+                                <img src="http://p7iva9054.bkt.clouddn.com/${ticketStroe.stroeManagerAttachment}-save" alt="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="photo">
-                                <img src="http://p7f6tjc1h.bkt.clouddn.com/${ticketStroe.storeAttachment}-preview" alt="">
+                                <img src="http://p7iva9054.bkt.clouddn.com/${ticketStroe.stroeAttachment}-save" alt="">
                             </div>
                         </div>
                     </div>
-                </div>--%>
+                </div>
             </div>
         </section>
         <!-- /.content -->
@@ -145,13 +154,29 @@
             })
         })
         
+        $("#enable").click(function () {
+            var id = $(this).attr("rel");
+            layer.confirm("确定要启用么？",function (index) {
+                layer.close(index);
+                $.get("/ticketstore/"+id+"/prohibited").done(function (result) {
+                    if(result.status == 'success') {
+                        history.go(0);
+                    } else {
+                        layer.msg(result.message);
+                    }
+                }).error(function () {
+                    layer.msg("服务器忙");
+                });
+            })
+        })
+
         $("#prohibited").click(function () {
             var id = $(this).attr("rel");
             layer.confirm("确定要禁用么？",function (index) {
                 layer.close(index);
                 $.get("/ticketstore/"+id+"/prohibited").done(function (result) {
                     if(result.status == 'success') {
-                        history.back();
+                        history.go(0);
                     } else {
                         layer.msg(result.message);
                     }

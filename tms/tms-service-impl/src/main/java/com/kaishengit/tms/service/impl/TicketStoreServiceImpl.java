@@ -176,10 +176,46 @@ public class TicketStoreServiceImpl implements TicketStoreService {
         if (stroeAccount == null){
             throw new ServiceException("账户存在");
         }
-        stroeAccount.setUpdateTime(new Date());
-        stroeAccount.setStroeState(StroeAccount.ACCOUNT_STATE_DISABLE);
-        stroeAccountMapperp.updateByPrimaryKeySelective(stroeAccount);
-        logger.info("禁用账号{}",stroeAccount);
+        if (stroeAccount.getStroeState().equals(StroeAccount.ACCOUNT_STATE_NORMAL)){
+            stroeAccount.setUpdateTime(new Date());
+            stroeAccount.setStroeState(StroeAccount.ACCOUNT_STATE_DISABLE);
+            stroeAccountMapperp.updateByPrimaryKeySelective(stroeAccount);
+            logger.info("禁用账号{}",stroeAccount);
+        }else {
+            stroeAccount.setUpdateTime(new Date());
+            stroeAccount.setStroeState(StroeAccount.ACCOUNT_STATE_NORMAL);
+            stroeAccountMapperp.updateByPrimaryKeySelective(stroeAccount);
+            logger.info("启用账号{}",stroeAccount);
+        }
+
+    }
+
+    /**
+     * 新增代理营业执照和身份信息
+     *
+     * @param ticketStroe
+     * @Author Reich
+     * @Date: 2018/4/21 16:16
+     */
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void saveNewTicketStorp(TicketStroe ticketStroe) {
+
+        ticketStroe.setCreateTime(new Date());
+        ticketStroeMapper.insertSelective(ticketStroe);
+
+        //创建代理人账号
+        StroeAccount stroeAccount = new StroeAccount();
+        stroeAccount.setId(ticketStroe.getId());
+        stroeAccount.setStroeAccount(ticketStroe.getStroeMobile());
+
+        if (ticketStroe.getStroeMobile().length() <= 6){
+            stroeAccount.setStroePassword(DigestUtils.md5Hex(ticketStroe.getStroeMobile()));
+        }
+        stroeAccount.setStroePassword(DigestUtils.md5Hex(ticketStroe.getStroeMobile().substring(5)));
+        stroeAccount.setCreateTime(new Date());
+        stroeAccount.setStroeState(StroeAccount.ACCOUNT_STATE_NORMAL);
+        stroeAccountMapperp.insertSelective(stroeAccount);
 
     }
 

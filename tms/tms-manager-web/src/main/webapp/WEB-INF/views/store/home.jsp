@@ -33,6 +33,12 @@
 
         <!-- Main content -->
         <section class="content">
+            <div>
+                <c:if test="${not empty message}">
+                    <div class="alert alert-success">${message}</div>
+                </c:if>
+            </div>
+
             <div class="box">
 
                 <div class="box-body">
@@ -51,10 +57,6 @@
                     </div>
                 </div>
                 <div class="box-body">
-
-                    <c:if test="${not empty message}">
-                        <div class="alert alert-success">${message}</div>
-                    </c:if>
 
                     <table class="table">
                         <thead>

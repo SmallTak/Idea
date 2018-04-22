@@ -5,12 +5,15 @@ import com.kaishengit.tms.dto.ResponseBean;
 import com.kaishengit.tms.entity.StroeAccount;
 import com.kaishengit.tms.entity.TicketStroe;
 import com.kaishengit.tms.exception.ServiceException;
+import com.kaishengit.tms.fileStroe.QiNiuStroe;
 import com.kaishengit.tms.service.TicketStoreService;
+import com.qiniu.util.Auth;
 import com.sun.javafx.binding.StringFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +30,9 @@ public class TicketStroeController {
 
     @Autowired
     private TicketStoreService ticketStoreService;
+
+    @Autowired
+    private QiNiuStroe qiNiuStroe;
 
     //home
     @GetMapping
@@ -68,9 +74,25 @@ public class TicketStroeController {
      * @Date: 2018/4/19 22:14
      */
     @GetMapping("/new")
-    public String newSale(){
+    public String newSale(Model model){
+
+        String token = qiNiuStroe.getUploadToken();
+        model.addAttribute("token",token);
         return "/store/new";
     }
+
+    /**新增代理身份信息和营业执照
+     *
+     * @Author Reich
+     * @Date: 2018/4/21 14:27
+     */
+    @PostMapping("/new")
+    public String newSale(TicketStroe ticketStroe, RedirectAttributes redirectAttributes){
+        ticketStoreService.saveNewTicketStorp(ticketStroe);
+        redirectAttributes.addFlashAttribute("message","创建代理成功");
+        return "redirect:/ticketstore";
+    }
+
 
     /**根据id修改ticketStroe
      *
@@ -106,7 +128,7 @@ public class TicketStroeController {
         }
     }
 
-    /**禁用代理
+    /**禁用/启用 代理
      *
      * @Author Reich
      * @Date: 2018/4/20 14:24
@@ -124,6 +146,4 @@ public class TicketStroeController {
         }
 
     }
-
-
 }

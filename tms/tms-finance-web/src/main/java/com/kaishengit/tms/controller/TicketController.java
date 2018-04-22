@@ -3,7 +3,7 @@ package com.kaishengit.tms.controller;
 import com.kaishengit.tms.dto.ResponseBean;
 import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.entity.TicketInRecord;
-import com.kaishengit.tms.mapper.TicketInRecordMapper;
+import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.TicketService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -14,9 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**年票入库
@@ -67,6 +65,34 @@ public class TicketController {
         return "redirect:/ticket/storage";
      }
 
+     /**修改年票入库信息
+      *
+      * @Author Reich
+      * @Date: 2018/4/21 10:27
+      */
+     @GetMapping("/{id:\\d+}/edit")
+     public String editTicket(@PathVariable Integer id, Model model){
+         //入库时间
+         String dayTime = DateTime.now().toString("YYYY-MM-dd");
+         //回显年票入库信息
+         TicketInRecord ticketInRecord = ticketService.findTicketInRecord(id);
+         model.addAttribute("dayTime",dayTime);
+         model.addAttribute("ticketInRecord",ticketInRecord);
+         return "/ticket/storage/edit";
+     }
+
+    /**修改年票入库信息
+     *
+     * @Author Reich
+     * @Date: 2018/4/21 10:27
+     */
+     @PostMapping("/{id:\\d+}/edit")
+     public String editTicketInRecord(@PathVariable Integer id, TicketInRecord ticketInRecord, RedirectAttributes redirectAttributes){
+         ticketService.updateTicketInRecord(id,ticketInRecord);
+         return "";
+     }
+
+
      /**删除年票入库记录
       *
       * @Author Reich
@@ -74,10 +100,13 @@ public class TicketController {
       */
      @GetMapping("/{id:\\d+}/del")
      @ResponseBody
-     public String delTicket(@PathVariable Integer id){
-
-         ticketService.delTicketInRecordById(id);
-            return "";
+     public ResponseBean delTicket(@PathVariable Integer id){
+        try {
+            ticketService.delTicketInRecordById(id);
+            return ResponseBean.success();
+        }catch (ServiceException e){
+            return ResponseBean.error(e.getMessage());
+        }
      }
 
 }

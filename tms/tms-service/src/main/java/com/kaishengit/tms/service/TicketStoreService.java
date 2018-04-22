@@ -58,4 +58,11 @@ public interface TicketStoreService {
      * @Date: 2018/4/20 14:28
      */
     void prohibitedTicketStroeById(Integer id);
+
+    /**新增代理营业执照和身份信息
+     *
+     * @Author Reich
+     * @Date: 2018/4/21 16:16
+     */
+    void saveNewTicketStorp(TicketStroe ticketStroe);
 }

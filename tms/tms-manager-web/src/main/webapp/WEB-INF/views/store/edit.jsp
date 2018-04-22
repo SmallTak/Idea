@@ -74,7 +74,16 @@
                         </div>
                         <div class="box-footer">
                             <button class="btn btn-primary pull-right" id="saveBtn">保存</button>
+                        </div><div class="row">
+                        <div class="col-md-6">
+                            <div id="picker">选择联系人身份证照片</div>
+                            <div class="photo" id="userPhoto"></div>
                         </div>
+                        <div class="col-md-6">
+                            <div id="picker2">选择营业执照照片</div>
+                            <div class="photo" id="storePhoto"></div>
+                        </div>
+                    </div>
                     </form>
                 </div>
 
@@ -97,6 +106,108 @@
         $("#saveBtn").click(function () {
             $("#saveForm").submit();
         });
+
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: '/static/plugins/uploader/Uploader.swf',
+
+            // 文件接收服务端。
+            server: 'http://upload-z2.qiniup.com',
+            fileVar:'file',
+            formData:{
+                "token":"${token}"
+            },
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        //文件上传进度条
+        var index = -1;
+        uploader.on( 'uploadStart', function( file ) {
+            index = layer.load(1);
+        });
+
+        uploader.on( 'uploadSuccess', function( file ,response) {
+            $("#userPhoto").html("");
+            //获得七牛返回json对象中的key值
+            var fileName = response.key;
+            var $img = $("<img>").attr("src","http://p7ktaebxa.bkt.clouddn.com/"+fileName+"-save");
+            $img.appendTo($("#userPhoto"))
+
+            $("#storeManagerAttachment").val(fileName);
+            layer.msg("上传成功")
+
+        });
+
+        uploader.on( 'uploadError', function( file ) {
+            layer.msg("服务器繁忙");
+        });
+
+        uploader.on( 'uploadComplete', function( file ) {
+            layer.close(index);
+        });
+
+        var uploader2 = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: '/static/plugins/uploader/Uploader.swf',
+
+            // 文件接收服务端。
+            server: 'http://upload-z2.qiniup.com',
+            fileVar:'file',
+            formData:{
+                "token":"${token}"
+            },
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker2',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        //文件上传进度条
+        var index = -1;
+        uploader2.on( 'uploadStart', function( file ) {
+            index = layer.load(1);
+        });
+
+
+        uploader2.on( 'uploadSuccess', function( file, response ) {
+            $("#storePhoto").html("");
+            var stroreName = response.key;
+            var $img = $("<img>").attr("src","http://p7ktaebxa.bkt.clouddn.com/"+stroreName+"-save");
+            $img.appendTo("#storePhoto");
+            $("#storeAttachment").val(stroreName);
+            layer.msg("上传成功");
+
+        });
+
+        uploader2.on( 'uploadError', function( file ) {
+            layer.msg("服务器繁忙");
+        });
+
+        uploader2.on( 'uploadComplete', function( file ) {
+            layer.close(index);
+        });
+
     })
 
 </script>

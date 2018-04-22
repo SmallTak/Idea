@@ -3,7 +3,7 @@
 <mapper namespace="com.kaishengit.tms.mapper.TicketMapper">
   <resultMap id="BaseResultMap" type="com.kaishengit.tms.entity.Ticket">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="ticket_num" jdbcType="VARCHAR" property="ticketNum" />
+    <result column="ticket_num" jdbcType="INTEGER" property="ticketNum" />
     <result column="ticket_in_time" jdbcType="TIMESTAMP" property="ticketInTime" />
     <result column="ticket_state" jdbcType="VARCHAR" property="ticketState" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -111,21 +111,11 @@
       ticket_state, create_time, update_time, 
       ticket_out_time, stroe_account_id, ticket_validity_Start, 
       ticket_validity_end, customer_id)
-    values (#{id,jdbcType=INTEGER}, #{ticketNum,jdbcType=VARCHAR}, #{ticketInTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{ticketNum,jdbcType=INTEGER}, #{ticketInTime,jdbcType=TIMESTAMP}, 
       #{ticketState,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{ticketOutTime,jdbcType=VARCHAR}, #{stroeAccountId,jdbcType=INTEGER}, #{ticketValidityStart,jdbcType=VARCHAR}, 
       #{ticketValidityEnd,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER})
   </insert>
-
-  <insert id="batchInsert" parameterType="com.kaishengit.tms.entity.Ticket">
-    insert into ticket (ticket_num, ticket_in_time,
-    ticket_state, create_time) VALUES
-    <foreach collection="tickets" item="ticket" separator=",">
-      (#{ticket.ticketNum},#{ticket.ticketInTime},#{ticket.ticketState},#{ticket.createTime})
-    </foreach>
-
-  </insert>
-
   <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.Ticket">
     insert into ticket
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -168,7 +158,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="ticketNum != null">
-        #{ticketNum,jdbcType=VARCHAR},
+        #{ticketNum,jdbcType=INTEGER},
       </if>
       <if test="ticketInTime != null">
         #{ticketInTime,jdbcType=TIMESTAMP},
@@ -199,6 +189,16 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="batchInsert" parameterType="com.kaishengit.tms.entity.Ticket">
+    insert into ticket (ticket_num, ticket_in_time,
+    ticket_state, create_time) VALUES
+    <foreach collection="tickets" item="ticket" separator=",">
+      (#{ticket.ticketNum},#{ticket.ticketInTime},#{ticket.ticketState},#{ticket.createTime})
+    </foreach>
+
+  </insert>
+
   <select id="countByExample" parameterType="com.kaishengit.tms.entity.TicketExample" resultType="java.lang.Long">
     select count(*) from ticket
     <if test="_parameter != null">
@@ -212,7 +212,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.ticketNum != null">
-        ticket_num = #{record.ticketNum,jdbcType=VARCHAR},
+        ticket_num = #{record.ticketNum,jdbcType=INTEGER},
       </if>
       <if test="record.ticketInTime != null">
         ticket_in_time = #{record.ticketInTime,jdbcType=TIMESTAMP},
@@ -249,7 +249,7 @@
   <update id="updateByExample" parameterType="map">
     update ticket
     set id = #{record.id,jdbcType=INTEGER},
-      ticket_num = #{record.ticketNum,jdbcType=VARCHAR},
+      ticket_num = #{record.ticketNum,jdbcType=INTEGER},
       ticket_in_time = #{record.ticketInTime,jdbcType=TIMESTAMP},
       ticket_state = #{record.ticketState,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -267,7 +267,7 @@
     update ticket
     <set>
       <if test="ticketNum != null">
-        ticket_num = #{ticketNum,jdbcType=VARCHAR},
+        ticket_num = #{ticketNum,jdbcType=INTEGER},
       </if>
       <if test="ticketInTime != null">
         ticket_in_time = #{ticketInTime,jdbcType=TIMESTAMP},
@@ -301,7 +301,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.kaishengit.tms.entity.Ticket">
     update ticket
-    set ticket_num = #{ticketNum,jdbcType=VARCHAR},
+    set ticket_num = #{ticketNum,jdbcType=INTEGER},
       ticket_in_time = #{ticketInTime,jdbcType=TIMESTAMP},
       ticket_state = #{ticketState,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -314,18 +314,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--<resultMap id="ticketInRecord" type="com.kaishengit.tms.entity.Ticket" extends="BaseResultMap">-->
-    <!--<collection property="ticketInRecordList" ofType="TicketInRecord">-->
-      <!--<id column="id" property="id"/>-->
-      <!--<result column="create_time" property="createTime"/>-->
-      <!--<result column="update_time" property="updateTime"/>-->
-      <!--<result column="account_name" property="accountName"/>-->
-      <!--<result column="content" property="content"/>-->
-      <!--<result column="account_id" property="accountId"/>-->
-      <!--<result column="begin_ticket_num" property="beginTicketNum"/>-->
-      <!--<result column="end_ticket_num" property="endTicketNum"/>-->
-      <!--<result column="total_num" property="totalNum"/>-->
-    <!--</collection>-->
-  <!--</resultMap>-->
+  <update id="batchUpdate" parameterType="com.kaishengit.tms.entity.Ticket">
+
+    update ticket SET
+    <foreach collection="ticketList" item="ticket" separator=",">
+      (ticket_num, update_time) values (#{ticket.ticketNum},#{ticket.updateTime})
+    </foreach>
+  </update>
 
 </mapper>

@@ -22,19 +22,12 @@
     </jsp:include>
 
     <!-- =============================================== -->
-
-
-
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
-
-
-
         <!-- Content Header (Page header) -->
         <section class="content-header">
                <h2> 权限管理</h2>
         </section>
-
         <!-- Main content -->
         <section class="content">
             <div class="box">

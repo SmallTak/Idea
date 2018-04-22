@@ -29,4 +29,6 @@ public interface TicketMapper {
     int updateByPrimaryKey(Ticket record);
 
     void batchInsert(@Param("tickets") List<Ticket> tickets);
+
+    void batchUpdate(@Param("ticketList") List<Ticket> ticketList);
 }

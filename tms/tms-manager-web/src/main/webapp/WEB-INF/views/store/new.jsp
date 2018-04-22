@@ -54,23 +54,23 @@
             <div class="box">
                 <div class="box-body">
                     <form method="post" id="saveForm">
-                        <input type="hidden" id="storeManagerAttachment" name="storeManagerAttachment">
-                        <input type="hidden" id="storeAttachment" name="storeAttachment">
+                        <input type="hidden" id="storeManagerAttachment" name="stroeManagerAttachment">
+                        <input type="hidden" id="storeAttachment" name="stroeAttachment">
                         <div class="form-group">
                             <label>售票点名称</label>
-                            <input type="text" class="form-control" name="storeName">
+                            <input type="text" class="form-control" name="stroeName">
                         </div>
                         <div class="form-group">
                             <label>售票点地址</label>
-                            <input type="text" class="form-control" name="storeAddress">
+                            <input type="text" class="form-control" name="stroeAddress">
                         </div>
                         <div class="form-group">
                             <label>联系人</label>
-                            <input type="text" class="form-control" name="storeManager">
+                            <input type="text" class="form-control" name="stroeManager">
                         </div>
                         <div class="form-group">
                             <label>联系电话</label>
-                            <input type="text" class="form-control" name="storeTel">
+                            <input type="text" class="form-control" name="stroeMobile">
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -105,6 +105,10 @@
 
     $(function () {
 
+        $("#saveBtn").click(function () {
+            $("#saveForm").submit();
+        });
+
         var uploader = WebUploader.create({
 
             // 选完文件后，是否自动上传。
@@ -114,11 +118,10 @@
             swf: '/static/plugins/uploader/Uploader.swf',
 
             // 文件接收服务端。
-            server: 'http://webuploader.duapp.com/server/fileupload.php',                   //~~
-
+            server: 'http://upload-z2.qiniup.com',
             fileVar:'file',
             formData:{
-                "token":"${upToken}"
+                "token":"${token}"
             },
             // 选择文件的按钮。可选。
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -138,9 +141,15 @@
         });
 
 
-        uploader.on( 'uploadSuccess', function( file ) {
+        uploader.on( 'uploadSuccess', function( file ,response) {
             $("#userPhoto").html("");
+            //获得七牛返回json对象中的key值
+           var fileName = response.key;
+           var $img = $("<img>").attr("src","http://p7iva9054.bkt.clouddn.com/"+fileName+"-save");
+           $img.appendTo($("#userPhoto"))
 
+           $("#storeManagerAttachment").val(fileName);
+            layer.msg("上传成功")
 
         });
 
@@ -161,11 +170,10 @@
             swf: '/static/plugins/uploader/Uploader.swf',
 
             // 文件接收服务端。
-            server: 'http://webuploader.duapp.com/server/fileupload.php',                   //~~
-
+            server: 'http://upload-z2.qiniup.com',
             fileVar:'file',
             formData:{
-                "token":"${upToken}"
+                "token":"${token}"
             },
             // 选择文件的按钮。可选。
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -185,9 +193,13 @@
         });
 
 
-        uploader2.on( 'uploadSuccess', function( file ) {
-            $("#userPhoto").html("");
-
+        uploader2.on( 'uploadSuccess', function( file, response ) {
+            $("#storePhoto").html("");
+            var stroreName = response.key;
+            var $img = $("<img>").attr("src","http://p7iva9054.bkt.clouddn.com/"+stroreName+"-save");
+            $img.appendTo("#storePhoto");
+            $("#storeAttachment").val(stroreName);
+            layer.msg("上传成功");
 
         });
 
@@ -195,7 +207,7 @@
             layer.msg("服务器繁忙");
         });
 
-        uploader25.on( 'uploadComplete', function( file ) {
+        uploader2.on( 'uploadComplete', function( file ) {
             layer.close(index);
         });
 

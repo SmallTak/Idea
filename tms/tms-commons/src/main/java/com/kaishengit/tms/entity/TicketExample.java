@@ -175,62 +175,52 @@ public class TicketExample {
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumEqualTo(String value) {
+        public Criteria andTicketNumEqualTo(Integer value) {
             addCriterion("ticket_num =", value, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumNotEqualTo(String value) {
+        public Criteria andTicketNumNotEqualTo(Integer value) {
             addCriterion("ticket_num <>", value, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumGreaterThan(String value) {
+        public Criteria andTicketNumGreaterThan(Integer value) {
             addCriterion("ticket_num >", value, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumGreaterThanOrEqualTo(String value) {
+        public Criteria andTicketNumGreaterThanOrEqualTo(Integer value) {
             addCriterion("ticket_num >=", value, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumLessThan(String value) {
+        public Criteria andTicketNumLessThan(Integer value) {
             addCriterion("ticket_num <", value, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumLessThanOrEqualTo(String value) {
+        public Criteria andTicketNumLessThanOrEqualTo(Integer value) {
             addCriterion("ticket_num <=", value, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumLike(String value) {
-            addCriterion("ticket_num like", value, "ticketNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketNumNotLike(String value) {
-            addCriterion("ticket_num not like", value, "ticketNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketNumIn(List<String> values) {
+        public Criteria andTicketNumIn(List<Integer> values) {
             addCriterion("ticket_num in", values, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumNotIn(List<String> values) {
+        public Criteria andTicketNumNotIn(List<Integer> values) {
             addCriterion("ticket_num not in", values, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumBetween(String value1, String value2) {
+        public Criteria andTicketNumBetween(Integer value1, Integer value2) {
             addCriterion("ticket_num between", value1, value2, "ticketNum");
             return (Criteria) this;
         }
 
-        public Criteria andTicketNumNotBetween(String value1, String value2) {
+        public Criteria andTicketNumNotBetween(Integer value1, Integer value2) {
             addCriterion("ticket_num not between", value1, value2, "ticketNum");
             return (Criteria) this;
         }

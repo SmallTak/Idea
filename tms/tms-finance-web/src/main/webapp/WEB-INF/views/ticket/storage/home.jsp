@@ -65,6 +65,7 @@
                                     <td>${list.totalNum}</td>
                                     <td>${list.accountName}</td>
                                     <td>
+                                        <a class="edit" rel="${list.id}" href="javascript:;">编辑</a>
                                         <a class="delLink" rel="${list.id}" href="javascript:;">删除</a>
                                     </td>
                                 </tr>
@@ -86,6 +87,11 @@
    <script>
 
        $(function () {
+           $(".edit").click(function () {
+                var id = $(this).attr("rel");
+               window.location.href = "/ticket/storage/"+id+"/edit"
+           })
+
            $(".delLink").click(function () {
                var id = $(this).attr("rel");
                layer.confirm("确定眼删除么？",function (index) {
@@ -100,7 +106,6 @@
                        layer.msg("服务器忙");
                    })
                });
-
            })
        })
 

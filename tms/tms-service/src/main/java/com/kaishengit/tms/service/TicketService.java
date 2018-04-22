@@ -1,10 +1,10 @@
 package com.kaishengit.tms.service;
 
 import com.kaishengit.tms.entity.Account;
-import com.kaishengit.tms.entity.Ticket;
 import com.kaishengit.tms.entity.TicketInRecord;
 
 import java.util.List;
+import java.util.zip.Adler32;
 
 public interface TicketService {
 
@@ -28,4 +28,18 @@ public interface TicketService {
      * @Date: 2018/4/20 23:15
      */
     void delTicketInRecordById(Integer id);
+
+    /**年票入库信息回显
+     *
+     * @Author Reich
+     * @Date: 2018/4/21 10:32
+     */
+    TicketInRecord findTicketInRecord(Integer id);
+
+    /**修改年票入库信息
+     *
+     * @Author Reich
+     * @Date: 2018/4/21 10:49
+     */
+    void updateTicketInRecord(Integer id, TicketInRecord ticketInRecord);
 }

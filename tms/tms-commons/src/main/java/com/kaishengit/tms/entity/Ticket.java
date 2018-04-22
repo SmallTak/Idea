@@ -2,7 +2,6 @@ package com.kaishengit.tms.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * ticket
@@ -16,12 +15,13 @@ public class Ticket implements Serializable {
     public static final String TICKET_STATE_LOST = "已挂失";
     public static final String TICKET_STATE_OUT_DATE = "已过期";
 
+
     private Integer id;
 
     /**
      * 入库年票中数量
      */
-    private String ticketNum;
+    private Integer ticketNum;
 
     /**
      * 入库时间
@@ -75,11 +75,11 @@ public class Ticket implements Serializable {
         this.id = id;
     }
 
-    public String getTicketNum() {
+    public Integer getTicketNum() {
         return ticketNum;
     }
 
-    public void setTicketNum(String ticketNum) {
+    public void setTicketNum(Integer ticketNum) {
         this.ticketNum = ticketNum;
     }
 
