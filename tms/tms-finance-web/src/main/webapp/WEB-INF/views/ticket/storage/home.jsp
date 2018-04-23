@@ -36,11 +36,15 @@
         <!-- Main content -->
         <section class="content">
             <div class="box">
+                <c:if test="${not empty message}">
+                    <div class="alert alert-danger">${message}</div>
+                </c:if>
                 <div class="box-header">
                     <h3 class="box-title">入库列表</h3>
                     <div class="box-tools">
                         <a href="/ticket/storage/new" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> 新增入库</a>
                     </div>
+
                 </div>
                 <div class="box-body">
                     <table class="table">
@@ -65,7 +69,6 @@
                                     <td>${list.totalNum}</td>
                                     <td>${list.accountName}</td>
                                     <td>
-                                        <a class="edit" rel="${list.id}" href="javascript:;">编辑</a>
                                         <a class="delLink" rel="${list.id}" href="javascript:;">删除</a>
                                     </td>
                                 </tr>

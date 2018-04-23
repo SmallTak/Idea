@@ -1,16 +1,23 @@
 package com.kaishengit.tms.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kaishengit.tms.entity.*;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.mapper.TicketInRecordMapper;
 import com.kaishengit.tms.mapper.TicketMapper;
+import com.kaishengit.tms.mapper.TicketOutRecordMapper;
+import com.kaishengit.tms.mapper.TicketStroeMapper;
 import com.kaishengit.tms.service.TicketService;
+import com.kaishengit.tms.util.ShiroUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +34,15 @@ public class TicketServiceimpl implements TicketService {
     @Autowired
     private TicketInRecordMapper ticketInRecordMapper;
 
+    @Autowired
+    private TicketStroeMapper ticketStroeMapper;
+
+    @Autowired
+    private TicketOutRecordMapper ticketOutRecordMapper;
+
+    @Autowired
+    private ShiroUtil shiroUtil;
+
     /**
      * 年票入库
      *
@@ -35,13 +51,29 @@ public class TicketServiceimpl implements TicketService {
      */
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public void saveTicketInWarehouse(TicketInRecord ticketInRecord, Account account) {
+    public void saveTicketInWarehouse(TicketInRecord ticketInRecord, Account account) throws ServiceException {
 
         ticketInRecord.setCreateTime(new Date());
 
         //设置起始票号 和 结束票号
         BigInteger startNum = new BigInteger(ticketInRecord.getBeginTicketNum());
         BigInteger endNum = new BigInteger(ticketInRecord.getEndTicketNum());
+
+        if (startNum.compareTo(endNum) >= 0){
+            throw new ServiceException("起始票号必须小于截止票号");
+        }
+
+        //判断当前用户入库的年票区间在不在已入库的区间范围内
+        List<TicketInRecord> ticketInRecordList = ticketInRecordMapper.selectByExample(new TicketInRecordExample());
+        for (TicketInRecord ticket : ticketInRecordList){
+            //数据库中年票的起始和截至票号
+            BigInteger oldStart = new BigInteger(ticket.getBeginTicketNum());
+            BigInteger oldEnd = new BigInteger(ticket.getEndTicketNum());
+            boolean flag = (oldStart.compareTo(startNum) <= 0 && oldEnd.compareTo(endNum) >= 0)||(oldStart.compareTo(endNum) <= 0 && oldEnd.compareTo(endNum) >= 0);
+            if (flag){
+                throw new ServiceException("年票号区间重复，添加失败");
+            }
+        }
 
         //设置总入库数量
         BigInteger totalNum = endNum.subtract(startNum).add(new BigInteger(String.valueOf("1")));
@@ -91,22 +123,27 @@ public class TicketServiceimpl implements TicketService {
      */
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public void delTicketInRecordById(Integer id) {
+    public void delTicketInRecordById(Integer id) throws ServiceException  {
 
         TicketInRecord ticketInRecord = ticketInRecordMapper.selectByPrimaryKey(id);
-        if (ticketInRecord == null){
-            throw new ServiceException("参数异常");
+        if (ticketInRecord != null) {
+
+            //查找出该区间的年票list集合
+            TicketExample ticketExample = new TicketExample();
+            List<Ticket> byBeginNumAndEndNum = ticketMapper.findByBeginNumAndEndNum(ticketInRecord.getBeginTicketNum(), ticketInRecord.getEndTicketNum());
+            //判断该区间内有没有已经已下发的，若有则抛出异常
+            for (Ticket ticket : byBeginNumAndEndNum){
+                if (!ticket.getTicketState().equals(Ticket.TICKET_STATE_IN_STORE)){
+                    throw new ServiceException("该年票区间内有非已入库的年票，请核对后操作删除");
+                }
+            }
+
+            //根据ticketInRecord中的起始年票号查找ticket
+            ticketMapper.deleteByExample(ticketExample);
+            ticketInRecordMapper.deleteByPrimaryKey(id);
+
+            logger.info("删除入库记录{}", ticketInRecord);
         }
-
-        String s = ticketInRecord.getBeginTicketNum();
-
-        //根据ticketInRecord中的起始年票号查找ticket
-        TicketExample ticketExample = new TicketExample();
-        ticketExample.createCriteria().andTicketNumBetween(Integer.valueOf(ticketInRecord.getBeginTicketNum()),Integer.valueOf(ticketInRecord.getEndTicketNum()));
-        ticketMapper.deleteByExample(ticketExample);
-        ticketInRecordMapper.deleteByPrimaryKey(id);
-
-        logger.info("删除入库记录{}",ticketInRecord);
     }
 
     /**
@@ -155,6 +192,106 @@ public class TicketServiceimpl implements TicketService {
             ticketList.add(ticket);
         }
         ticketMapper.batchUpdate(ticketList);
+
+    }
+
+    /**
+     * 查询所有的年票代理点
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 11:05
+     */
+    @Override
+    public List<TicketStroe> findAllTikcetStroe() {
+        TicketStroeExample ticketStroeExample = new TicketStroeExample();
+        return ticketStroeMapper.selectByExample(ticketStroeExample);
+    }
+
+    /**
+     * 新增年票下发
+     *
+     * @param ticketOutRecord
+     * @Author Reich
+     * @Date: 2018/4/23 11:21
+     */
+    @Override
+    public void saveTicketOut(TicketOutRecord ticketOutRecord) throws ServiceException {
+
+        //根据下发年票的起始票号和截至票号来判断该区间内有没有已下发的
+        List<Ticket> ticketList = ticketMapper.findByBeginNumAndEndNum(ticketOutRecord.getBeginTicketNum(),ticketOutRecord.getEndTicketNum());
+        for (Ticket ticket : ticketList){
+            if (!Ticket.TICKET_STATE_IN_STORE.equals(ticket.getTicketState())){
+                throw new ServiceException("该区间内有已下发的年票，请重新选择");
+            }
+        }
+
+        
+
+        //获取当前年票下发的代理对象
+        TicketStroe ticketStroe = ticketStroeMapper.selectByPrimaryKey(ticketOutRecord.getTicketStoreAccountid());
+        ticketOutRecord.setTicketStoreAccountname(ticketStroe.getStroeName());
+
+        Account account = shiroUtil.getCurrAccount();
+
+        //获得总数量
+        int totalNum = ticketList.size();
+        //获得总价格
+        BigDecimal totalPrice = ticketOutRecord.getTicketPrice().multiply(new BigDecimal(totalNum));
+        //设置创建时间
+        ticketOutRecord.setCreateTime(new Date());
+        ticketOutRecord.setContent(ticketOutRecord.getBeginTicketNum()+ "~" +ticketOutRecord.getEndTicketNum());
+        ticketOutRecord.setOutAccountid(account.getId());
+        ticketOutRecord.setTicketOutAccountName(account.getAccountName());
+        ticketOutRecord.setTicketNum(totalNum);
+        ticketOutRecord.setTicketState(TicketOutRecord.STATE_NO_PAY);
+        ticketOutRecord.setTicketTotalPrice(totalPrice);
+
+        ticketOutRecordMapper.insertSelective(ticketOutRecord);
+        logger.info("新增年票下发记录：{}",ticketOutRecord);
+
+
+    }
+
+    /**
+     * 查出所有的出库记录
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 14:28
+     */
+    @Override
+    public PageInfo<TicketOutRecord> findAllTicketOutRecord(Integer pageNo) {
+
+        PageHelper.startPage(pageNo,10);
+
+        TicketOutRecordExample ticketOutRecordExample = new TicketOutRecordExample();
+        ticketOutRecordExample.setOrderByClause("id desc");
+
+        List<TicketOutRecord> ticketOutRecords = ticketOutRecordMapper.selectByExample(ticketOutRecordExample);
+        return new  PageInfo<>(ticketOutRecords) ;
+    }
+
+    /**
+     * 通过id删除年票下发记录
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/4/23 16:56
+     */
+    @Override
+    public void delTicketOutRecord(Integer id) throws ServiceException {
+
+        TicketOutRecord ticketOutRecord = ticketOutRecordMapper.selectByPrimaryKey(id);
+        if (ticketOutRecord == null){
+            throw new ServiceException("参数异常");
+        }
+
+//        List<Ticket> byBeginNumAndEndNum = ticketMapper.findByBeginNumAndEndNum(ticketOutRecord.getBeginTicketNum(), ticketOutRecord.getEndTicketNum());
+//
+//        for (Ticket ticket : byBeginNumAndEndNum){
+//            ticket.setTicketState(Ticket.TICKET_STATE_IN_STORE);
+//        }
+
+        ticketOutRecordMapper.deleteByPrimaryKey(id);
 
     }
 

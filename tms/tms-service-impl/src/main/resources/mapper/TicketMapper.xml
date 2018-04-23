@@ -205,7 +205,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="findByBeginNumAndEndNum" resultType="com.kaishengit.tms.entity.Ticket">
+
+      SELECT
+        *
+      FROM
+        ticket
+      WHERE
+        ticket_num >= CONVERT (#{beginNum}, UNSIGNED INT)
+      AND ticket_num &lt;= CONVERT (#{endNum}, UNSIGNED INT);
+
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update ticket
     <set>
       <if test="record.id != null">

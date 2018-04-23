@@ -1,7 +1,7 @@
 package com.kaishengit.tms.service;
 
-import com.kaishengit.tms.entity.Account;
-import com.kaishengit.tms.entity.TicketInRecord;
+import com.github.pagehelper.PageInfo;
+import com.kaishengit.tms.entity.*;
 
 import java.util.List;
 import java.util.zip.Adler32;
@@ -42,4 +42,32 @@ public interface TicketService {
      * @Date: 2018/4/21 10:49
      */
     void updateTicketInRecord(Integer id, TicketInRecord ticketInRecord);
+
+    /**查询所有的年票代理点
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 11:05
+     */
+    List<TicketStroe> findAllTikcetStroe();
+
+    /**新增年票下发
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 11:21
+     */
+    void saveTicketOut(TicketOutRecord ticketOutRecord);
+
+    /**查出所有的出库记录
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 14:28
+     */
+    PageInfo<TicketOutRecord> findAllTicketOutRecord(Integer pageNo);
+
+    /**通过id删除年票下发记录
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 16:56
+     */
+    void delTicketOutRecord(Integer id);
 }

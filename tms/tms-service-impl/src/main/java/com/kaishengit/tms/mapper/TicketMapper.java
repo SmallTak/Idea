@@ -31,4 +31,6 @@ public interface TicketMapper {
     void batchInsert(@Param("tickets") List<Ticket> tickets);
 
     void batchUpdate(@Param("ticketList") List<Ticket> ticketList);
+
+    List<Ticket> findByBeginNumAndEndNum(@Param("beginNum") String beginTicketNum, @Param("endNum") String endTicketNum);
 }

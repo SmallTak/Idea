@@ -1,18 +1,20 @@
 package com.kaishengit.tms.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.kaishengit.tms.dto.ResponseBean;
-import com.kaishengit.tms.entity.Account;
-import com.kaishengit.tms.entity.TicketInRecord;
+import com.kaishengit.tms.entity.*;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.service.TicketService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.misc.Cache;
 
 import java.util.List;
 
@@ -58,11 +60,17 @@ public class TicketController {
      @PostMapping("/new")
      public String newTicket(TicketInRecord ticketInRecord, RedirectAttributes redirectAttributes){
 
-        Subject subject = SecurityUtils.getSubject();
-        Account account = (Account) subject.getPrincipal();
-        ticketService.saveTicketInWarehouse(ticketInRecord, account);
-         redirectAttributes.addFlashAttribute("message","新增成功");
-        return "redirect:/ticket/storage";
+         try {
+             Subject subject = SecurityUtils.getSubject();
+             Account account = (Account) subject.getPrincipal();
+             ticketService.saveTicketInWarehouse(ticketInRecord, account);
+             redirectAttributes.addFlashAttribute("message","新增成功");
+             return "redirect:/ticket/storage";
+         } catch(ServiceException e){
+             redirectAttributes.addFlashAttribute("message",e.getMessage());
+             return "redirect:/ticket/storage";
+         }
+
      }
 
      /**修改年票入库信息
@@ -92,7 +100,6 @@ public class TicketController {
          return "";
      }
 
-
      /**删除年票入库记录
       *
       * @Author Reich
@@ -108,5 +115,74 @@ public class TicketController {
             return ResponseBean.error(e.getMessage());
         }
      }
+
+/** 年票下发
+ *
+ * @Author Reich
+ * @Date: 2018/4/23 11:05
+ */
+    @GetMapping("/ticketOut")
+    public String ticketOut(Model model,
+                            @RequestParam(name = "p",required = false, defaultValue = "1") Integer pageNo
+                            ){
+        PageInfo<TicketOutRecord> ticketOutRecordList = ticketService.findAllTicketOutRecord(pageNo);
+
+        model.addAttribute("ticketOutRecordList", ticketOutRecordList);
+         return "/ticket/ticketOut/home";
+    }
+
+    //年票下发
+//    @PostMapping("/ticketOut")
+//    public String ticketOut(Model model){
+//
+//         return "";
+//    }
+
+    /**新增年票下发
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 11:05
+     */
+    @GetMapping("/ticketOut/new")
+    public String newOutTicket(Model model){
+       //设置下发日期为服务端日期
+        String taday = DateTime.now().toString("YYYY-MM-dd");
+        //查询所有的代理点
+        List<TicketStroe> ticketStroeList = ticketService.findAllTikcetStroe();
+
+        model.addAttribute("taday", taday);
+        model.addAttribute("ticketStroeList", ticketStroeList);
+        return "/ticket/ticketOut/new";
+    }
+
+    /**新增年票下发
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 11:18
+     */
+    @PostMapping("/ticketOut/new")
+    public String newOutTicket(TicketOutRecord ticketOutRecord){
+        Subject subject = SecurityUtils.getSubject();
+        Account account = (Account) subject.getPrincipal();
+        ticketService.saveTicketOut(ticketOutRecord);
+        return "redirect:/ticket/storage/ticketOut";
+    }
+
+    /**取消年票下发
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 16:49
+     */
+    @GetMapping("/ticketOut/{id:\\d+}/del")
+    @ResponseBody
+    public ResponseBean delTicketOut(@PathVariable Integer id){
+
+        try {
+            ticketService.delTicketOutRecord(id);
+            return ResponseBean.success();
+        }catch (ServiceException e){
+            return ResponseBean.error(e.getMessage());
+        }
+    }
 
 }

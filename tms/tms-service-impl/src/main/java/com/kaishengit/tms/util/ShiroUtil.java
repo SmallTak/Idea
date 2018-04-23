@@ -11,8 +11,8 @@ public class ShiroUtil {
 
    public Account getCurrAccount(){
 
-       Subject subject = SecurityUtils.getSubject();
-       return (Account) subject.getPreviousPrincipals();
+        Subject subject = SecurityUtils.getSubject();
+        return (Account) subject.getPrincipal();
 
    }
 }

@@ -12,7 +12,7 @@
             <shiro:hasRole name="store">
                 <li class="header">库存管理</li>
                 <li><a href="/ticket/storage"><i class="fa fa-circle-o"></i> <span>年票入库</span></a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> <span>年票下发</span></a></li>
+                <li><a href="/ticket/storage/ticketOut"><i class="fa fa-circle-o"></i> <span>年票下发</span></a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> <span>年票作废</span></a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> <span>盘点统计</span></a></li>
             </shiro:hasRole>

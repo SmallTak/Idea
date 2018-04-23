@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.tms.mapper.TicketOutRecordMapper">
+  <resultMap id="BaseResultMap" type="com.kaishengit.tms.entity.TicketOutRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ticket_out_account_name" jdbcType="VARCHAR" property="ticketOutAccountName" />
+    <result column="finance_account_name" jdbcType="VARCHAR" property="financeAccountName" />
+    <result column="ticket_state" jdbcType="VARCHAR" property="ticketState" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="begin_ticket_num" jdbcType="VARCHAR" property="beginTicketNum" />
+    <result column="end_ticket_num" jdbcType="VARCHAR" property="endTicketNum" />
+    <result column="ticket_num" jdbcType="INTEGER" property="ticketNum" />
+    <result column="ticket_price" jdbcType="DECIMAL" property="ticketPrice" />
+    <result column="ticket_total_price" jdbcType="DECIMAL" property="ticketTotalPrice" />
+    <result column="ticket_store_accountName" jdbcType="VARCHAR" property="ticketStoreAccountname" />
+    <result column="ticket_store_accountId" jdbcType="INTEGER" property="ticketStoreAccountid" />
+    <result column="out_accountid" jdbcType="INTEGER" property="outAccountid" />
+    <result column="finance_accountId" jdbcType="INTEGER" property="financeAccountid" />
+    <result column="payment_method" jdbcType="VARCHAR" property="paymentMethod" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, ticket_out_account_name, finance_account_name, ticket_state, 
+    content, begin_ticket_num, end_ticket_num, ticket_num, ticket_price, ticket_total_price, 
+    ticket_store_accountName, ticket_store_accountId, out_accountid, finance_accountId, 
+    payment_method
+  </sql>
+  <select id="selectByExample" parameterType="com.kaishengit.tms.entity.TicketOutRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ticket_out_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ticket_out_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ticket_out_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kaishengit.tms.entity.TicketOutRecordExample">
+    delete from ticket_out_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kaishengit.tms.entity.TicketOutRecord">
+    insert into ticket_out_record (id, create_time, update_time, 
+      ticket_out_account_name, finance_account_name, 
+      ticket_state, content, begin_ticket_num, 
+      end_ticket_num, ticket_num, ticket_price, 
+      ticket_total_price, ticket_store_accountName, 
+      ticket_store_accountId, out_accountid, finance_accountId, 
+      payment_method)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{ticketOutAccountName,jdbcType=VARCHAR}, #{financeAccountName,jdbcType=VARCHAR}, 
+      #{ticketState,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{beginTicketNum,jdbcType=VARCHAR}, 
+      #{endTicketNum,jdbcType=VARCHAR}, #{ticketNum,jdbcType=INTEGER}, #{ticketPrice,jdbcType=DECIMAL}, 
+      #{ticketTotalPrice,jdbcType=DECIMAL}, #{ticketStoreAccountname,jdbcType=VARCHAR}, 
+      #{ticketStoreAccountid,jdbcType=INTEGER}, #{outAccountid,jdbcType=INTEGER}, #{financeAccountid,jdbcType=INTEGER}, 
+      #{paymentMethod,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.TicketOutRecord">
+    insert into ticket_out_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="ticketOutAccountName != null">
+        ticket_out_account_name,
+      </if>
+      <if test="financeAccountName != null">
+        finance_account_name,
+      </if>
+      <if test="ticketState != null">
+        ticket_state,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="beginTicketNum != null">
+        begin_ticket_num,
+      </if>
+      <if test="endTicketNum != null">
+        end_ticket_num,
+      </if>
+      <if test="ticketNum != null">
+        ticket_num,
+      </if>
+      <if test="ticketPrice != null">
+        ticket_price,
+      </if>
+      <if test="ticketTotalPrice != null">
+        ticket_total_price,
+      </if>
+      <if test="ticketStoreAccountname != null">
+        ticket_store_accountName,
+      </if>
+      <if test="ticketStoreAccountid != null">
+        ticket_store_accountId,
+      </if>
+      <if test="outAccountid != null">
+        out_accountid,
+      </if>
+      <if test="financeAccountid != null">
+        finance_accountId,
+      </if>
+      <if test="paymentMethod != null">
+        payment_method,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketOutAccountName != null">
+        #{ticketOutAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="financeAccountName != null">
+        #{financeAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketState != null">
+        #{ticketState,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTicketNum != null">
+        #{beginTicketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="endTicketNum != null">
+        #{endTicketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNum != null">
+        #{ticketNum,jdbcType=INTEGER},
+      </if>
+      <if test="ticketPrice != null">
+        #{ticketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ticketTotalPrice != null">
+        #{ticketTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ticketStoreAccountname != null">
+        #{ticketStoreAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketStoreAccountid != null">
+        #{ticketStoreAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="outAccountid != null">
+        #{outAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="financeAccountid != null">
+        #{financeAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="paymentMethod != null">
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kaishengit.tms.entity.TicketOutRecordExample" resultType="java.lang.Long">
+    select count(*) from ticket_out_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ticket_out_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ticketOutAccountName != null">
+        ticket_out_account_name = #{record.ticketOutAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.financeAccountName != null">
+        finance_account_name = #{record.financeAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketState != null">
+        ticket_state = #{record.ticketState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTicketNum != null">
+        begin_ticket_num = #{record.beginTicketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTicketNum != null">
+        end_ticket_num = #{record.endTicketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketNum != null">
+        ticket_num = #{record.ticketNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.ticketPrice != null">
+        ticket_price = #{record.ticketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ticketTotalPrice != null">
+        ticket_total_price = #{record.ticketTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ticketStoreAccountname != null">
+        ticket_store_accountName = #{record.ticketStoreAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketStoreAccountid != null">
+        ticket_store_accountId = #{record.ticketStoreAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="record.outAccountid != null">
+        out_accountid = #{record.outAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="record.financeAccountid != null">
+        finance_accountId = #{record.financeAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentMethod != null">
+        payment_method = #{record.paymentMethod,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ticket_out_record
+    set id = #{record.id,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      ticket_out_account_name = #{record.ticketOutAccountName,jdbcType=VARCHAR},
+      finance_account_name = #{record.financeAccountName,jdbcType=VARCHAR},
+      ticket_state = #{record.ticketState,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      begin_ticket_num = #{record.beginTicketNum,jdbcType=VARCHAR},
+      end_ticket_num = #{record.endTicketNum,jdbcType=VARCHAR},
+      ticket_num = #{record.ticketNum,jdbcType=INTEGER},
+      ticket_price = #{record.ticketPrice,jdbcType=DECIMAL},
+      ticket_total_price = #{record.ticketTotalPrice,jdbcType=DECIMAL},
+      ticket_store_accountName = #{record.ticketStoreAccountname,jdbcType=VARCHAR},
+      ticket_store_accountId = #{record.ticketStoreAccountid,jdbcType=INTEGER},
+      out_accountid = #{record.outAccountid,jdbcType=INTEGER},
+      finance_accountId = #{record.financeAccountid,jdbcType=INTEGER},
+      payment_method = #{record.paymentMethod,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.tms.entity.TicketOutRecord">
+    update ticket_out_record
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticketOutAccountName != null">
+        ticket_out_account_name = #{ticketOutAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="financeAccountName != null">
+        finance_account_name = #{financeAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketState != null">
+        ticket_state = #{ticketState,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTicketNum != null">
+        begin_ticket_num = #{beginTicketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="endTicketNum != null">
+        end_ticket_num = #{endTicketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNum != null">
+        ticket_num = #{ticketNum,jdbcType=INTEGER},
+      </if>
+      <if test="ticketPrice != null">
+        ticket_price = #{ticketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ticketTotalPrice != null">
+        ticket_total_price = #{ticketTotalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ticketStoreAccountname != null">
+        ticket_store_accountName = #{ticketStoreAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketStoreAccountid != null">
+        ticket_store_accountId = #{ticketStoreAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="outAccountid != null">
+        out_accountid = #{outAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="financeAccountid != null">
+        finance_accountId = #{financeAccountid,jdbcType=INTEGER},
+      </if>
+      <if test="paymentMethod != null">
+        payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kaishengit.tms.entity.TicketOutRecord">
+    update ticket_out_record
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      ticket_out_account_name = #{ticketOutAccountName,jdbcType=VARCHAR},
+      finance_account_name = #{financeAccountName,jdbcType=VARCHAR},
+      ticket_state = #{ticketState,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      begin_ticket_num = #{beginTicketNum,jdbcType=VARCHAR},
+      end_ticket_num = #{endTicketNum,jdbcType=VARCHAR},
+      ticket_num = #{ticketNum,jdbcType=INTEGER},
+      ticket_price = #{ticketPrice,jdbcType=DECIMAL},
+      ticket_total_price = #{ticketTotalPrice,jdbcType=DECIMAL},
+      ticket_store_accountName = #{ticketStoreAccountname,jdbcType=VARCHAR},
+      ticket_store_accountId = #{ticketStoreAccountid,jdbcType=INTEGER},
+      out_accountid = #{outAccountid,jdbcType=INTEGER},
+      finance_accountId = #{financeAccountid,jdbcType=INTEGER},
+      payment_method = #{paymentMethod,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
