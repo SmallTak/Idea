@@ -35,6 +35,9 @@
         <!-- Main content -->
         <section class="content">
             <div class="box">
+                <c:if test="${not empty message}">
+                    <div class="alert alert-danger">${message}</div>
+                </c:if>
                 <div class="box-header">
                     <h3 class="box-title">下发列表</h3>
                     <div class="box-tools">

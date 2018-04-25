@@ -17,16 +17,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 账号管理控制器
- * @author fankay
- */
+
 @Controller
 @RequestMapping("/manage/account")
 public class AccountController {
 
     @Autowired
     private RolesPermissionService rolesPermissionService;
+
     @Autowired
     private AccountService accountService;
 

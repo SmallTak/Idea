@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 /**七牛云存储类
  *
  * @Author Reich
- * @Date: 2018/4/20 14:10
- */
+ * @Date: 2018/4/20 14:10*/
+
 @Component
 public class QiNiuStroe {
 

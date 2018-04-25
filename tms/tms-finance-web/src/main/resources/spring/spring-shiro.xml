@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+
+    <!--自动扫描  spring可以自动去扫描base-pack下面或者子包下面的java文件，
+            如果扫描到有@Component @Controller@Service等这些注解的类，
+            则把这些类注册为bean-->
+    <context:component-scan base-package="com.kaishengit">
+        <!--排除controller和ControllerAdvice注解的类-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
 
     <!--0. 配置rememberMe-->
     <bean id="rememberCookie" class="org.apache.shiro.web.servlet.SimpleCookie">

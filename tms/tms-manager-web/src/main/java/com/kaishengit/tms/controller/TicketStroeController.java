@@ -7,8 +7,6 @@ import com.kaishengit.tms.entity.TicketStroe;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.fileStroe.QiNiuStroe;
 import com.kaishengit.tms.service.TicketStoreService;
-import com.qiniu.util.Auth;
-import com.sun.javafx.binding.StringFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +32,6 @@ public class TicketStroeController {
     @Autowired
     private QiNiuStroe qiNiuStroe;
 
-    //home
     @GetMapping
     public String home(Model model,
                        @RequestParam(required = false, defaultValue = "1") Integer pageNo,

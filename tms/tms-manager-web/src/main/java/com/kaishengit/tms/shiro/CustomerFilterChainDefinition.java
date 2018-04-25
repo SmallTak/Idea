@@ -8,7 +8,6 @@ import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -87,7 +86,6 @@ public class CustomerFilterChainDefinition {
         for(Map.Entry<String,String> entry : section.entrySet()) {
             defaultFilterChainManager.createChain(entry.getKey(),entry.getValue());
         }
-
     }
 
     public DefaultFilterChainManager getFilterChainManager() {

@@ -145,7 +145,7 @@
             $("#userPhoto").html("");
             //获得七牛返回json对象中的key值
            var fileName = response.key;
-           var $img = $("<img>").attr("src","http://p7iva9054.bkt.clouddn.com/"+fileName+"-save");
+           var $img = $("<img>").attr("src","http://p7ktaebxa.bkt.clouddn.com/"+fileName+"-save");
            $img.appendTo($("#userPhoto"))
 
            $("#storeManagerAttachment").val(fileName);
@@ -196,7 +196,7 @@
         uploader2.on( 'uploadSuccess', function( file, response ) {
             $("#storePhoto").html("");
             var stroreName = response.key;
-            var $img = $("<img>").attr("src","http://p7iva9054.bkt.clouddn.com/"+stroreName+"-save");
+            var $img = $("<img>").attr("src","http://p7ktaebxa.bkt.clouddn.com/"+stroreName+"-save");
             $img.appendTo("#storePhoto");
             $("#storeAttachment").val(stroreName);
             layer.msg("上传成功");

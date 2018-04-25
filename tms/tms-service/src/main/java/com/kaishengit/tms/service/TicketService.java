@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.kaishengit.tms.entity.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.zip.Adler32;
 
 public interface TicketService {
@@ -70,4 +71,32 @@ public interface TicketService {
      * @Date: 2018/4/23 16:56
      */
     void delTicketOutRecord(Integer id);
+
+    /**数据统计
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 22:07
+     */
+    Map<String,Long> countTicketByState();
+
+    /**查找所有年票的下发记录
+     *
+     * @Author Reich
+     * @Date: 2018/4/24 12:44
+     */
+    PageInfo<TicketOutRecord> findAllTicketOutAndPage(Integer pageNo, Map<String, Object> queryParam);
+
+    /**通过id查找缴费年票订单的金额
+     *
+     * @Author Reich
+     * @Date: 2018/4/24 14:17
+     */
+    TicketOutRecord findTicketOutRecordPay(Integer id);
+
+    /**提交缴费记录
+     *
+     * @Author Reich
+     * @Date: 2018/4/24 14:24
+     */
+    void savePayRecord(Integer id, String paymentMethod);
 }

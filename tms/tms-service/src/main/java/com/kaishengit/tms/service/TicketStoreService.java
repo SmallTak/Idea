@@ -1,6 +1,8 @@
 package com.kaishengit.tms.service;
 
+import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.entity.StroeAccount;
+import com.kaishengit.tms.entity.StroeLoginLog;
 import com.kaishengit.tms.entity.TicketStroe;
 import com.github.pagehelper.PageInfo;
 import java.util.List;
@@ -65,4 +67,18 @@ public interface TicketStoreService {
      * @Date: 2018/4/21 16:16
      */
     void saveNewTicketStorp(TicketStroe ticketStroe);
+
+    /**通过手机号查找代理人
+     *
+     * @Author Reich
+     * @Date: 2018/4/25 20:49
+     */
+    StroeAccount findAccountByMobile(String userMobile);
+
+    /**保存代理登录星系
+     *
+     * @Author Reich
+     * @Date: 2018/4/25 21:08
+     */
+    void saveAccountLoginLog(StroeLoginLog stroeLoginLog);
 }

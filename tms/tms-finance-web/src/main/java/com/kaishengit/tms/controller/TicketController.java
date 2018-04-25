@@ -9,14 +9,13 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.misc.Cache;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**年票入库
@@ -131,13 +130,6 @@ public class TicketController {
          return "/ticket/ticketOut/home";
     }
 
-    //年票下发
-//    @PostMapping("/ticketOut")
-//    public String ticketOut(Model model){
-//
-//         return "";
-//    }
-
     /**新增年票下发
      *
      * @Author Reich
@@ -161,11 +153,17 @@ public class TicketController {
      * @Date: 2018/4/23 11:18
      */
     @PostMapping("/ticketOut/new")
-    public String newOutTicket(TicketOutRecord ticketOutRecord){
-        Subject subject = SecurityUtils.getSubject();
-        Account account = (Account) subject.getPrincipal();
-        ticketService.saveTicketOut(ticketOutRecord);
-        return "redirect:/ticket/storage/ticketOut";
+    public String newOutTicket(TicketOutRecord ticketOutRecord, Model model){
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            Account account = (Account) subject.getPrincipal();
+            ticketService.saveTicketOut(ticketOutRecord);
+            return "redirect:/ticket/storage/ticketOut";
+        } catch (ServiceException e){
+            model.addAttribute("message",e.getMessage());
+            return "/ticket/ticketOut/home";
+        }
+
     }
 
     /**取消年票下发
@@ -183,6 +181,18 @@ public class TicketController {
         }catch (ServiceException e){
             return ResponseBean.error(e.getMessage());
         }
+    }
+
+    /**统计
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 22:05
+     */
+    @GetMapping("/chart")
+    public String chart(Model model){
+        Map<String,Long> resultMap = ticketService.countTicketByState();
+        model.addAttribute("resultMap",resultMap);
+        return "/ticket/chart/home";
     }
 
 }

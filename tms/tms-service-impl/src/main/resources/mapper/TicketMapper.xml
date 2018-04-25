@@ -106,6 +106,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <delete id="batchDeleteById">
+
+    delete from ticket
+    where id in (
+    <foreach collection="idList" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+
+  </delete>
   <insert id="insert" parameterType="com.kaishengit.tms.entity.Ticket">
     insert into ticket (id, ticket_num, ticket_in_time, 
       ticket_state, create_time, update_time, 
@@ -216,7 +226,18 @@
       AND ticket_num &lt;= CONVERT (#{endNum}, UNSIGNED INT);
 
     </select>
-    <update id="updateByExampleSelective" parameterType="map">
+  <select id="countByState" resultType="java.util.Map">
+      SELECT
+      count(*) as total,
+      count(case when ticket_state = '已入库' then 1 end) AS in_num,
+      count(case when ticket_state = '已下发' then 1 end) AS out_num,
+      count(case when ticket_state = '已销售' then 1 end) AS sale_num,
+      count(case when ticket_state = '已挂失' then 1 end) AS lost_num,
+      count(case when ticket_state = '已过期' then 1 end) AS outtime_num
+      FROM
+      ticket
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
     update ticket
     <set>
       <if test="record.id != null">

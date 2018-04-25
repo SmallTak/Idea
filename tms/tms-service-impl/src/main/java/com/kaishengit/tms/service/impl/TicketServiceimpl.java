@@ -3,6 +3,9 @@ package com.kaishengit.tms.service.impl;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.kaishengit.tms.entity.*;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.mapper.TicketInRecordMapper;
@@ -11,17 +14,21 @@ import com.kaishengit.tms.mapper.TicketOutRecordMapper;
 import com.kaishengit.tms.mapper.TicketStroeMapper;
 import com.kaishengit.tms.service.TicketService;
 import com.kaishengit.tms.util.ShiroUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
+import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TicketServiceimpl implements TicketService {
@@ -69,7 +76,7 @@ public class TicketServiceimpl implements TicketService {
             //数据库中年票的起始和截至票号
             BigInteger oldStart = new BigInteger(ticket.getBeginTicketNum());
             BigInteger oldEnd = new BigInteger(ticket.getEndTicketNum());
-            boolean flag = (oldStart.compareTo(startNum) <= 0 && oldEnd.compareTo(endNum) >= 0)||(oldStart.compareTo(endNum) <= 0 && oldEnd.compareTo(endNum) >= 0);
+            boolean flag = (oldStart.compareTo(startNum) <= 0 && oldEnd.compareTo(startNum) >= 0) || (oldStart.compareTo(endNum) <= 0 && oldEnd.compareTo(endNum) >= 0);
             if (flag){
                 throw new ServiceException("年票号区间重复，添加失败");
             }
@@ -129,7 +136,6 @@ public class TicketServiceimpl implements TicketService {
         if (ticketInRecord != null) {
 
             //查找出该区间的年票list集合
-            TicketExample ticketExample = new TicketExample();
             List<Ticket> byBeginNumAndEndNum = ticketMapper.findByBeginNumAndEndNum(ticketInRecord.getBeginTicketNum(), ticketInRecord.getEndTicketNum());
             //判断该区间内有没有已经已下发的，若有则抛出异常
             for (Ticket ticket : byBeginNumAndEndNum){
@@ -138,8 +144,16 @@ public class TicketServiceimpl implements TicketService {
                 }
             }
 
+            List<Long> idList = Lists.newArrayList(Collections2.transform(byBeginNumAndEndNum, new Function<Ticket, Long>() {
+                @Nullable
+                @Override
+                public Long apply(@Nullable Ticket input) {
+                    return input.getId().longValue();
+                }
+            }));
+
             //根据ticketInRecord中的起始年票号查找ticket
-            ticketMapper.deleteByExample(ticketExample);
+            ticketMapper.batchDeleteById(idList);
             ticketInRecordMapper.deleteByPrimaryKey(id);
 
             logger.info("删除入库记录{}", ticketInRecord);
@@ -224,13 +238,26 @@ public class TicketServiceimpl implements TicketService {
                 throw new ServiceException("该区间内有已下发的年票，请重新选择");
             }
         }
+        //获取当前下发年票的起始票号
+        BigInteger startNum = new BigInteger(ticketOutRecord.getBeginTicketNum());
+        //获取当前下发年票的截止票号
+        BigInteger endNum = new BigInteger(ticketOutRecord.getEndTicketNum());
+        //查找出所有已入库的年票
+        List<TicketInRecord> ticketInRecordList = ticketInRecordMapper.selectByExample(new TicketInRecordExample());
+        for (TicketInRecord ticketInRecord : ticketInRecordList ){
 
-        
-
+            BigInteger oldStart = new BigInteger(ticketInRecord.getBeginTicketNum());
+            BigInteger oldEnd = new BigInteger(ticketInRecord.getEndTicketNum());
+            boolean flag = (oldStart.compareTo(startNum) <= 0 && oldEnd.compareTo(startNum) >= 0) && (oldStart.compareTo(endNum) < 0 && oldEnd.compareTo(endNum) >= 0);
+            if (!flag){
+                throw new ServiceException("下发年票必须在库存年票区间内，请重新选择");
+            }
+        }
         //获取当前年票下发的代理对象
         TicketStroe ticketStroe = ticketStroeMapper.selectByPrimaryKey(ticketOutRecord.getTicketStoreAccountid());
         ticketOutRecord.setTicketStoreAccountname(ticketStroe.getStroeName());
 
+        //获得当前登录的对象（仓库管理）
         Account account = shiroUtil.getCurrAccount();
 
         //获得总数量
@@ -293,6 +320,85 @@ public class TicketServiceimpl implements TicketService {
 
         ticketOutRecordMapper.deleteByPrimaryKey(id);
 
+    }
+
+    /**
+     * 数据统计
+     *
+     * @Author Reich
+     * @Date: 2018/4/23 22:07
+     */
+    @Override
+    public Map<String, Long> countTicketByState() {
+        return ticketMapper.countByState();
+    }
+
+    /**
+     * 查找所有年票的下发记录
+     *
+     * @param pageNo
+     * @param queryParam
+     * @Author Reich
+     * @Date: 2018/4/24 12:44
+     */
+    @Override
+    public PageInfo<TicketOutRecord> findAllTicketOutAndPage(Integer pageNo, Map<String, Object> queryParam) {
+
+        PageHelper.startPage(pageNo, 10);
+
+        //根据条件查询判断state是否为空
+        TicketOutRecordExample ticketOutRecordExample = new TicketOutRecordExample();
+        TicketOutRecordExample.Criteria criteria = ticketOutRecordExample.createCriteria();
+
+        String state = (String) queryParam.get("state");
+        if (StringUtils.isNoneEmpty(state)) {
+            criteria.andTicketStateEqualTo(state);
+        }
+        ticketOutRecordExample.setOrderByClause("id desc");
+        List<TicketOutRecord> ticketOutRecords = ticketOutRecordMapper.selectByExample(ticketOutRecordExample);
+
+        return new PageInfo<>(ticketOutRecords);
+    }
+
+    /**
+     * 通过id查找缴费年票订单的金额
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/4/24 14:17
+     */
+    @Override
+    public TicketOutRecord findTicketOutRecordPay(Integer id) {
+        return ticketOutRecordMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 提交缴费记录
+     *
+     * @param id
+     * @param paymentMethod
+     * @Author Reich
+     * @Date: 2018/4/24 14:24
+     */
+    @Override
+    public void savePayRecord(Integer id, String paymentMethod) throws ServiceException {
+
+        //通过id查找到需要缴费的订单
+        TicketOutRecord ticketOutRecord = ticketOutRecordMapper.selectByPrimaryKey(id);
+        if (ticketOutRecord == null){
+            throw  new ServiceException("参数异常");
+        }
+        //获得当前登录的对象
+        Account account = shiroUtil.getCurrAccount();
+
+        ticketOutRecord.setUpdateTime(new Date());
+        ticketOutRecord.setFinanceAccountName(account.getAccountName());
+        ticketOutRecord.setPaymentMethod(paymentMethod);
+        ticketOutRecord.setFinanceAccountid(account.getId());
+        ticketOutRecord.setTicketState(TicketOutRecord.STATE_PAY);
+
+        ticketOutRecordMapper.updateByPrimaryKeySelective(ticketOutRecord);
+        logger.info("缴费{}",ticketOutRecord);
     }
 
 }

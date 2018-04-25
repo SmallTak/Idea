@@ -3,6 +3,8 @@ package com.kaishengit.tms.mapper;
 import com.kaishengit.tms.entity.Ticket;
 import com.kaishengit.tms.entity.TicketExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TicketMapper {
@@ -33,4 +35,9 @@ public interface TicketMapper {
     void batchUpdate(@Param("ticketList") List<Ticket> ticketList);
 
     List<Ticket> findByBeginNumAndEndNum(@Param("beginNum") String beginTicketNum, @Param("endNum") String endTicketNum);
+
+    void batchDeleteById(@Param("idList") List<Long> idList);
+
+    Map<String,Long> countByState();
+
 }

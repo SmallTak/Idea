@@ -2,12 +2,10 @@ package com.kaishengit.tms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.kaishengit.tms.entity.StroeAccount;
-import com.kaishengit.tms.entity.StroeAccountExample;
-import com.kaishengit.tms.entity.TicketStroe;
-import com.kaishengit.tms.entity.TicketStroeExample;
+import com.kaishengit.tms.entity.*;
 import com.kaishengit.tms.exception.ServiceException;
 import com.kaishengit.tms.mapper.StroeAccountMapper;
+import com.kaishengit.tms.mapper.StroeLoginLogMapper;
 import com.kaishengit.tms.mapper.TicketStroeMapper;
 import com.kaishengit.tms.service.TicketStoreService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -33,6 +31,8 @@ public class TicketStoreServiceImpl implements TicketStoreService {
     @Autowired
     private StroeAccountMapper stroeAccountMapperp;
 
+    @Autowired
+    private StroeLoginLogMapper stroeLoginLogMapper;
 
     /**
      * 查找所有的代理年票客户
@@ -217,6 +217,34 @@ public class TicketStoreServiceImpl implements TicketStoreService {
         stroeAccount.setStroeState(StroeAccount.ACCOUNT_STATE_NORMAL);
         stroeAccountMapperp.insertSelective(stroeAccount);
 
+    }
+
+    /**
+     * 通过手机号查找代理人
+     *
+     * @param userMobile
+     * @Author Reich
+     * @Date: 2018/4/25 20:49
+     */
+    @Override
+    public StroeAccount findAccountByMobile(String userMobile) {
+        StroeAccountExample stroeAccountExample = new StroeAccountExample();
+        stroeAccountExample.createCriteria().andStroeAccountEqualTo(userMobile);
+        List<StroeAccount> stroeAccountList = stroeAccountMapperp.selectByExample(stroeAccountExample);
+        return stroeAccountList.get(0);
+
+    }
+
+    /**
+     * 保存代理登录星系
+     *
+     * @param stroeLoginLog
+     * @Author Reich
+     * @Date: 2018/4/25 21:08
+     */
+    @Override
+    public void saveAccountLoginLog(StroeLoginLog stroeLoginLog) {
+        stroeLoginLogMapper.insert(stroeLoginLog);
     }
 
 }
