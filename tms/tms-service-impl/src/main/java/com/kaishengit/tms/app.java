@@ -9,7 +9,7 @@ public class app {
 
     public static void main(String[] args) throws IOException {
 
-        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("spring*.xml");
+        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("spring.xml");
         classPathXmlApplicationContext.start();
 
         System.out.println("-------------------服务器启动完毕");
