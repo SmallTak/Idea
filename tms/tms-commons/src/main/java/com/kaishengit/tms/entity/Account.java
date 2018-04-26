@@ -136,6 +136,7 @@ public class Account implements Serializable {
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", accountState='" + accountState + '\'' +
+                ", rolesList=" + rolesList +
                 '}';
     }
 }

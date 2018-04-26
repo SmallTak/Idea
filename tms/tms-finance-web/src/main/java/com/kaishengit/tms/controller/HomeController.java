@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * 首页及登录、登出的控制器
  * @author fankay
  */
-@Controller
+@Controller(value = "controller2")
 public class HomeController {
 
     private Logger logger = LoggerFactory.getLogger(HomeController.class);

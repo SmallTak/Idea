@@ -60,6 +60,13 @@
             <version>2.10.4</version>
         </dependency>
 
+        <!--fastdfs-->
+        <dependency>
+            <groupId>org.csource</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

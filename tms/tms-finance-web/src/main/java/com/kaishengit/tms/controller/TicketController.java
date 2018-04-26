@@ -23,7 +23,7 @@ import java.util.Map;
  * @Author Reich
  * @Date: 2018/4/20 16:52
  */
-@Controller
+@Controller(value = "controller3")
 @RequestMapping("/ticket/storage")
 public class TicketController {
 

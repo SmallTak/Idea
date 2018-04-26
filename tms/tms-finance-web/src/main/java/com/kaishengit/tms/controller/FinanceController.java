@@ -19,7 +19,7 @@ import java.util.Map;
  * @Author Reich
  * @Date: 2018/4/24 12:24
  */
-@Controller
+@Controller(value = "controller1")
 @RequestMapping("/finance/ticket")
 public class FinanceController {
 

@@ -113,6 +113,7 @@ public class AccountServiceImpl implements AccountService {
         //设置账号默认状态
         account.setAccountState(Account.STATE_NORMAL);
         accountMapper.insertSelective(account);
+        System.out.println(account);
         //添加用户和角色关系
         if (rolesIds != null){
             for (Integer rolesId : rolesIds){
