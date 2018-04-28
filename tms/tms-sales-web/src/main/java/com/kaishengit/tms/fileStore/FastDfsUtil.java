@@ -26,10 +26,20 @@ public class FastDfsUtil {
     @Value("${fastdfs.tracker.server}")
     private String trackerServerAddr;
 
+    /**文件上传 没属性
+     *
+     * @Author Reich
+     * @Date: 2018/4/27 22:48
+     */
     public String uploadFile(InputStream inputStream, String extName) {
         return upload(inputStream, extName,null);
     }
 
+    /**文件上传
+     *
+     * @Author Reich
+     * @Date: 2018/4/27 22:48
+     */
     public String upload(InputStream inputStream, String exName, Map<String, String> param){
        try {
            StorageClient storageClient = getStorageClient();
@@ -60,6 +70,11 @@ public class FastDfsUtil {
 
     }
 
+    /**文件下载
+     *
+     * @Author Reich
+     * @Date: 2018/4/27 22:48
+     */
     public byte[] downloadFile(String fileId){
 
         try {
@@ -105,7 +120,11 @@ public class FastDfsUtil {
         return new StorageClient(trackerServer, storageServer);
     }
 
-
+    /**删除文件
+     *
+     * @Author Reich
+     * @Date: 2018/4/27 22:49
+     */
     public void deleteFile(String fileId){
         try {
             StorageClient storageClient = getStorageClient();

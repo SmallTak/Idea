@@ -81,4 +81,11 @@ public interface TicketStoreService {
      * @Date: 2018/4/25 21:08
      */
     void saveAccountLoginLog(StroeLoginLog stroeLoginLog);
+
+    /**通过id查找当前登录代理的销售信息
+     *
+     * @Author Reich
+     * @Date: 2018/4/27 13:07
+     */
+    Map<String,Long> countTicketByStateStroeAccountId(Integer id);
 }

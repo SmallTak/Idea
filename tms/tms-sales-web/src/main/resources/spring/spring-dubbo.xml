@@ -3,13 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="TmsFinanceWeb"/>
+    <dubbo:application name="TmsSalesWeb"/>
 
-    <dubbo:registry address="zookeeper://192.168.142.10:2181"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
 
-    <!--引用服务-->
-    <dubbo:reference interface="com.kaishengit.tms.service.AccountService" id="accountService"/>
-    <dubbo:reference interface="com.kaishengit.tms.service.RolesPermissionService" id="rolesPermissionService"/>
     <dubbo:reference interface="com.kaishengit.tms.service.TicketStoreService" id="ticketStoreService"/>
+    <dubbo:reference interface="com.kaishengit.tms.service.RolesPermissionService" id="rolesPermissionService"/>
+    <dubbo:reference interface="com.kaishengit.tms.service.TicketCustomerService" id="ticketCustomerService"/>
     <dubbo:reference interface="com.kaishengit.tms.service.TicketService" id="ticketService"/>
 </beans>

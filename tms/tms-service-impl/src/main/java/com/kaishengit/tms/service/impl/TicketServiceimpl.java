@@ -1,6 +1,5 @@
 package com.kaishengit.tms.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Function;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.rmi.runtime.Log;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
@@ -47,8 +45,6 @@ public class TicketServiceimpl implements TicketService {
     @Autowired
     private TicketOutRecordMapper ticketOutRecordMapper;
 
-    @Autowired
-    private ShiroUtil shiroUtil;
 
     /**
      * 年票入库
@@ -229,7 +225,7 @@ public class TicketServiceimpl implements TicketService {
      * @Date: 2018/4/23 11:21
      */
     @Override
-    public void saveTicketOut(TicketOutRecord ticketOutRecord) throws ServiceException {
+    public void saveTicketOut(TicketOutRecord ticketOutRecord, Account account) throws ServiceException {
 
         //根据下发年票的起始票号和截至票号来判断该区间内有没有已下发的
         List<Ticket> ticketList = ticketMapper.findByBeginNumAndEndNum(ticketOutRecord.getBeginTicketNum(),ticketOutRecord.getEndTicketNum());
@@ -256,9 +252,6 @@ public class TicketServiceimpl implements TicketService {
         //获取当前年票下发的代理对象
         TicketStroe ticketStroe = ticketStroeMapper.selectByPrimaryKey(ticketOutRecord.getTicketStoreAccountid());
         ticketOutRecord.setTicketStoreAccountname(ticketStroe.getStroeName());
-
-        //获得当前登录的对象（仓库管理）
-        Account account = shiroUtil.getCurrAccount();
 
         //获得总数量
         int totalNum = ticketList.size();
@@ -381,16 +374,13 @@ public class TicketServiceimpl implements TicketService {
      * @Date: 2018/4/24 14:24
      */
     @Override
-    public void savePayRecord(Integer id, String paymentMethod) throws ServiceException {
+    public void savePayRecord(Integer id, String paymentMethod, Account account) throws ServiceException {
 
         //通过id查找到需要缴费的订单
         TicketOutRecord ticketOutRecord = ticketOutRecordMapper.selectByPrimaryKey(id);
         if (ticketOutRecord == null){
             throw  new ServiceException("参数异常");
         }
-        //获得当前登录的对象
-        Account account = shiroUtil.getCurrAccount();
-
         ticketOutRecord.setUpdateTime(new Date());
         ticketOutRecord.setFinanceAccountName(account.getAccountName());
         ticketOutRecord.setPaymentMethod(paymentMethod);

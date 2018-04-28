@@ -247,4 +247,16 @@ public class TicketStoreServiceImpl implements TicketStoreService {
         stroeLoginLogMapper.insert(stroeLoginLog);
     }
 
+    /**
+     * 通过id查找当前登录代理的销售信息
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/4/27 13:07
+     */
+    @Override
+    public Map<String, Long> countTicketByStateStroeAccountId(Integer id) {
+        return ticketStroeMapper.countByStateAndStoreAccountId(id);
+    }
+
 }

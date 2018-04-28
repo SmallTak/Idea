@@ -1,27 +1,33 @@
 package com.kaishengit.tms.controller;
 
-import com.kaishengit.tms.service.AccountService;
+import com.kaishengit.tms.entity.StroeAccount;
+import com.kaishengit.tms.entity.TicketStroe;
+import com.kaishengit.tms.service.TicketStoreService;
+import com.kaishengit.tms.shiro.shiroUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
-@RequestMapping
 public class HomeController {
 
     @Autowired
-    private AccountService accountService;
+    private TicketStoreService ticketStoreService;
+    @Autowired
+    private shiroUtil shiroUtil;
 
     @GetMapping("/")
     public String index(){
@@ -47,8 +53,8 @@ public class HomeController {
      * @Date: 2018/4/17 17:15
      */
     @PostMapping("/")
-    public String login(String accountMobile,
-                        String password,
+    public String login(String stroeAccount,
+                        String stroePassword,
                         String rememberMe,
                         HttpServletRequest request,
                         RedirectAttributes redirectAttributes) {
@@ -59,16 +65,17 @@ public class HomeController {
         String requestIp = request.getRemoteAddr();
 
         //根据账号密码进行登录
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(accountMobile, DigestUtils.md5Hex(password),rememberMe != null , requestIp);
+        UsernamePasswordToken usernamePasswordToken =
+                new UsernamePasswordToken(stroeAccount, DigestUtils.md5Hex(stroePassword),rememberMe != null , requestIp);
 
         try {
             subject.login(usernamePasswordToken);
 
             //登录成功后跳转的目标(callback)
-            SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+            SavedRequest savedR = WebUtils.getSavedRequest(request);
             String url = "/home";
-            if (savedRequest != null){
-                url = savedRequest.getRequestUrl();
+            if (savedR != null){
+                url = savedR.getRequestUrl();
             }
 
             return "redirect:" + url;
@@ -90,7 +97,10 @@ public class HomeController {
      * @return
      */
     @GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        TicketStroe currentAccount = shiroUtil.getCurrentAccount();
+        Map<String, Long> stringMap = ticketStoreService.countTicketByStateStroeAccountId(currentAccount.getId());
+        model.addAttribute("stringMap", stringMap);
         return "home";
     }
 

@@ -40,4 +40,5 @@ public interface TicketMapper {
 
     Map<String,Long> countByState();
 
+    List<Ticket> selectByStroeIdAndTicketStatu(Integer id);
 }

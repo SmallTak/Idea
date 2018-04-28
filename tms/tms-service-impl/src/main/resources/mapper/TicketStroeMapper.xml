@@ -195,7 +195,31 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="countByStateAndStoreAccountId" resultType="java.util.Map">
+
+      SELECT
+        count(*) AS total,
+        count(
+                CASE
+                WHEN ticket_state = '已下发' THEN 1 END
+        ) AS out_num,
+        COUNT(
+                CASE
+                WHEN ticket_state = '已销售' THEN 1 END
+        ) AS sale_num,
+        count(
+                CASE
+                WHEN ticket_state = '已挂失' THEN 1 END
+        ) AS lost_num,
+        COUNT(
+                CASE
+                WHEN ticket_state = '已补办' THEN 1 END
+        ) AS outtime_num
+      FROM
+        `ticket` WHERE stroe_account_id = #{id};
+
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update ticket_stroe
     <set>
       <if test="record.id != null">

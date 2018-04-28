@@ -3,6 +3,8 @@ package com.kaishengit.tms.mapper;
 import com.kaishengit.tms.entity.TicketStroe;
 import com.kaishengit.tms.entity.TicketStroeExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TicketStroeMapper {
@@ -27,4 +29,6 @@ public interface TicketStroeMapper {
     int updateByPrimaryKeySelective(TicketStroe record);
 
     int updateByPrimaryKey(TicketStroe record);
+
+    Map<String,Long> countByStateAndStoreAccountId(Integer id);
 }

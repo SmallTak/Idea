@@ -157,7 +157,7 @@ public class TicketController {
         try {
             Subject subject = SecurityUtils.getSubject();
             Account account = (Account) subject.getPrincipal();
-            ticketService.saveTicketOut(ticketOutRecord);
+            ticketService.saveTicketOut(ticketOutRecord, account);
             return "redirect:/ticket/storage/ticketOut";
         } catch (ServiceException e){
             model.addAttribute("message",e.getMessage());

@@ -5,7 +5,6 @@ import com.kaishengit.tms.entity.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Adler32;
 
 public interface TicketService {
 
@@ -56,7 +55,7 @@ public interface TicketService {
      * @Author Reich
      * @Date: 2018/4/23 11:21
      */
-    void saveTicketOut(TicketOutRecord ticketOutRecord);
+    void saveTicketOut(TicketOutRecord ticketOutRecord, Account account);
 
     /**查出所有的出库记录
      *
@@ -98,5 +97,7 @@ public interface TicketService {
      * @Author Reich
      * @Date: 2018/4/24 14:24
      */
-    void savePayRecord(Integer id, String paymentMethod);
+    void savePayRecord(Integer id, String paymentMethod, Account account);
+
+
 }

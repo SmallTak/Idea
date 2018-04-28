@@ -237,7 +237,16 @@
       FROM
       ticket
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="selectByStroeIdAndTicketStatu" resultType="com.kaishengit.tms.entity.Ticket">
+      SELECT
+        *
+      FROM
+        ticket
+      WHERE
+        stroe_account_id = #{id}
+        AND ticket_state = '已下发';
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update ticket
     <set>
       <if test="record.id != null">

@@ -1,9 +1,12 @@
 package com.kaishengit.tms.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.kaishengit.tms.entity.Account;
 import com.kaishengit.tms.entity.TicketOutRecord;
 import com.kaishengit.tms.service.TicketService;
 import com.kaishengit.tms.service.TicketStoreService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**财务结算
@@ -65,7 +67,9 @@ public class FinanceController {
      */
     @PostMapping("/{id:\\d+}/pay")
     public String payMent(@PathVariable Integer id, String paymentMethod, Model model){
-        ticketService.savePayRecord(id, paymentMethod);
+        Subject subject = SecurityUtils.getSubject();
+        Account account = (Account) subject.getPrincipal();
+        ticketService.savePayRecord(id, paymentMethod,account);
         model.addAttribute("message", "缴费成功");
         return "/finance/ticket/home";
     }
