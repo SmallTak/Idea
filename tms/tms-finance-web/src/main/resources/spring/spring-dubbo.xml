@@ -5,7 +5,7 @@
 
     <dubbo:application name="TmsFinanceWeb"/>
 
-    <dubbo:registry address="zookeeper://192.168.142.10:2181"/>
+    <dubbo:registry address="zookeeper://111.230.219.165:2181"/>
 
     <!--引用服务-->
     <dubbo:reference interface="com.kaishengit.tms.service.AccountService" id="accountService"/>

@@ -121,7 +121,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{customerPhoto,jdbcType=VARCHAR}, 
       #{customerTicketId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.Customer">
+  <insert id="insertSelective" parameterType="com.kaishengit.tms.entity.Customer" useGeneratedKeys="true" keyProperty="id">
     insert into customer
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

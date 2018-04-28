@@ -1,10 +1,9 @@
 package com.kaishengit.tms.service;
 
-import com.kaishengit.tms.entity.Account;
-import com.kaishengit.tms.entity.StroeAccount;
-import com.kaishengit.tms.entity.StroeLoginLog;
-import com.kaishengit.tms.entity.TicketStroe;
+import com.kaishengit.tms.entity.*;
 import com.github.pagehelper.PageInfo;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -88,4 +87,11 @@ public interface TicketStoreService {
      * @Date: 2018/4/27 13:07
      */
     Map<String,Long> countTicketByStateStroeAccountId(Integer id);
+
+    /**保存客户购票信息
+     *
+     * @Author Reich
+     * @Date: 2018/4/27 21:29
+     */
+    void saveTicketCustomer(Customer customer, TicketStroe ticketStroe, String ticketNum, BigDecimal ticketPrice);
 }

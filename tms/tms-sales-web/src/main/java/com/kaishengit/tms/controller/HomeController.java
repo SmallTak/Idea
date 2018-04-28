@@ -1,9 +1,8 @@
 package com.kaishengit.tms.controller;
 
-import com.kaishengit.tms.entity.StroeAccount;
 import com.kaishengit.tms.entity.TicketStroe;
 import com.kaishengit.tms.service.TicketStoreService;
-import com.kaishengit.tms.shiro.shiroUtil;
+import com.kaishengit.tms.shiro.ShiroUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +25,7 @@ public class HomeController {
     @Autowired
     private TicketStoreService ticketStoreService;
     @Autowired
-    private shiroUtil shiroUtil;
+    private ShiroUtil shiroUtil;
 
     @GetMapping("/")
     public String index(){

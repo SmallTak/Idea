@@ -56,12 +56,12 @@ public class Ticket implements Serializable {
     /**
      * 年票起始
      */
-    private String ticketValidityStart;
+    private Date ticketValidityStart;
 
     /**
      * 年票结束
      */
-    private String ticketValidityEnd;
+    private Date ticketValidityEnd;
 
     private Integer customerId;
 
@@ -131,22 +131,6 @@ public class Ticket implements Serializable {
         this.stroeAccountId = stroeAccountId;
     }
 
-    public String getTicketValidityStart() {
-        return ticketValidityStart;
-    }
-
-    public void setTicketValidityStart(String ticketValidityStart) {
-        this.ticketValidityStart = ticketValidityStart;
-    }
-
-    public String getTicketValidityEnd() {
-        return ticketValidityEnd;
-    }
-
-    public void setTicketValidityEnd(String ticketValidityEnd) {
-        this.ticketValidityEnd = ticketValidityEnd;
-    }
-
     public Integer getCustomerId() {
         return customerId;
     }
@@ -154,4 +138,21 @@ public class Ticket implements Serializable {
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
+
+    public Date getTicketValidityStart() {
+        return ticketValidityStart;
+    }
+
+    public void setTicketValidityStart(Date ticketValidityStart) {
+        this.ticketValidityStart = ticketValidityStart;
+    }
+
+    public Date getTicketValidityEnd() {
+        return ticketValidityEnd;
+    }
+
+    public void setTicketValidityEnd(Date ticketValidityEnd) {
+        this.ticketValidityEnd = ticketValidityEnd;
+    }
 }
+

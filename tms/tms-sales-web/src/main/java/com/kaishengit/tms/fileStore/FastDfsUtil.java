@@ -3,8 +3,12 @@ package com.kaishengit.tms.fileStore;
 import org.apache.commons.io.IOUtils;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
-import org.csource.fastdfs.*;
+import org.csource.fastdfs.ClientGlobal;
 
+import org.csource.fastdfs.StorageClient;
+import org.csource.fastdfs.StorageServer;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerServer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -57,7 +61,7 @@ public class FastDfsUtil {
                     i++;
                }
            }
-            String[] strings = storageClient.upload_appender_file(IOUtils.toByteArray(inputStream),exName,nameValuePairs);
+            String[] strings = storageClient.upload_file(IOUtils.toByteArray(inputStream),exName,nameValuePairs);
 
             StringBuffer stringBuffer = new StringBuffer();
             for (String str : strings){

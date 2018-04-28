@@ -7,7 +7,7 @@
     <dubbo:application name="TmsService"/>
 
     <!--注册中心-->
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry address="zookeeper://111.230.219.165:2181"/>
     <!--配置网卡和端口-->
 <!--
     <dubbo:protocol host="192.168.142.10" port="20880"/>
@@ -18,6 +18,5 @@
     <dubbo:service interface="com.kaishengit.tms.service.TicketStoreService" ref="ticketStoreServiceImpl"/>
     <dubbo:service interface="com.kaishengit.tms.service.TicketService" ref="ticketServiceimpl"/>
     <dubbo:service interface="com.kaishengit.tms.service.RolesPermissionService" ref="rolesPermissionServiceImpl"/>
-    <dubbo:service interface="com.kaishengit.tms.service.TicketCustomerService" ref="ticketCustomerServiceImpl"/>
 
 </beans>

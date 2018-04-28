@@ -6,7 +6,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Component;
 
 @Component
-public class shiroUtil {
+public class ShiroUtil {
 
     public TicketStroe getCurrentAccount() {
         Subject subject = SecurityUtils.getSubject();
