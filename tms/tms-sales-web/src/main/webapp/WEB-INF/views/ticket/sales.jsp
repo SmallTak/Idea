@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -43,6 +44,7 @@
                 <div class="box-header">
                     <h3 class="box-title">年票办理</h3>
                 </div>
+
                 <div class="box-body">
                     <c:if test="${not empty message}">
                         <div class="alert alert-info">${message}</div>

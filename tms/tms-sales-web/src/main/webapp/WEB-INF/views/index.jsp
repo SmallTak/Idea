@@ -36,7 +36,7 @@
         </c:if>
         <form method="post">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" name="stroeAccount" placeholder="手机号码" autofocus <%--value="${stroeAccount}"--%>>
+                <input type="text" class="form-control" name="stroeAccount" placeholder="手机号码" <%--autofocus value="${phone}"--%>>
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" name="stroePassword" placeholder="密码">
@@ -70,7 +70,13 @@
 <!-- iCheck -->
 <script src="/static/plugins/iCheck/icheck.min.js"></script>
 <script>
-
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+    });
 </script>
 </body>
 </html>

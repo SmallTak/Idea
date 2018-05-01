@@ -391,4 +391,18 @@ public class TicketServiceimpl implements TicketService {
         logger.info("缴费{}",ticketOutRecord);
     }
 
+    /**
+     * 通过年票id查找年票
+     *
+     * @param ticketNum
+     * @Author Reich
+     * @Date: 2018/5/1 20:47
+     */
+    @Override
+    public Ticket findTicketByTicketNum(String ticketNum) {
+        TicketExample ticketExample = new TicketExample();
+        ticketExample.createCriteria().andTicketNumEqualTo(Integer.valueOf(ticketNum));
+        return ticketMapper.selectByExample(ticketExample).get(0);
+    }
+
 }

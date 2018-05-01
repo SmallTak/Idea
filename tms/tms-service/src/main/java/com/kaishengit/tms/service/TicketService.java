@@ -99,5 +99,10 @@ public interface TicketService {
      */
     void savePayRecord(Integer id, String paymentMethod, Account account);
 
-
+    /**通过年票id查找年票
+     *
+     * @Author Reich
+     * @Date: 2018/5/1 20:47
+     */
+    Ticket findTicketByTicketNum(String ticketNum);
 }
