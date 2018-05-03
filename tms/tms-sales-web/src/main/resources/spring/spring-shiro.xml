@@ -4,12 +4,6 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.kaishengit">
-        <!--排除controller和ControllerAdvice注解的类-->
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-    </context:component-scan>
-
     <!--0. 配置rememberMe-->
     <bean id="rememberCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <property name="maxAge" value="604800"/>
