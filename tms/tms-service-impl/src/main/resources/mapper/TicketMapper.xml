@@ -362,5 +362,14 @@
       (ticket_num, update_time) values (#{ticket.ticketNum},#{ticket.updateTime})
     </foreach>
   </update>
+  <update id="batchUpdateState">
+    update tickets set ticket_state = #{state} where
+    id in (
+    <foreach collection="ticketList" item="ticket" separator=",">
+      #{ticket.id}
+    </foreach>
+    )
+  </update>
+
 
 </mapper>

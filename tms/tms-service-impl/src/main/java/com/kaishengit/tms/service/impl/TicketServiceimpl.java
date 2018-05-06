@@ -405,4 +405,35 @@ public class TicketServiceimpl implements TicketService {
         return ticketMapper.selectByExample(ticketExample).get(0);
     }
 
+    /**
+     * 查询出所有已经销售的年票
+     *
+     * @param ticketStateSale
+     * @Author Reich
+     * @Date: 2018/5/6 22:14
+     */
+    @Override
+    public List<Ticket> findAllTicketByTicketState(String ticketStateSale) {
+
+        TicketExample ticketExample = new TicketExample();
+        ticketExample.createCriteria().andTicketStateEqualTo(ticketStateSale);
+        List<Ticket> ticketList = ticketMapper.selectByExample(ticketExample);
+        return ticketList;
+
+    }
+
+    /**
+     * 批量设置过期年票
+     *
+     * @param outTimeTicket
+     * @Author Reich
+     * @Date: 2018/5/6 22:30
+     */
+    @Override
+    public void batchUpdateTicketState(List<Ticket> outTimeTicket) {
+
+        ticketMapper.batchUpdateState(outTimeTicket,Ticket.TICKET_STATE_OUT_DATE);
+
+    }
+
 }

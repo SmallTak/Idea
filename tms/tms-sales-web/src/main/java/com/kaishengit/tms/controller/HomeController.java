@@ -38,9 +38,9 @@ public class HomeController {
         }
 
         //若当前为被记住（通过rememberMe认证），则直接跳转到登录成功页面 home
-        if (subject.isRemembered()){
-            return "redirect:/home";
-        }
+//        if (subject.isRemembered()){
+//            return "redirect:/home";
+//        }
 
         return "index";
     }

@@ -105,4 +105,18 @@ public interface TicketService {
      * @Date: 2018/5/1 20:47
      */
     Ticket findTicketByTicketNum(String ticketNum);
+
+    /**查询出所有已经销售的年票
+     *
+     * @Author Reich
+     * @Date: 2018/5/6 22:14
+     */
+    List<Ticket> findAllTicketByTicketState(String ticketStateSale);
+
+    /**批量设置过期年票
+     *
+     * @Author Reich
+     * @Date: 2018/5/6 22:30
+     */
+    void batchUpdateTicketState(List<Ticket> outTimeTicket);
 }

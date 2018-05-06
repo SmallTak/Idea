@@ -41,4 +41,6 @@ public interface TicketMapper {
     Map<String,Long> countByState();
 
     List<Ticket> selectByStroeIdAndTicketStatu(Integer id);
+
+    void batchUpdateState(@Param("ticketList") List<Ticket> outTimeTicket,@Param("state") String ticketStateOutDate);
 }
