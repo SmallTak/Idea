@@ -4,12 +4,14 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -19,17 +21,20 @@ import java.util.Set;
 @ContextConfiguration(locations = "classpath:spring-jedis-cluster.xml")
 public class JedisClusterTest {
 
+    @Autowired
     private JedisCluster jedisCluster;
+    @Autowired
+    private JedisPoolConfig jedisPoolConfig;
 
     @Before
     public void before(){
 
         //连接池配置
-        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-        genericObjectPoolConfig.setMaxTotal(10);
-        genericObjectPoolConfig.setMinIdle(5);
+       /* GenericObjectPoolConfig jedisPoolConfig = new GenericObjectPoolConfig();
+        jedisPoolConfig.setMaxTotal(10);
+        jedisPoolConfig.setMinIdle(5);*/
 
-        //集群主机集合
+     /*   //集群主机集合
         Set<HostAndPort> hostAndPorts = new HashSet<HostAndPort>();
         hostAndPorts.add(new HostAndPort("192.168.1.14",6001));
         hostAndPorts.add(new HostAndPort("192.168.1.14",6002));
@@ -38,14 +43,14 @@ public class JedisClusterTest {
         hostAndPorts.add(new HostAndPort("192.168.1.14",6005));
         hostAndPorts.add(new HostAndPort("192.168.1.14",6006));
 
-        jedisCluster = new JedisCluster(hostAndPorts, genericObjectPoolConfig);
-
+        jedisCluster = new JedisCluster(hostAndPorts, jedisPoolConfig);
+*/
     }
 
     @Test
     public void setString() throws IOException {
 
-        String set = jedisCluster.set("user:1","hey men~");
+        String set = jedisCluster.set("user:1","hey gay");
         System.out.println(set);
         jedisCluster.close();
 
