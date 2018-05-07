@@ -10,21 +10,42 @@ import com.kaishengit.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@CacheConfig(cacheNames = "products")
 public class ProductServiceImpl implements ProductService {
 
     private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
     private ProductMapper productMapper;
+
     @Autowired
     private ProductTypeMapper productTypeMapper;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    //热数据    表示容器启动的时候就把id为2177的数据放入到缓存中   热数据
+    @PostConstruct  //init
+    public void initCache(){
+
+        Cache cache = cacheManager.getCache("products");
+        Product product = productMapper.findById(2177);
+        cache.put(2177,product);
+        logger.info("init {} product in cache ",2177);
+
+    }
 
     /**
      * @param id
@@ -33,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
      * @Date: 2018/4/10 12:42
      */
     @Override
-    @Cacheable("products")
+    @Cacheable
     public Product findById(Integer id) {
         logger.info("缓存测试");
         return productMapper.findById(id);
@@ -90,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
      * @Date: 2018/4/10 23:02
      */
     @Override
+    @CacheEvict
     public void delProduct(Integer id) {
 
         Product product = productMapper.findById(id);
@@ -105,6 +127,7 @@ public class ProductServiceImpl implements ProductService {
      * @Date: 2018/4/10 23:24
      */
     @Override
+    @CacheEvict(key="#product.id")//springel表达式   beforeInvocation = true表示在方法执行之前使用注解    先删除缓存 再删除数据库
     public void updateProduct(Product product) {
         productMapper.updateProduct(product);
         logger.info("修改商品{}",product);
