@@ -6,13 +6,27 @@
     <!--1.开启基于注解的缓存-->
     <cache:annotation-driven cache-manager="cacheManager"/>
 
+    <!--2.使用redis作为缓存的提供者-->
+
+
+    <!--2.配置缓存管理器 (本地 ehcache)-->
+    <bean id="cacheManagerFactoryBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <!--ehcache.xml的位置-->
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="cacheManagerFactoryBean"/>
+    </bean>
+
+
     <!--2.配置缓存管理器-->
-    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+    <!--<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <list>
                 <bean name="products" class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"/>
             </list>
         </property>
-    </bean>
+    </bean>-->
 
 </beans>

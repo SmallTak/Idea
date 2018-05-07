@@ -11,11 +11,25 @@
         <property name="maxWaitMillis" value="5000"/>
     </bean>
 
+    <!--2.配置JedisConnectionFactory-->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+        <property name="hostName" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="usePool" value="true"/>
+    </bean>
+
+    <!--3.配置RedisTemplate-->
+    <bean class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="enableTransactionSupport" value="true"/>
+    </bean>
+
     <!--2.连接池-->
-    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="close">
+    <!--<bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="close">
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
         <constructor-arg name="host" value="192.168.142.13"/>
         <constructor-arg name="port" value="6379"/>
-    </bean>
+    </bean>-->
 
 </beans>
