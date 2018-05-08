@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+    <!--1.创建ActiveMq的链接工厂-->
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+    </bean>
+
+    <!--2.spring适配JMS的链接工厂-->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+    </bean>
+
+  <!--  &lt;!&ndash;配置目的地：主题 用于发布订阅模式&ndash;&gt;
+    <bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg name="name" value="hey-topic"/>
+    </bean>-->
+
+    <!--3.适配JMSTemplate-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <!--配置链接工厂-->
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!--配置默认的目的地-->
+        <!--<property name="defaultDestination" ref="topic"/>-->
+    </bean>
+
+    <!--4.配置监听器和监听容器-->
+    <bean id="listener" class="com.kaishengit.jms.consumer.SpringTopicListener"/>
+    <bean id="listener2" class="com.kaishengit.jms.consumer.SpringTopicListener2"/>
+    <!--监听容器-->                                                                                   <!--线程池的配置 控制这3-10个线程-->
+    <jms:listener-container destination-type="topic" connection-factory="connectionFactory" acknowledge="client" concurrency="3-10" >
+        <jms:listener destination="hey-topic" ref="listener"/>
+        <jms:listener destination="hey-topic" ref="listener2"/>
+    </jms:listener-container>
+
+
+</beans>

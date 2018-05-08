@@ -9,7 +9,7 @@ import org.junit.Test;
 import javax.jms.*;
 import java.io.IOException;
 
-public class HelloWord {
+public class QueueTest {
 
     /**创建生产者
      *
@@ -41,24 +41,31 @@ public class HelloWord {
             connection = connectionFactory.createConnection();
             connection.start();
 
-            //3.创建session(参数:是否提交事务  消息签收模式 .AUTO_ACKNOWLEDGE自动签收  CLIENT_ACKNOWLEDGE客户端签收)
-            session = connection.createSession(true, Session.CLIENT_ACKNOWLEDGE);
+            int i = 0;
+            while (true){
+                //3.创建session(参数:是否提交事务  消息签收模式 .AUTO_ACKNOWLEDGE自动签收  CLIENT_ACKNOWLEDGE客户端签收)
+                session = connection.createSession(true, Session.CLIENT_ACKNOWLEDGE);
 
-            //4.创建消息米低地
-            Destination destination = session.createQueue("weChat-queue");
+                //4.创建消息米低地
+                Destination destination = session.createQueue("weChat-queue");
 
-            //5.创建生产者
-            producer = session.createProducer(destination);
-            //使用持久模式
-            producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+                //5.创建生产者
+                producer = session.createProducer(destination);
+                //使用持久模式
+                producer.setDeliveryMode(DeliveryMode.PERSISTENT);
 
-            //6.发送消息
-            TextMessage textMessage = session.createTextMessage("Hello:MQ15");
-            producer.send(textMessage);
-            //提交事务
-            session.commit();
-            //若不提交则需写回滚
+                //6.发送消息
+                TextMessage textMessage = session.createTextMessage("Hello:MQ15" + i);
+                producer.send(textMessage);
+                //提交事务
+                session.commit();
+                //若不提交则需写回滚
 //            session.rollback();
+
+                i++;
+                Thread.sleep(2000);
+
+            }
 
         } catch (JMSException ex) {
             ex.printStackTrace();
@@ -68,10 +75,13 @@ public class HelloWord {
                 }
             } catch (JMSException e) {
                 e.printStackTrace();
-            }finally {
+            }
+            finally {
                 //7. 释放资源
                 close(session,connection,producer);
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,7 +111,7 @@ public class HelloWord {
         connection.start();
 
         //3.创建session(参数:是否提交事务  消息签收模式 .AUTO_ACKNOWLEDGE自动签收  CLIENT_ACKNOWLEDGE客户端签收) 消息发布的时候为手动签收的 接收消息也应是手动的
-        Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+       Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
 
         //4.创建消息米低地
         Destination destination = session.createQueue("weChat-queue");
@@ -144,7 +154,7 @@ public class HelloWord {
     }
 
     /**ActiveMQ.DLQ
-     *
+     * 
      * @Author Reich
      * @Date: 2018/5/7 21:07
      */
