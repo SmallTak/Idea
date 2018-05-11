@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      th:with="menu='Home'">
+<head>
+    <title>首页</title>
+    <link rel="stylesheet" th:href="@{'/css/style.css'}" href="../../static/css/style.css">
+</head>
+<body>
+    <div id="content" layout:fragment="content">
+    这是首页
+    <div class="text-danger">
+
+        <div th:object="${user}">
+            <p>姓名: <span th:text="*{name}"></span>.</p>
+            <p>
+                Name:
+                <span th:text="*{name}?: (*{age}? '22': #{default.name})">Sebastian</span>
+            </p>
+            <p>
+                Name:
+                <span th:text="*{name} ?: _">没名字</span>
+            </p>
+            <p>年龄: <span th:text="*{age}"></span>.</p>
+            <p>age:<span th:text="*{age}?: '27'">27</span></p>
+            <p>age:<span th:text="*{age != null}? *{age} : '27'">27</span></p>
+
+            <p>住址: <span th:text="*{address}"></span>.</p>
+        </div>
+        <h3>----------------------------------------</h3><br>
+        <div>
+            <p>姓名: <span th:text="${user.name}"></span>.</p>
+            <p>年龄: <span th:text="${user.age}"></span>.</p>
+            <p>住址: <span th:text="${user.address}"></span>.</p>
+        </div>
+
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(function () {
+        //alert("hey men");
+    })
+</script>
+</body>
+</html>
