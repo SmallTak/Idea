@@ -7,14 +7,13 @@ import com.kaishengit.springbootdemo.cache.RedisCacheHelper;
 import com.kaishengit.springbootdemo.entity.Movie;
 import com.kaishengit.springbootdemo.mapper.MovieMapper;
 import com.kaishengit.springbootdemo.service.MovieService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.cache.RedisCacheElement;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -23,11 +22,13 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieMapper movieMapper;
 
-    @Autowired
+    /*@Autowired
     private RedisTemplate redisTemplate;
-
+*/
     @Autowired
     private RedisCacheHelper redisCacheHelper;
+
+    private Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
 /*
     @Autowired
@@ -46,15 +47,20 @@ public class MovieServiceImpl implements MovieService {
      * @Date: 2018/5/10 17:23
      */
     @Override
+    @Cacheable("movie")
     public Movie selectMovieById(Integer id) {
+        //使用本地缓存是释放
+        return movieMapper.selectMairById(id);
+
         //使用redisCacheHelper工具类
-        String movieKey = "movie" + id;
+        /*String movieKey = "movie" + id;
         Movie movie = (Movie) redisCacheHelper.get(movieKey, Movie.class);
         if (movie == null){
             movie = movieMapper.selectMairById(id);
             redisCacheHelper.set(movieKey, movie, 10);
+            return movie;
         }
-        return movie;
+        return movie;*/
 
        /* String movieKey = "movie" + id;
         Movie movie = null;
@@ -83,4 +89,19 @@ public class MovieServiceImpl implements MovieService {
         return new  PageInfo<>(movies);
     }
 
+    /** 热数据
+     *
+     * @Author Reich
+     * @Date: 2018/5/11 10:49
+     */
+ /*   @PostConstruct
+    public void initCache(){
+
+        Movie movie = movieMapper.selectMairById(143);
+        String movieKey = "movie" + movie.getId();
+        redisCacheHelper.set(movieKey, movie, 10);
+        logger.info("init {} product in cache ",2177);
+
+    }
+*/
 }

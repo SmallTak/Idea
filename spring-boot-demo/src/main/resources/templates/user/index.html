@@ -33,7 +33,26 @@
             <p>姓名: <span th:text="${user.name}"></span>.</p>
             <p>年龄: <span th:text="${user.age}"></span>.</p>
             <p>住址: <span th:text="${user.address}"></span>.</p>
+
         </div>
+
+        <p th:utext="${user.name}">
+            welCome[[${user.name}}]]
+        </p>
+
+        <p>Please select an option</p>
+        <ol>
+            <li><a href="/movie" th:href="@{/movie/123}">Product List</a></li>
+        </ol>
+
+        <p>
+            Now you are looking at a <span>欢迎你[[${user.name}]]</span>.
+        </p>
+
+        <p>The year is <span th:text="2013">1492</span>.</p>
+        <p>In two years, it will be <span th:text="2013 + 2">1494</span>.</p>
+
+        <p><span th:text="${message == '尼玛'} ? '智障' : ${message}"></span></p>
 
     </div>
 </div>

@@ -34,10 +34,15 @@ public class UserController {
         model.addAttribute("money",987993491L);
         model.addAttribute("names",names);
         model.addAttribute("age",23);
-        model.addAttribute("message", "你好");
+        model.addAttribute("message", "尼玛");
         model.addAttribute("id",1001);
 //        return "user/home";
         return "user/index";
+    }
+
+    @GetMapping("/hey")
+    public String hey(){
+        return "user/home";
     }
 
 }
