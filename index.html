@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+</head>
+<body>
+    <h3>hello,vuejs</h3>
+    <div id="app">
+        
+        <h3>{{message}}</h3>
+        <h1 v-if="flag">邱智辉 小可爱</h5>
+        <ul>
+            <li v-for="item in names">{{item}}</li>
+        </ul>
+        <button v-on:click="btnClick('不可思议')">callMe</button>
+    </div>
+
+<script src="js/vue.js"></script>
+
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            message:"你好 vue.js",
+            flag:true,
+            names:["邱","智","辉"]
+        },
+        methods:{
+            btnClick:function(message){
+                //alert("嘿 我的小可爱，花花给你戴" + message)
+                this.message = "hey men..."
+            }
+        }
+    });
+    vm.$watch("message",function(newValue,oldValue){
+        console.log(oldValue + "-->" + newValue);
+    }); 
+</script>
+
+</body>
+</html>
