@@ -1,13 +1,14 @@
 package com.kaishengit.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.kaishengit.controller.result.RequestBean;
+import com.kaishengit.controller.result.ResponseBean;
 import com.kaishengit.entity.SeckillProduct;
 import com.kaishengit.service.SeckillProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/product")
@@ -61,15 +62,15 @@ public class ProductController {
         return "product/detail";
     }
 
-    @GetMapping("/{id}")
-    @RequestBody
-    public RequestBean seckillBay(@PathVariable Integer id){
+    @GetMapping("/buy/{id}")
+    @ResponseBody
+    public ResponseBean seckillBuy(@PathVariable Integer id){
         try {
             seckillProductService.buyProduct(id);
         } catch (RuntimeException e) {
-            return RequestBean.error(e.getMessage());
+            return ResponseBean.error(e.getMessage());
         }
-        return RequestBean.success();
+        return ResponseBean.success();
     }
 
 }

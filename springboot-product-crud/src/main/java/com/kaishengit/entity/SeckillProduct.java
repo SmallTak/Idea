@@ -116,7 +116,7 @@ public class SeckillProduct implements Serializable {
     public boolean isAfter(){
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
         DateTime endTime = dateTimeFormatter.parseDateTime(getEndTime());
-        return endTime.isAfterNow();
+        return endTime.isBeforeNow();
     }
 
 }

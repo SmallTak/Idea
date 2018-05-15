@@ -4,14 +4,17 @@ spring:
     url: jdbc:mysql:///product?useSSL=false
     username: root
     password: root
+  redis:
+      host: 192.168.142.13
+      port: 6379
+  activemq:
+     broker-url: tcp://127.0.0.1:61616
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.kaishengit.entity
   mapper-locations: classpath:mapper/*.xml
-redis:
-  host: 192.168.142.13
-  port: 6379
+
 pagehelper:
   helper-dialect: mysql
   reasonable: true

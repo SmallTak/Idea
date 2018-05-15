@@ -27,9 +27,9 @@
         </p>
 
         <button class="btn btn-default disabled" th:if="${not product.isBefore()}">距抢购时间有:<sapn id="countDown"></sapn></button>
-        <button class="btn btn-default disabled" th:if="${product.endTime}">已结束</button>
+        <button class="btn btn-default disabled" th:if="${product.isAfter()}">已结束</button>
         <button class="btn btn-default deisable" th:if="${product.productInventory == 0} ">商品已售罄</button>
-        <button class="btn btn-default disabled" th:if="${not product.isBefore()}">距抢购时间有:<sapn id="countDown"></sapn></button>
+        <button id="buyButton" class="btn btn-danger" th:if="${product.isBefore() and not product.isAfter() and product.productInventory != 0}">抢购</button>
 
     </div>
     <script src="/js/jquery.min.js"></script>
@@ -43,6 +43,18 @@
             $(this).text(
                 event.strftime('%D 天 %H小时%M分%S秒')
             );
+        });
+
+        $("#buyButton").click(function () {
+            $.get("/product/buy/"+id).done(function(result){
+                if(result.status == "success") {
+                    alert("抢购成功");
+                } else {
+                    alert(result.message);
+                }
+            }).error(function () {
+                alert("服务器异常");
+            });
         });
 
     </script>
