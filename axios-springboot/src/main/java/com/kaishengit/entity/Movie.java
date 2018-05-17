@@ -84,4 +84,17 @@ public class Movie implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", rate=" + rate +
+                ", releaseYear='" + releaseYear + '\'' +
+                ", sendTime='" + sendTime + '\'' +
+                ", director='" + director + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
