@@ -127,7 +127,7 @@ public class TicketController {
         PageInfo<TicketOutRecord> ticketOutRecordList = ticketService.findAllTicketOutRecord(pageNo);
 
         model.addAttribute("ticketOutRecordList", ticketOutRecordList);
-         return "/ticket/ticketOut/home";
+        return "/ticket/ticketOut/home";
     }
 
     /**新增年票下发

@@ -1,6 +1,6 @@
 <template>
   <div id="detailMovie">
-      <i id="text" @click="backList" class="el-icon-back grid-content"></i>
+      <i layout="->" id="text" @click="backList" class="el-icon-back grid-content"></i>
         <el-form style="margin-top:20px" ref="form" :model="movie" label-width="80px">
             <el-form-item label="电影名称">
                 <el-input v-model="movie.title"></el-input>
@@ -42,7 +42,7 @@ export default {
   },
   methods:{
       backList: function() {
-      this.$router.push("/");
+      this.$router.push("/home");
     }
   },
    mounted:function(){
@@ -57,4 +57,8 @@ export default {
 </script>
 
 <style scoped lang="less">
+    #text {
+        color: black;
+        margin-left: 970px
+    }
 </style>

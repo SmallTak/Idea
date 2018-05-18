@@ -1,22 +1,37 @@
 <template>
   <div id="home">
-        <i layout="->" @click="addMovie" class="el-icon-circle-plus grid-content" ></i><br><br>
+    <el-table-column>
+      <el-button id="newMovie" @click="clickOut" class="el-icon-close" type="black" round></el-button>
+      <el-button id="newMovie" @click="addMovie" class="el-icon-plus" type="black" round></el-button>
+    </el-table-column>
     <el-table
+      ref="multipleTable"
       :data="movies"
-      style="width: 100%">
+      style="width: 100%"
+      max-height="1100"
+      @selection-change="handleSelectionChange">
+      <el-table-column
+      type="selection"
+      width="55">
+      </el-table-column>
       <el-table-column
         prop="title"
         label="电影名称"
         width="300">
+        <template slot-scope="scope">
+        <el-popover trigger="hover" placement="top">
+          <p>电影名称: {{ scope.row.title }}</p>
+          <p>发行时间: {{ scope.row.releaseYear }}</p>
+          <div slot="reference" class="name-wrapper">
+            <el-tag size="medium">{{ scope.row.title }}</el-tag>
+          </div>
+        </el-popover>
+      </template>
       </el-table-column>
       <el-table-column
         prop="rate"
         label="评分"
         width="200">
-      </el-table-column>
-      <el-table-column
-        prop="releaseYear"
-        label="发行时间">
       </el-table-column>
       <el-table-column
         prop="sendTime"
@@ -28,23 +43,20 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-            <i class="el-icon-edit"
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row)"></i>
-            <i class="el-icon-close"
-                size="mini"
-                @click="handleDelete(scope.$index, scope.row)"></i>
+          <el-button type="primary" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)" circle></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)" circle></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <br>
+      <el-button @click="toggleSelection()">取消</el-button>
+   
     <el-pagination
       background
       layout="->,prev, pager, next,total"
       :total="total"
       :current-Page="currentPage"
       @current-change="pageData">
-  </el-pagination>
+    </el-pagination>
   </div>
 </template>
 
@@ -60,6 +72,11 @@ export default {
     };
   },
   methods:{
+      clickOut:function () {
+        localStorage.removeItem("jwtToken");
+        this.$message("你已安全退出");
+        this.$router.push("/");
+      },
       addMovie:function () {
         this.$router.push("/new");
       },
@@ -99,14 +116,38 @@ export default {
         }).catch(error => {
           this.$message.error("系统提示:" + error.message);
         })
+      },
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+        //console.log(this.multipleSelection.id);
       }
   },
   mounted:function() {
-    this.loadData(this.currentPage)
+    this.loadData(this.currentPage);
   }
 };
 </script>
 
 <style scoped lang="less">
-  
+  #newMovie {
+ margin-top: 35px; 
+    color: black;
+    margin-left: 970px;
+    float:left;
+  }
+  #logout{
+ margin-top: 35px; 
+    color: black;
+    margin-left: 900px;
+    float:right;
+  }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div id="addMovie">
-   
-        <i id="text" @click="backList" class="el-icon-back grid-content"></i>
+        <el-button id="text" @click="backList" class="el-icon-back" type="black" round></el-button>
         <el-form style="margin-top:20px" ref="form" :model="movie" label-width="80px">
             <el-form-item label="电影名称">
                 <el-input v-model="movie.title"></el-input>
@@ -49,7 +48,7 @@ export default {
   },
   methods:{
     backList:function () {
-        this.$router.push("/")
+        this.$router.push("/home")
     },
     onSubmit:function(){
         this.$http.post(api.addMovie,this.movie).then(response=>{
@@ -74,4 +73,8 @@ export default {
 </script>
 
 <style scoped lang="less">
+ #text {
+        color: black;
+        margin-left: 1040px
+    }
 </style>
