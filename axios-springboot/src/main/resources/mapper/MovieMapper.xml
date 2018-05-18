@@ -93,6 +93,7 @@
     </if>
   </select>
   <select id="selectByExample" parameterType="com.kaishengit.entity.MovieExample" resultMap="BaseResultMap">
+    /*SELECT * from movie*/
     select
     <if test="distinct">
       distinct

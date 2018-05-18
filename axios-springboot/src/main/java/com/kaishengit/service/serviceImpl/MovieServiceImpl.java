@@ -1,14 +1,11 @@
-package com.kaishengit.movie.serviceImpl;
+package com.kaishengit.service.serviceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kaishengit.service.MovieService;
 import com.kaishengit.entity.Movie;
 import com.kaishengit.entity.MovieExample;
 import com.kaishengit.mapper.MovieMapper;
-import com.kaishengit.movie.MovieService;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

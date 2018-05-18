@@ -3,13 +3,9 @@ package com.kaishengit.controller;
 import com.github.pagehelper.PageInfo;
 import com.kaishengit.controller.resoult.ResponseBean;
 import com.kaishengit.entity.Movie;
-import com.kaishengit.movie.MovieService;
-import org.apache.ibatis.annotations.Delete;
+import com.kaishengit.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/movie")
