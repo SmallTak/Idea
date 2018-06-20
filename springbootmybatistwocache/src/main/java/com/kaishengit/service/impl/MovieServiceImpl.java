@@ -3,6 +3,7 @@ package com.kaishengit.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kaishengit.cache.RedisCacheHelper;
+import com.kaishengit.controller.exception.NotFountException;
 import com.kaishengit.entity.Movie;
 import com.kaishengit.entity.MovieExample;
 import com.kaishengit.mapper.MovieMapper;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -70,5 +73,48 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return movie;
+    }
+
+    /**
+     * 修改电影信息
+     *
+     * @param movie
+     * @Author Reich
+     * @Date: 2018/6/20 16:33
+     */
+    @Override
+    public void updateMovie(Movie movie) {
+        movieMapper.updateByPrimaryKeySelective(movie);
+    }
+
+    /**
+     * 根据id删除电影
+     *
+     * @param id
+     * @Author Reich
+     * @Date: 2018/6/20 16:48
+     */
+    @Override
+    public void delMovieById(Integer id) {
+        Movie movie = movieMapper.selectByPrimaryKey(id);
+        if (movie == null){
+            throw new NotFountException();
+        }
+
+    }
+
+    /**
+     * 通过导演查找电影
+     *
+     * @param director
+     * @Author Reich
+     * @Date: 2018/6/20 22:47
+     */
+    @Override
+    public List<Movie> findMovieByDirector(String director) {
+        MovieExample movieExample = new MovieExample();
+        movieExample.createCriteria().andTitleEqualTo(director);
+        List<Movie> movieList = movieMapper.selectByExample(movieExample);
+        return movieList;
     }
 }

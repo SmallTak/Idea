@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform"
+      xmlns:td="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/paging.css">
+</head>
+<body>
+
+<div class="container">
+    <h3>movie Crud demo</h3>
+    <a href="/movie/new" class="btn btn-default small"  align="right">新增商品</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>电影名称</th>
+            <th>电影评分</th>
+            <th>发行时间</th>
+            <th>上映时间</th>
+            <th>电影导演</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${movieList}">
+            <td th:text="${item.title}"></td>
+            <td th:text="${item.rate}"></td>
+            <td th:text="${item.releaseYear}"></td>
+            <td th:text="${item.sendTime}"></td>
+            <td th:text="${item.director}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <ul id="pagination-demo" class="pagination pull-right"></ul>
+</div>
+
+<script src="/bootstrap/js/jquery.min.js"></script>
+<script src="/plugins/jQuery/jquery.twbsPagination.min.js"></script>
+<script src="/plugins/layer/layer.js"></script>
+
+<script>
+    /*$(function () {
+        var pag = $("#lastNum").text();
+        $('#pagination-demo').twbsPagination({
+            totalPages:pag/10+1,
+            visiblePages: 10,
+            first:'首页',
+            last:'末页',
+            prev:'上一页',
+            next:'下一页',
+            href:"?p={{number}}"
+        });
+    })*/
+
+</script>
+
+</body>
+</html>

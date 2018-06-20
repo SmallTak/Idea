@@ -37,4 +37,6 @@ public interface MovieMapper {
     int updateByPrimaryKeyWithBLOBs(Movie record);
 
     int updateByPrimaryKey(Movie record);
+
+    List<Movie> selectByDirector(String director);
 }

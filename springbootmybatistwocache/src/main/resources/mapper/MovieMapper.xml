@@ -12,7 +12,7 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kaishengit.entity.Movie">
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
-  <cache/>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -195,6 +195,9 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="selectByDirector" resultType="com.kaishengit.entity.Movie">
+    SELECT * FROM movie WHERE director = #{director}
   </select>
   <update id="updateByExampleSelective" parameterType="map">
     update movie

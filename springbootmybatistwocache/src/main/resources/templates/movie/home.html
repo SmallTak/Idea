@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform"
+      xmlns:td="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/paging.css">
 </head>
 <body>
 
 <div class="container">
     <h3>movie Crud demo</h3>
     <a href="/movie/new" class="btn btn-default small"  align="right">新增商品</a>
+    <div class="box-body">
+        <form class="form-inline" th:action="@{/search}">
+            <input type="text" class="form-control" name="director" placeholder="请输入导演名称">
+            <button class="btn btn-default">搜索</button>
+        </form>
+    </div>
     <table class="table">
         <thead>
         <tr>
@@ -23,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${page.list}">
+        <tr th:each="item : ${pageInfo.list}">
             <td>
                 <a th:href="@{/movie/{id}(id=${item.id})}" th:text="${item.title}"></a>
             </td>
@@ -34,13 +42,54 @@
             <td th:text="${item.description}"></td>
             <td>
                 <a th:href="@{/movie/{id}/edit(id=${item.id})}">编辑</a>
-                <a rel="${item.id}" th:href="@{/movie/{id}/del(id=${item.id})}">删除</a>
+                <a rel="${item.id}" class="del" href="javascript:;">删除</a>
             </td>
         </tr>
+        <td id="lastNum" th:text="${pag}" hidden>
         </tbody>
     </table>
-
+        <ul id="pagination-demo" class="pagination pull-right"></ul>
 </div>
+
+<script src="/bootstrap/js/jquery.min.js"></script>
+<script src="/plugins/jQuery/jquery.twbsPagination.min.js"></script>
+<script src="/plugins/layer/layer.js"></script>
+
+    <script>
+        $(function () {
+            var pag = $("#lastNum").text();
+            $('#pagination-demo').twbsPagination({
+                totalPages:pag/10+1,
+                visiblePages: 10,
+                first:'首页',
+                last:'末页',
+                prev:'上一页',
+                next:'下一页',
+                href:"?p={{number}}"
+            });
+
+            $("#director").click(function () {
+
+            })
+
+            $(".del").click(function (){
+                var id = $(this).attr("rel");
+                layer.confirm("确定要删除么？",function (index) {
+                    layer.close(index);
+                    $.get("/movie/"+id+"/del").done(function (result) {
+                        if(result.status == 'success') {
+                            history.go(0);
+                        } else {
+                            layer.msg(result.message);
+                        }
+                    }).error(function () {
+                        layer.msg("服务器忙");
+                    });
+                })
+            })
+        })
+
+    </script>
 
 </body>
 </html>

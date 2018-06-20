@@ -2,35 +2,65 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>电影详情</title>
+    <title>修改电影</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/datetimepicker/css/bootstrap-datetimepicker.css">
 </head>
 <body>
-<div class="container">
-    <h3>movie Crud demo</h3>
-    <a href="/movie/new" class="btn btn-default small"  align="right">新增商品</a>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>电影名称</th>
-            <th>电影评分</th>
-            <th>发行时间</th>
-            <th>上映时间</th>
-            <th>电影导演</th>
-            <th>电影简介</th>
-            <th>#</th>
-        </tr>
-        </thead>
-        <tbody>
-            <td th:text="${movie.title}"></td>
-            <td th:text="${movie.rate}"></td>
-            <td th:text="${movie.releaseYear}"></td>
-            <td th:text="${movie.sendTime}"></td>
-            <td th:text="${movie.director}"></td>
-            <td th:text="${movie.description}"></td>
-        </tr>
-        </tbody>
-    </table>
 
+<div class="container">
+    <form method="post">
+        <div class="form-group">
+            <label>电影名称</label>
+            <input type="text" name="title" th:value="${movie.title}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>电影评分</label>
+            <input type="text" name="rate" th:value="${movie.rate}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>发行时间</label>
+            <input type="text" class="form-control" name="releaseYear" th:value="${movie.releaseYear}" id="releaseYear">
+        </div>
+        <div class="form-group">
+            <label>上映时间</label>
+            <input type="text" class="form-control" name="sendTime" th:value="${movie.sendTime}" id="sendTime">
+        </div>
+        <div class="form-group">
+            <label>电影导演</label>
+            <input type="text" class="form-control" name="director" th:value="${movie.director}">
+        </div>
+        <div class="form-group">
+            <label>电影简介</label>
+            <input type="text" class="form-control" name="description" th:value="${movie.description}" >
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">保存</button>
+        </div>
+    </form>
 </div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/moment.js"></script>
+<script src="/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script>
+    $(function () {
+        $("#sendTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            autoclose:true,
+            todayHighlight:true,
+            language:'zh-CN'
+        });
+        $("#releaseYear").datetimepicker({
+            format: 'yyyy',
+            autoclose:true,
+            todayHighlight:true,
+            language:'zh-CN'
+        });
+    })
+</script>
+
 </body>
 </html>
