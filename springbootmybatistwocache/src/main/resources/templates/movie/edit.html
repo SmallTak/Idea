@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>电影详情</title>
+</head>
+<body>
+<div class="container">
+    <h3>movie Crud demo</h3>
+    <a href="/movie/new" class="btn btn-default small"  align="right">新增商品</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>电影名称</th>
+            <th>电影评分</th>
+            <th>发行时间</th>
+            <th>上映时间</th>
+            <th>电影导演</th>
+            <th>电影简介</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+            <td th:text="${movie.title}"></td>
+            <td th:text="${movie.rate}"></td>
+            <td th:text="${movie.releaseYear}"></td>
+            <td th:text="${movie.sendTime}"></td>
+            <td th:text="${movie.director}"></td>
+            <td th:text="${movie.description}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

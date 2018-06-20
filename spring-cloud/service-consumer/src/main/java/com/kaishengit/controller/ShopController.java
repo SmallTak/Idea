@@ -1,18 +1,19 @@
 package com.kaishengit.controller;
 
 import com.kaishengit.client.MovieServiceClient;
+import com.kaishengit.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/shop")
 public class ShopController {
+
+    @Autowired
+    private MovieService movieService;
 
     /*以下而注解为Ribbon loadBalancerClient*/
    /* @Autowired
@@ -20,14 +21,16 @@ public class ShopController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;*/
 
-    @Autowired
-    private MovieServiceClient movieServiceClient;
+//    @Autowired
+//    private MovieServiceClient movieServiceClient;
 
     @GetMapping("/buy/movie/{id}")
     public  String buyMovie(@PathVariable Integer id){
 
+        return movieService.getMovieNameById(id);
+
           //服务消费feign
-          return movieServiceClient.getMovieName(id);
+          //return movieServiceClient.getMovieName(id);
 
         //服务消费-Ribbon
 //        String url = "http://MOVIE-SERVICE-PROVIDER/movie/"+id;

@@ -1,5 +1,7 @@
 package com.kaishengit.tms.entity;
 
+import com.kaishengit.tms.commonsUtil.SnowFlake;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +12,6 @@ import java.util.List;
  * @Date: 2018/4/12 19:11  
  */
 public class Account implements Serializable {
-
     public static final String STATE_NORMAL = "正常";
     public static final String STATE_DISABLE = "禁用";
     public static final String STATE_LOCKED = "锁定";

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h3>movie Crud demo</h3>
+    <a href="/movie/new" class="btn btn-default small"  align="right">新增商品</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>电影名称</th>
+            <th>电影评分</th>
+            <th>发行时间</th>
+            <th>上映时间</th>
+            <th>电影导演</th>
+            <th>电影简介</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${page.list}">
+            <td>
+                <a th:href="@{/movie/{id}(id=${item.id})}" th:text="${item.title}"></a>
+            </td>
+            <td th:text="${item.rate}"></td>
+            <td th:text="${item.releaseYear}"></td>
+            <td th:text="${item.sendTime}"></td>
+            <td th:text="${item.director}"></td>
+            <td th:text="${item.description}"></td>
+            <td>
+                <a th:href="@{/movie/{id}/edit(id=${item.id})}">编辑</a>
+                <a rel="${item.id}" th:href="@{/movie/{id}/del(id=${item.id})}">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

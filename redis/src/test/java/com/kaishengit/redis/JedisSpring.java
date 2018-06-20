@@ -2,6 +2,8 @@ package com.kaishengit.redis;
 
 import com.google.gson.Gson;
 import com.kaishengit.entity.User;
+import com.kaishengit.entity.UserText;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-
-import javax.sound.midi.VoiceStatus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring-redis.xml")
@@ -42,5 +42,7 @@ public class JedisSpring {
         System.out.println(userJson);
         jedis.close();
     }
+
+
 
 }

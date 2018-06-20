@@ -2,6 +2,8 @@ package com.kaishengit.redis;
 
 import com.google.gson.Gson;
 import com.kaishengit.entity.User;
+import com.kaishengit.entity.UserText;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +51,24 @@ public class JedisSpringData {
         User user = (User) redisTemplate.opsForValue().get("user:3");
         System.out.println(user);
     }
+
+    @Test
+    public void setUserText(){
+
+        UserText userText = new UserText("jack","123123443","1048388981@qq,com","123123");
+        String s = DigestUtils.md5Hex(userText.getPassword());
+        System.out.println(s);
+        redisTemplate.opsForValue().set(s,userText);
+
+    }
+
+    @Test
+    public void getUserText(){
+
+        UserText userText = (UserText) redisTemplate.opsForValue().get("4297f44b13955235245b2497399d7a93");
+
+
+    }
+
 
 }
