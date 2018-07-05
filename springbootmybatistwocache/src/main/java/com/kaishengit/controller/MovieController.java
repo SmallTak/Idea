@@ -28,9 +28,6 @@ public class MovieController {
        return "movie/home";
     }
 
-
-
-
     @GetMapping("/{id}")
     public String movieEdit(@PathVariable Integer id, Model model){
         Movie movie = movieService.findmoviebyid(id);
